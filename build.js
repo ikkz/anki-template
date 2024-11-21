@@ -137,7 +137,11 @@ export async function rollupOptions(config) {
             let frontHtml = '';
             frontHtml += `<div data-at-version="${packageJson.version}" id="at-root"></div>`;
             frontHtml += `<style>${files?.css?.map(({ source }) => source).join('')}</style>`;
-            frontHtml += `<div id="at-fields" style="display:none;">${buildFields()}</div>`;
+            frontHtml += `
+<div id="at-fields" style="display:none;">
+${buildFields()}
+</div>
+`;
             frontHtml +=
               files.js
                 ?.map(({ code }) => `<script>${code}</script>`)
@@ -183,12 +187,12 @@ export async function rollupOptions(config) {
     return options.fields
       .map(
         (field) =>
-          `<div id="at-field-${field}">${envValue(
+          `    <div id="at-field-${field}">${envValue(
             `{{${field}}}`,
             release[config.id].notes[0].fields[field] || '',
           )}</div>`,
       )
-      .join('');
+      .join('\n');
   }
 
   function buildEntry() {
