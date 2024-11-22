@@ -1,6 +1,10 @@
 import { ErrorList } from '../components/error-list';
 import { AnkiField } from '../components/field';
-import { biggerTextAtom, hideQuestionTypeAtom } from '../components/settings';
+import {
+  biggerTextAtom,
+  blurOptionsAtom,
+  hideQuestionTypeAtom,
+} from '../components/settings';
 import { useBack } from '../hooks/use-back';
 import { useField } from '../hooks/use-field';
 import { useStorage } from '../hooks/use-storage';
@@ -94,6 +98,11 @@ export default () => {
   const note = useField('note');
   const isMultipleChoice = answers.length > 1;
 
+  const [blurred, setBlurred] = useStorage(
+    'blurred',
+    useAtomValue(blurOptionsAtom),
+  );
+
   return (
     <CardShell
       header={
@@ -115,6 +124,7 @@ export default () => {
         <div
           className={clsx('mt-5', prefBiggerText ? 'prose-xl' : '')}
           ref={parent}
+          onClick={() => setBlurred(false)}
         >
           {options.map((name) => {
             const selectResult = getSelectResult(name);
@@ -149,6 +159,9 @@ export default () => {
                     )]: back,
                     'before:text-indigo-500 after:hidden':
                       selectResult === 'none',
+                  },
+                  {
+                    [`pointer-events-none blur`]: blurred,
                   },
                 )}
               >

@@ -31,5 +31,7 @@
   "wrongAnswer": "错选",
   "hideQuestionType": "隐藏题目类型（单选/多选）",
   "hideQuestionTypeDetail": "你需要自己判断当前卡片有几个正确选项",
-  "noScroll": "翻转时不要自动滚动"
+  "noScroll": "翻转时不要自动滚动",
+  "blurOptions": "选项模糊",
+  "blurOptionsDetail": "开启后选项会被模糊，点击选项区域后恢复"
 }

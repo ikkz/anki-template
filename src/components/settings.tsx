@@ -27,6 +27,10 @@ export const hideQuestionTypeAtom = atomWithLocalStorage<boolean>(
   false,
 );
 export const noScorllAtom = atomWithLocalStorage<boolean>('noScorll', true);
+export const blurOptionsAtom = atomWithLocalStorage<boolean>(
+  'blurOptions',
+  false,
+);
 
 let OptionList: FC;
 
@@ -41,6 +45,7 @@ if (id === 'mcq') {
     const [hideQuestionType, setHideQuestionType] =
       useAtom(hideQuestionTypeAtom);
     const [noScorll, setNoScorll] = useAtom(noScorllAtom);
+    const [blurOptions, setBlurOptions] = useAtom(blurOptionsAtom);
 
     return (
       <>
@@ -71,6 +76,12 @@ if (id === 'mcq') {
           subtitle={t('selMenuDetail')}
           checked={selectionMenu}
           onChange={setSelectionMenu}
+        />
+        <Checkbox
+          title={t('blurOptions')}
+          subtitle={t('blurOptionsDetail')}
+          checked={blurOptions}
+          onChange={setBlurOptions}
         />
         <Checkbox
           title={t('hideTimer')}
