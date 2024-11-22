@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.1.1
+
+### Patch Changes
+
+- f36cf66: Enable scroll for long formula (长公式启用滚动)
+
 ## 1.1.0
 
 ### Minor Changes
