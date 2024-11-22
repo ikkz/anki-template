@@ -18,3 +18,11 @@ body {
 .anki-field p:last-child {
   margin-bottom: 0 !important;
 }
+
+.anki-field {
+  scrollbar-width: none;
+}
+
+.anki-field::-webkit-scrollbar {
+  scrollbar-width: none;
+}

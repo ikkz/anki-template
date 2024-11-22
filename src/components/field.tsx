@@ -39,9 +39,9 @@ export const AnkiField: FC<{
       ref={attachNode}
       id={`anki-field-${name}`}
       className={clsx(
-        'anki-field overflow-x-hidden',
-        'prose prose-neutral',
-        'dark:prose-invert',
+        'anki-field',
+        'overflow-x-auto',
+        'prose prose-neutral dark:prose-invert',
         styleId,
         className,
       )}
