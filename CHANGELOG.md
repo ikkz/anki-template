@@ -1,5 +1,12 @@
 # anki-templates
 
+## 1.1.2
+
+### Patch Changes
+
+- 1c8ce33: feat(basic): hide answer area when there are not answer and note (没有答案和备注时隐藏答案区域)
+- b88f7be: fix: should use builtin `Tags` field (展示内置标签字段)
+
 ## 1.1.1
 
 ### Patch Changes
