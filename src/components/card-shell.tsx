@@ -103,7 +103,7 @@ export const CardShell: FC<Props> = ({
           />
           {questionExtra}
         </Block>
-        {back ? (
+        {back && answer ? (
           <Block name={t('answer')} id={prefNoScroll ? undefined : 'answer'}>
             {answer}
           </Block>
