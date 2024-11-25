@@ -8,8 +8,11 @@ with open("./templates.json") as file:
 with open("./release.json") as file:
     release_config = json.load(file)
 
+BUILTIN_FIELDS = ["Tags", "Type", "Deck", "Subdeck", "CardFlag", "Card", "FrontSide"]
+
 
 def gen_apkg(id: str, locale: str):
+    print(f"generating {id} {locale}")
     folder = f"dist/{id}/{locale}"
     with open(f"{folder}/front.html") as f:
         front = f.read()
@@ -17,7 +20,7 @@ def gen_apkg(id: str, locale: str):
         back = f.read()
     release = release_config[id]
     template = templates_config[id]
-    fields = template["fields"]
+    fields = list(filter(lambda field: field not in BUILTIN_FIELDS, template["fields"]))
     model = genanki.Model(
         release_config[id]["id"][locale],
         f"IKKZ_{id}_TEMPLATE_{locale}".upper(),
