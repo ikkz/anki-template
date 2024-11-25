@@ -82,7 +82,7 @@ export const CardShell: FC<Props> = ({
                 {tags?.length ? (
                   <>
                     <Dot />
-                    {tags.join('@/ ')}
+                    {tags.join(' / ')}
                   </>
                 ) : null}
               </span>
