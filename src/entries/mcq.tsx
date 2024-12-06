@@ -12,6 +12,7 @@ import { useField } from '../hooks/use-field';
 import { t } from '../utils/locale';
 import { randomOptionsAtom } from '@/components/settings';
 import '@/styles/mcq.css';
+import { flipToBack } from '@/utils/bridge';
 import { FIELD_ID } from '@/utils/const';
 import { getFieldText, isFieldEmpty } from '@/utils/field';
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
@@ -72,6 +73,7 @@ export default () => {
       toggle(name);
     } else {
       setSelected([name]);
+      setTimeout(flipToBack, 300);
     }
   });
 
