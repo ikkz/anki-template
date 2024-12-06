@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.2.0
+
+### Minor Changes
+
+- 4bc168f: feat(mcq): single choice question auto flipping (单选题自动翻转)
+
 ## 1.1.2
 
 ### Patch Changes
