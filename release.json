@@ -33,5 +33,21 @@
         }
       }
     ]
+  },
+  "tof": {
+    "id": {
+      "zh": 1356462000,
+      "en": 1693362483
+    },
+    "deck": 1598429921,
+    "notes": [
+      {
+        "fields": {
+          "question": "This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.",
+          "items": "<ul><li>T: All sub-questions should be in an unordered list format</li><li>T: Each sub-question must begin with \"T:\" or \"F:\", indicating whether the sub-question is true or false<br></li><li>T: Pay special attention to ensuring \"T/F\" is followed by an English half-width colon<br></li></ul>",
+          "note": "note"
+        }
+      }
+    ]
   }
 }

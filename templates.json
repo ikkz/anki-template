@@ -19,5 +19,10 @@
     "id": "basic",
     "name": "Basic",
     "fields": ["question", "answer", "note", "Tags"]
+  },
+  "tof": {
+    "id": "tof",
+    "name": "True or False",
+    "fields": ["question", "items", "note", "Tags"]
   }
 }
