@@ -30,19 +30,53 @@ export const blurOptionsAtom = atomWithLocalStorage<boolean>(
   false,
 );
 
+const CommonOptions: FC = () => {
+  const [selectionMenu, setSelectionMenu] = useAtom(selectionMenuAtom);
+  const [hideAbout, setHideAbout] = useAtom(hideAboutAtom);
+  const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
+  const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
+  const [noScorll, setNoScorll] = useAtom(noScorllAtom);
+
+  return (
+    <>
+      <Checkbox
+        title={t('biggerText')}
+        checked={biggerText}
+        onChange={setBiggerText}
+      />
+      <Checkbox
+        title={t('noScroll')}
+        checked={noScorll}
+        onChange={setNoScorll}
+      />
+      <Checkbox
+        title={t('selMenu')}
+        subtitle={t('selMenuDetail')}
+        checked={selectionMenu}
+        onChange={setSelectionMenu}
+      />
+      <Checkbox
+        title={t('hideTimer')}
+        checked={hideTimer}
+        onChange={setHideTimer}
+      />
+      <Checkbox
+        title={t('hideAbout')}
+        checked={hideAbout}
+        onChange={setHideAbout}
+      />
+    </>
+  );
+};
+
 let OptionList: FC;
 
 // these branches can be treeshaken by rollup
 if (id === 'mcq') {
   OptionList = () => {
     const [randomOptions, setRandomOptions] = useAtom(randomOptionsAtom);
-    const [selectionMenu, setSelectionMenu] = useAtom(selectionMenuAtom);
-    const [hideAbout, setHideAbout] = useAtom(hideAboutAtom);
-    const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
-    const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
     const [hideQuestionType, setHideQuestionType] =
       useAtom(hideQuestionTypeAtom);
-    const [noScorll, setNoScorll] = useAtom(noScorllAtom);
     const [blurOptions, setBlurOptions] = useAtom(blurOptionsAtom);
 
     return (
@@ -54,26 +88,10 @@ if (id === 'mcq') {
           subtitle={t('hideQuestionTypeDetail')}
         />
         <Checkbox
-          title={t('biggerText')}
-          checked={biggerText}
-          onChange={setBiggerText}
-        />
-        <Checkbox
           title={t('randomOption')}
           subtitle={t('randomOptionDetail')}
           checked={randomOptions}
           onChange={setRandomOptions}
-        />
-        <Checkbox
-          title={t('noScroll')}
-          checked={noScorll}
-          onChange={setNoScorll}
-        />
-        <Checkbox
-          title={t('selMenu')}
-          subtitle={t('selMenuDetail')}
-          checked={selectionMenu}
-          onChange={setSelectionMenu}
         />
         <Checkbox
           title={t('blurOptions')}
@@ -81,58 +99,14 @@ if (id === 'mcq') {
           checked={blurOptions}
           onChange={setBlurOptions}
         />
-        <Checkbox
-          title={t('hideTimer')}
-          checked={hideTimer}
-          onChange={setHideTimer}
-        />
-        <Checkbox
-          title={t('hideAbout')}
-          checked={hideAbout}
-          onChange={setHideAbout}
-        />
+        <CommonOptions />
       </>
     );
   };
 } else if (id === 'basic') {
-  OptionList = () => {
-    const [selectionMenu, setSelectionMenu] = useAtom(selectionMenuAtom);
-    const [hideAbout, setHideAbout] = useAtom(hideAboutAtom);
-    const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
-    const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
-    const [noScorll, setNoScorll] = useAtom(noScorllAtom);
-
-    return (
-      <>
-        <Checkbox
-          title={t('biggerText')}
-          checked={biggerText}
-          onChange={setBiggerText}
-        />
-        <Checkbox
-          title={t('noScroll')}
-          checked={noScorll}
-          onChange={setNoScorll}
-        />
-        <Checkbox
-          title={t('selMenu')}
-          subtitle={t('selMenuDetail')}
-          checked={selectionMenu}
-          onChange={setSelectionMenu}
-        />
-        <Checkbox
-          title={t('hideTimer')}
-          checked={hideTimer}
-          onChange={setHideTimer}
-        />
-        <Checkbox
-          title={t('hideAbout')}
-          checked={hideAbout}
-          onChange={setHideAbout}
-        />
-      </>
-    );
-  };
+  OptionList = CommonOptions;
+} else if (id === 'tof') {
+  OptionList = CommonOptions;
 } else {
   OptionList = () => null;
 }
