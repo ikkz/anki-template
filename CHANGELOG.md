@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.3.0
+
+### Minor Changes
+
+- 3a39c99: feat(tf): Add new True/False template (新增正误题模板)
+
 ## 1.2.0
 
 ### Minor Changes
