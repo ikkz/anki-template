@@ -23,6 +23,8 @@ All of the templates have the following common features:
 
 #### Fields
 
+Note: When all options are empty, the template will behave as a basic Q&A template
+
 | Field name  | Description                                                                                                                                                                                                                   |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | question    | This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.                                                                                                                 |

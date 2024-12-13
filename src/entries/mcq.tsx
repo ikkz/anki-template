@@ -1,5 +1,4 @@
 import { CardShell } from '../components/card-shell';
-import { ErrorList } from '../components/error-list';
 import { AnkiField } from '../components/field';
 import {
   biggerTextAtom,
@@ -107,120 +106,121 @@ export default () => {
 
   return (
     <CardShell
-      header={
-        <ErrorList
-          predicates={[
-            { condition: answers.length === 0, message: t('missingAnswer') },
-            { condition: options.length === 0, message: t('missingOptions') },
-          ]}
-        />
-      }
       title={
-        prefHideQuestionType ? (
+        prefHideQuestionType || !options.length ? (
           t('question')
         ) : (
           <>{isMultipleChoice ? t('multipleAnswer') : t('singleAnswer')}</>
         )
       }
       questionExtra={
-        <div
-          className={clsx('mt-5', prefBiggerText ? 'prose-xl' : '')}
-          ref={parent}
-          onClick={() => setBlurred(false)}
-        >
-          {options.map((name) => {
-            const selectResult = getSelectResult(name);
-            return (
-              <div
-                key={name}
-                onClick={() => onClick(name)}
-                className={clsx(
-                  'select-type-hint relative mb-3 cursor-pointer transition-transform before:select-none after:select-none last:mb-0 lg:mb-6',
-                  {
-                    'active:scale-95': !back,
-                    'after:absolute after:left-px after:top-0 after:block after:-translate-x-full after:rounded-l after:px-0.5 after:py-1 after:text-xs after:text-white':
-                      selectResult !== 'none',
-                    'after:origin-top-right after:scale-75':
-                      selectResult !== 'none' && locale === 'en',
-                    'before:text-red-500 after:bg-red-500':
-                      selectResult === 'wrong',
-                    'before:text-green-500 after:bg-green-500':
-                      selectResult === 'correct',
-                    'before:text-amber-500 after:bg-amber-500':
-                      selectResult === 'missed',
-                    [`after:content-['${t(
-                      `${
-                        selectResult as Exclude<typeof selectResult, 'none'>
-                      }Answer`,
-                    )}']`]: selectResult !== 'none',
-                    [clsx(
-                      `before:absolute before:content-['${fieldToAlpha(
-                        name,
-                      )}'] before:-top-4 before:right-1 before:text-4xl before:font-extrabold before:italic before:opacity-20`,
-                      'dark:before:opacity-50',
-                    )]: back,
-                    'before:text-indigo-500 after:hidden':
-                      selectResult === 'none',
-                  },
-                  {
-                    [`pointer-events-none blur`]: blurred,
-                  },
-                )}
-              >
-                <AnkiField
-                  name={name}
+        options.length ? (
+          <div
+            className={clsx('mt-5', prefBiggerText ? 'prose-xl' : '')}
+            ref={parent}
+            onClick={() => setBlurred(false)}
+          >
+            {options.map((name) => {
+              const selectResult = getSelectResult(name);
+              return (
+                <div
+                  key={name}
+                  onClick={() => onClick(name)}
                   className={clsx(
-                    'rounded-xl border-2 border-transparent bg-indigo-50 px-4 py-2 transition-colors',
+                    'select-type-hint relative mb-3 cursor-pointer transition-transform before:select-none after:select-none last:mb-0 lg:mb-6',
                     {
-                      '!border-indigo-500 !bg-indigo-50 !text-indigo-500':
-                        !back && isSelected(name),
-                      '!border-red-500 !bg-red-50 !text-red-500':
+                      'active:scale-95': !back,
+                      'after:absolute after:left-px after:top-0 after:block after:-translate-x-full after:rounded-l after:px-0.5 after:py-1 after:text-xs after:text-white':
+                        selectResult !== 'none',
+                      'after:origin-top-right after:scale-75':
+                        selectResult !== 'none' && locale === 'en',
+                      'before:text-red-500 after:bg-red-500':
                         selectResult === 'wrong',
-                      '!border-green-500 !bg-green-50 !text-green-500':
+                      'before:text-green-500 after:bg-green-500':
                         selectResult === 'correct',
-                      '!border-amber-500 !bg-amber-50 !text-amber-500':
+                      'before:text-amber-500 after:bg-amber-500':
                         selectResult === 'missed',
-                      '!rounded-tl-none': selectResult !== 'none',
+                      [`after:content-['${t(
+                        `${
+                          selectResult as Exclude<typeof selectResult, 'none'>
+                        }Answer`,
+                      )}']`]: selectResult !== 'none',
+                      [clsx(
+                        `before:absolute before:content-['${fieldToAlpha(
+                          name,
+                        )}'] before:-top-4 before:right-1 before:text-4xl before:font-extrabold before:italic before:opacity-20`,
+                        'dark:before:opacity-50',
+                      )]: back,
+                      'before:text-indigo-500 after:hidden':
+                        selectResult === 'none',
                     },
-                    'dark:!bg-opacity-10',
+                    {
+                      [`pointer-events-none blur`]: blurred,
+                    },
                   )}
-                />
-              </div>
-            );
-          })}
-        </div>
+                >
+                  <AnkiField
+                    name={name}
+                    className={clsx(
+                      'rounded-xl border-2 border-transparent bg-indigo-50 px-4 py-2 transition-colors',
+                      {
+                        '!border-indigo-500 !bg-indigo-50 !text-indigo-500':
+                          !back && isSelected(name),
+                        '!border-red-500 !bg-red-50 !text-red-500':
+                          selectResult === 'wrong',
+                        '!border-green-500 !bg-green-50 !text-green-500':
+                          selectResult === 'correct',
+                        '!border-amber-500 !bg-amber-50 !text-amber-500':
+                          selectResult === 'missed',
+                        '!rounded-tl-none': selectResult !== 'none',
+                      },
+                      'dark:!bg-opacity-10',
+                    )}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        ) : null
       }
       answer={
         <>
-          <div className="text-center text-3xl font-bold italic text-opacity-50">
-            <span className="align-super">
-              {selected.length ? (
-                originOptions.map((name) => {
-                  const selectResult = getSelectResult(name);
-                  if (!['wrong', 'correct'].includes(selectResult)) {
-                    return null;
-                  }
-                  return (
-                    <span
-                      key={name}
-                      className={clsx({
-                        'text-red-400': selectResult === 'wrong',
-                        'text-green-400': selectResult === 'correct',
-                      })}
-                    >
-                      {fieldToAlpha(name)}
-                    </span>
-                  );
-                })
-              ) : (
-                <span className="text-amber-400">-</span>
-              )}
-            </span>
-            <span className="text-5xl text-gray-200">/</span>
-            <span className="align-sub text-green-400">
-              {answers.map((name) => fieldToAlpha(name))}
-            </span>
-          </div>
+          {options.length ? (
+            <div className="text-center text-3xl font-bold italic text-opacity-50">
+              <span className="align-super">
+                {selected.length ? (
+                  originOptions.map((name) => {
+                    const selectResult = getSelectResult(name);
+                    if (!['wrong', 'correct'].includes(selectResult)) {
+                      return null;
+                    }
+                    return (
+                      <span
+                        key={name}
+                        className={clsx({
+                          'text-red-400': selectResult === 'wrong',
+                          'text-green-400': selectResult === 'correct',
+                        })}
+                      >
+                        {fieldToAlpha(name)}
+                      </span>
+                    );
+                  })
+                ) : (
+                  <span className="text-amber-400">-</span>
+                )}
+              </span>
+              <span className="text-5xl text-gray-200">/</span>
+              <span className="align-sub text-green-400">
+                {answers.map((name) => fieldToAlpha(name))}
+              </span>
+            </div>
+          ) : (
+            <>
+              <AnkiField name="answer" />
+              <hr className="my-3" />
+            </>
+          )}
           {note ? (
             <AnkiField
               name="note"
