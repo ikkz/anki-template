@@ -1,5 +1,12 @@
 # anki-templates
 
+## 1.3.1
+
+### Patch Changes
+
+- 991b925: feat(mcq): behave as Basic QA template when all options are empty (所有选项都为空时表现为基础问答题模板)
+- b9714e9: fix(tf): dark mode
+
 ## 1.3.0
 
 ### Minor Changes
