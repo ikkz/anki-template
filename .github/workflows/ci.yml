@@ -16,6 +16,7 @@ jobs:
           node-version: 22.x
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm test
       - run: pnpm run build
 
       - name: Install uv

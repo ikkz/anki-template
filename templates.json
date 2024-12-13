@@ -20,8 +20,8 @@
     "name": "Basic",
     "fields": ["question", "answer", "note", "Tags"]
   },
-  "tof": {
-    "id": "tof",
+  "tf": {
+    "id": "tf",
     "name": "True or False",
     "fields": ["question", "items", "note", "Tags"]
   }

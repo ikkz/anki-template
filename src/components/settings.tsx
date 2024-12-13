@@ -105,7 +105,7 @@ if (id === 'mcq') {
   };
 } else if (id === 'basic') {
   OptionList = CommonOptions;
-} else if (id === 'tof') {
+} else if (id === 'tf') {
   OptionList = CommonOptions;
 } else {
   OptionList = () => null;

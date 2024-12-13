@@ -33,5 +33,6 @@
   "hideQuestionTypeDetail": "You need to judge by yourself how many correct options the current card has",
   "noScroll": "Don't auto scroll when flipping",
   "blurOptions": "Blur options",
-  "blurOptionsDetail": "When enabled, options will be blurred and will become clear after clicking on the option area."
+  "blurOptionsDetail": "When enabled, options will be blurred and will become clear after clicking on the option area.",
+  "yourWrongAnswer": "Your wrong answer"
 }
