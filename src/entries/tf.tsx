@@ -67,6 +67,7 @@ const Item = ({ node, answer, index }: ItemProp) => {
             ? 'bg-indigo-50'
             : 'bg-red-100'
           : 'bg-indigo-50',
+        'dark:bg-opacity-10',
       )}
     >
       <div
@@ -87,7 +88,7 @@ const Item = ({ node, answer, index }: ItemProp) => {
               },
               displayStatus === true
                 ? 'bg-green-500 text-white'
-                : 'bg-indigo-100 text-gray-600',
+                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
             )}
             onClick={() => onStatusChange(true)}
           >
@@ -103,7 +104,7 @@ const Item = ({ node, answer, index }: ItemProp) => {
               },
               displayStatus === false
                 ? 'bg-orange-500 text-white'
-                : 'bg-indigo-100 text-gray-600',
+                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
             )}
             onClick={() => onStatusChange(false)}
           >
