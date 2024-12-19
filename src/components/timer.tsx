@@ -1,22 +1,10 @@
 import { Block } from './block';
 import { Input } from './input';
-import { hideTimerAtom } from './settings';
-import { atomWithLocalStorage } from '@/utils/storage';
+import { hideTimerAtom } from '@/store/settings';
+import { atomWithScopedStorage } from '@/utils/storage';
 import useCountDown from 'ahooks/es/useCountDown';
 import useCreation from 'ahooks/es/useCreation';
-import {
-  tClose,
-  tDay,
-  tDefaultTimerTitle,
-  tHour,
-  tMinute,
-  tSecond,
-  tSetting,
-  tTargetDate,
-  tTimer,
-  tTimerSetting,
-  tTimerTitle,
-} from 'at/i18n';
+import * as t from 'at/i18n';
 import { useAtom, useAtomValue } from 'jotai';
 import { FC, useState } from 'react';
 
@@ -30,10 +18,10 @@ export const Timer: FC = () => {
     const { days, hours, minutes, seconds } = formattedRes;
 
     return [
-      [tDay, days],
-      [tHour, hours],
-      [tMinute, minutes],
-      [tSecond, seconds],
+      [t.day, days],
+      [t.hour, hours],
+      [t.minute, minutes],
+      [t.second, seconds],
     ];
   }, [formattedRes]);
 
@@ -64,10 +52,10 @@ interface TimerProps {
 
 const defaultTimerProps = {
   targetDate: '2023-12-31',
-  title: tDefaultTimerTitle,
+  title: t.defaultTimerTitle,
 };
 
-export const timerAtom = atomWithLocalStorage<TimerProps>(
+export const timerAtom = atomWithScopedStorage<TimerProps>(
   'timer',
   defaultTimerProps,
 );
@@ -84,22 +72,14 @@ export const TimerBlock = () => {
 
   return (
     <Block
-      name={
-        <div className="flex flex-row justify-between">
-          <span>{showSetting ? tTimerSetting : tTimer}</span>
-          <div
-            className="cursor-pointer font-bold text-indigo-500"
-            onClick={() => setShowSetting((p) => !p)}
-          >
-            {showSetting ? tClose : tSetting}
-          </div>
-        </div>
-      }
+      name={<span>{showSetting ? t.timerSetting : t.timer}</span>}
+      action={showSetting ? t.close : t.setting}
+      onAction={() => setShowSetting((prev) => !prev)}
     >
       {showSetting ? (
         <>
           <Input
-            title={tTimerTitle}
+            title={t.timerTitle}
             value={timer.title}
             onChange={(title) =>
               setTimer((prevTimer) => ({
@@ -111,7 +91,7 @@ export const TimerBlock = () => {
           />
           <Input
             type="date"
-            title={tTargetDate}
+            title={t.targetDate}
             value={timer.targetDate || defaultTimerProps.targetDate}
             onChange={(targetDate) =>
               setTimer((prevTimer) => ({

@@ -1,14 +1,14 @@
 import { CardShell } from '../components/card-shell';
 import { AnkiField } from '../components/field';
+import { useBack } from '../hooks/use-back';
+import { useCrossState } from '../hooks/use-cross-state';
+import { useField } from '../hooks/use-field';
 import {
   biggerTextAtom,
   blurOptionsAtom,
   hideQuestionTypeAtom,
-} from '../components/settings';
-import { useBack } from '../hooks/use-back';
-import { useCrossState } from '../hooks/use-cross-state';
-import { useField } from '../hooks/use-field';
-import { randomOptionsAtom } from '@/components/settings';
+  randomOptionsAtom,
+} from '@/store/settings';
 import '@/styles/mcq.css';
 import { flipToBack } from '@/utils/bridge';
 import { FIELD_ID } from '@/utils/const';
@@ -17,15 +17,8 @@ import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import useSelections from 'ahooks/es/useSelections';
-import {
-  tCorrectAnswer,
-  tMissedAnswer,
-  tMultipleAnswer,
-  tQuestion,
-  tSingleAnswer,
-  tWrongAnswer,
-} from 'at/i18n';
-import { locale } from 'at/locale';
+import * as t from 'at/i18n';
+import { locale } from 'at/options';
 import { fields } from 'at/options';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
@@ -33,9 +26,9 @@ import { useEffect } from 'react';
 import { doNothing, shuffle } from 'remeda';
 
 const ANSWER_TYPE_MAP = {
-  missedAnswer: tMissedAnswer,
-  correctAnswer: tCorrectAnswer,
-  wrongAnswer: tWrongAnswer,
+  missedAnswer: t.missedAnswer,
+  correctAnswer: t.correctAnswer,
+  wrongAnswer: t.wrongAnswer,
 };
 
 const fieldToAlpha = (field: string) => field.slice(field.length - 1);
@@ -124,9 +117,9 @@ export default () => {
     <CardShell
       title={
         prefHideQuestionType || !options.length ? (
-          tQuestion
+          t.question
         ) : (
-          <>{isMultipleChoice ? tMultipleAnswer : tSingleAnswer}</>
+          <>{isMultipleChoice ? t.multipleAnswer : t.singleAnswer}</>
         )
       }
       questionExtra={

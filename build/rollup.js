@@ -15,7 +15,6 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import * as R from 'remeda';
 import postcss from 'rollup-plugin-postcss';
 import { swc } from 'rollup-plugin-swc3';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -31,7 +30,7 @@ export async function rollupOptions(config) {
       .readFile(
         path.resolve(
           import.meta.dirname,
-          '../locales/',
+          '../translations/',
           `${config.locale}.json`,
         ),
         { encoding: 'utf8' },
@@ -42,13 +41,11 @@ export async function rollupOptions(config) {
       input: 'entry',
       plugins: [
         virtual({
-          'at/options': dataToEsm(templates[config.id]),
-          'at/locale': dataToEsm({
+          'at/options': dataToEsm({
+            ...templates[config.id],
             locale: config.locale,
           }),
-          'at/i18n': dataToEsm(
-            R.mapKeys(i18nMap, (key) => `t${R.capitalize(key)}`),
-          ),
+          'at/i18n': dataToEsm(i18nMap),
           entry: buildEntry(),
         }),
         replace({
@@ -122,7 +119,9 @@ export async function rollupOptions(config) {
           ].filter(Boolean),
         }),
         url(),
-        visualizer(),
+        visualizer({
+          emitFile: true,
+        }),
         html({
           fileName: `front.html`,
           template({ files }) {
@@ -163,6 +162,9 @@ ${buildFields()}
             terser({
               compress: {
                 drop_console: true,
+              },
+              format: {
+                comments: false,
               },
             }),
           false,

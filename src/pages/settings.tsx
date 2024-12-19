@@ -1,47 +1,21 @@
-import { About } from './about';
-import { Checkbox } from './checkbox';
-import { atomWithLocalStorage } from '@/utils/storage';
+import { About } from '@/components/about';
+import { Block } from '@/components/block';
+import { Checkbox } from '@/components/checkbox';
+import { Page, useNavigate } from '@/hooks/use-page';
 import {
-  tBiggerText,
-  tBlurOptions,
-  tBlurOptionsDetail,
-  tHideAbout,
-  tHideQuestionType,
-  tHideQuestionTypeDetail,
-  tHideTimer,
-  tNoScroll,
-  tRandomOption,
-  tRandomOptionDetail,
-  tSelMenu,
-  tSelMenuDetail,
-} from 'at/i18n';
+  biggerTextAtom,
+  blurOptionsAtom,
+  hideAboutAtom,
+  hideQuestionTypeAtom,
+  hideTimerAtom,
+  noScorllAtom,
+  randomOptionsAtom,
+  selectionMenuAtom,
+} from '@/store/settings';
+import * as t from 'at/i18n';
 import { id } from 'at/options';
 import { useAtom } from 'jotai';
 import { FC } from 'react';
-
-export const randomOptionsAtom = atomWithLocalStorage<boolean>(
-  'randomOptions',
-  true,
-);
-export const selectionMenuAtom = atomWithLocalStorage<boolean>(
-  'selectionMenu',
-  true,
-);
-export const hideAboutAtom = atomWithLocalStorage<boolean>('hideAbout', false);
-export const biggerTextAtom = atomWithLocalStorage<boolean>(
-  'biggerText',
-  false,
-);
-export const hideTimerAtom = atomWithLocalStorage<boolean>('hideTimer', false);
-export const hideQuestionTypeAtom = atomWithLocalStorage<boolean>(
-  'hideQuestionType',
-  false,
-);
-export const noScorllAtom = atomWithLocalStorage<boolean>('noScorll', true);
-export const blurOptionsAtom = atomWithLocalStorage<boolean>(
-  'blurOptions',
-  false,
-);
 
 const CommonOptions: FC = () => {
   const [selectionMenu, setSelectionMenu] = useAtom(selectionMenuAtom);
@@ -49,28 +23,39 @@ const CommonOptions: FC = () => {
   const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
   const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
   const [noScorll, setNoScorll] = useAtom(noScorllAtom);
+  const navigate = useNavigate();
 
   return (
     <>
       <Checkbox
-        title={tBiggerText}
-        checked={biggerText}
-        onChange={setBiggerText}
-      />
-      <Checkbox title={tNoScroll} checked={noScorll} onChange={setNoScorll} />
-      <Checkbox
-        title={tSelMenu}
-        subtitle={tSelMenuDetail}
+        title={t.selMenu}
+        subtitle={
+          <span>
+            {t.selMenuDetail}
+            <span
+              className="text-indigo-500 font-bold cursor-pointer px-1 ml-auto float-right"
+              onClick={() => navigate(Page.Tools)}
+            >
+              {t.setting}
+            </span>
+          </span>
+        }
         checked={selectionMenu}
         onChange={setSelectionMenu}
       />
       <Checkbox
-        title={tHideTimer}
+        title={t.biggerText}
+        checked={biggerText}
+        onChange={setBiggerText}
+      />
+      <Checkbox title={t.noScroll} checked={noScorll} onChange={setNoScorll} />
+      <Checkbox
+        title={t.hideTimer}
         checked={hideTimer}
         onChange={setHideTimer}
       />
       <Checkbox
-        title={tHideAbout}
+        title={t.hideAbout}
         checked={hideAbout}
         onChange={setHideAbout}
       />
@@ -91,20 +76,20 @@ if (id === 'mcq') {
     return (
       <>
         <Checkbox
-          title={tHideQuestionType}
+          title={t.hideQuestionType}
           checked={hideQuestionType}
           onChange={setHideQuestionType}
-          subtitle={tHideQuestionTypeDetail}
+          subtitle={t.hideQuestionTypeDetail}
         />
         <Checkbox
-          title={tRandomOption}
-          subtitle={tRandomOptionDetail}
+          title={t.randomOption}
+          subtitle={t.randomOptionDetail}
           checked={randomOptions}
           onChange={setRandomOptions}
         />
         <Checkbox
-          title={tBlurOptions}
-          subtitle={tBlurOptionsDetail}
+          title={t.blurOptions}
+          subtitle={t.blurOptionsDetail}
           checked={blurOptions}
           onChange={setBlurOptions}
         />
@@ -120,14 +105,19 @@ if (id === 'mcq') {
   OptionList = () => null;
 }
 
-export const Settings: FC = () => {
+export default () => {
+  const navigate = useNavigate();
   return (
-    <>
+    <Block
+      name={t.templateSetting}
+      action={t.back}
+      onAction={() => navigate(Page.Index)}
+    >
       <div className="flex flex-col gap-4">
         <OptionList />
       </div>
       <hr className="my-8" />
       <About />
-    </>
+    </Block>
   );
 };

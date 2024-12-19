@@ -1,5 +1,5 @@
 import { version } from '../../package.json';
-import { locale } from 'at/locale';
+import { locale } from 'at/options';
 import clsx from 'clsx';
 
 export const EnAbout = () => (

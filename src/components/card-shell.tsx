@@ -2,22 +2,17 @@ import { About } from './about';
 import { Block } from './block';
 import { Dot } from './dot';
 import { AnkiField } from './field';
-import { SelectionMenu } from './selection-menu';
-import {
-  Settings,
-  biggerTextAtom,
-  hideAboutAtom,
-  noScorllAtom,
-  selectionMenuAtom,
-} from './settings';
 import { TimerBlock } from './timer';
 import { useBack } from '@/hooks/use-back';
 import { useField } from '@/hooks/use-field';
-import { tAbout, tAnswer, tBack, tTemplateSetting } from 'at/i18n';
-import { locale } from 'at/locale';
+import { Page, PageContext } from '@/hooks/use-page';
+import { DEFAULT_PAGES } from '@/pages';
+import { biggerTextAtom, hideAboutAtom, noScorllAtom } from '@/store/settings';
+import * as t from 'at/i18n';
+import { locale } from 'at/options';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
-import { FC, ReactNode, useRef, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 interface Props {
   header?: ReactNode;
@@ -32,18 +27,15 @@ export const CardShell: FC<Props> = ({
   questionExtra,
   answer,
 }) => {
-  const prefSelectionMenu = useAtomValue(selectionMenuAtom);
   const prefHideAbout = useAtomValue(hideAboutAtom);
   const prefBiggerText = useAtomValue(biggerTextAtom);
   const prefNoScroll = useAtomValue(noScorllAtom);
-
   const [back] = useBack();
-
-  const questionRef = useRef<HTMLDivElement>(null);
 
   const tags = useField('Tags')?.split(' ');
 
-  const [showSettings, setShowSettings] = useState(false);
+  const [page, setPage] = useState(Page.Index);
+  const PageComponent = DEFAULT_PAGES[page];
 
   return (
     <div
@@ -54,28 +46,11 @@ export const CardShell: FC<Props> = ({
       )}
     >
       {header}
-      {showSettings ? (
-        <Block
-          name={
-            <div className="flex flex-row justify-between">
-              <span>{tTemplateSetting}</span>
-              <div
-                className="cursor-pointer font-bold text-indigo-500"
-                onClick={() => setShowSettings(false)}
-              >
-                {tBack}
-              </div>
-            </div>
-          }
-        >
-          <Settings />
-        </Block>
-      ) : null}
-      <div className={showSettings ? 'hidden' : 'block'}>
-        <Block
-          ref={questionRef}
-          name={
-            <div className="flex flex-row justify-between">
+      <PageContext.Provider value={{ page, setPage }}>
+        {PageComponent ? <PageComponent /> : null}
+        <div className={page !== Page.Index ? 'hidden' : 'block'}>
+          <Block
+            name={
               <span>
                 {title}
                 {tags?.length ? (
@@ -85,35 +60,35 @@ export const CardShell: FC<Props> = ({
                   </>
                 ) : null}
               </span>
-              <div
-                className="cursor-pointer font-bold text-indigo-500"
-                onClick={() => setShowSettings(true)}
-              >
-                {tTemplateSetting}
-              </div>
-            </div>
-          }
-          className="relative"
-        >
-          {prefSelectionMenu ? <SelectionMenu target={questionRef} /> : null}
-          <AnkiField
-            name="question"
-            className={clsx('font-bold', prefBiggerText ? 'prose-xl' : '')}
-          />
-          {questionExtra}
-        </Block>
-        {back && answer ? (
-          <Block name={tAnswer} id={prefNoScroll ? undefined : 'answer'}>
-            {answer}
+            }
+            action={t.templateSetting}
+            onAction={() => setPage(Page.Settings)}
+            className="relative"
+            enableTools
+          >
+            <AnkiField
+              name="question"
+              className={clsx('font-bold', prefBiggerText ? 'prose-xl' : '')}
+            />
+            {questionExtra}
           </Block>
-        ) : null}
-        <TimerBlock />
-        {prefHideAbout ? null : (
-          <Block name={tAbout}>
-            <About />
-          </Block>
-        )}
-      </div>
+          {back && answer ? (
+            <Block
+              name={t.answer}
+              id={prefNoScroll ? undefined : 'answer'}
+              enableTools
+            >
+              {answer}
+            </Block>
+          ) : null}
+          <TimerBlock />
+          {prefHideAbout ? null : (
+            <Block name={t.about}>
+              <About />
+            </Block>
+          )}
+        </div>
+      </PageContext.Provider>
     </div>
   );
 };

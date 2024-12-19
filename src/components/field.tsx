@@ -1,7 +1,7 @@
-import { FIELD_ID } from '@/utils/const';
+import { FIELD_ID, FIELDS_CONTAINER_ID } from '@/utils/const';
 import useCreation from 'ahooks/es/useCreation';
 import clsx from 'clsx';
-import { FC, memo, useCallback, useId } from 'react';
+import { FC, memo, useCallback, useEffect, useId } from 'react';
 
 export const AnkiField: FC<{
   name: string;
@@ -22,14 +22,14 @@ export const AnkiField: FC<{
     [fieldNode],
   );
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (fieldNode) {
-  //       fieldNode.remove();
-  //       document.getElementById(FIELDS_CONTAINER_ID)?.appendChild(fieldNode);
-  //     }
-  //   };
-  // }, [fieldNode]);
+  useEffect(() => {
+    return () => {
+      if (fieldNode) {
+        fieldNode.remove();
+        document.getElementById(FIELDS_CONTAINER_ID)?.appendChild(fieldNode);
+      }
+    };
+  }, [fieldNode]);
 
   const styleId = useId();
 
@@ -39,6 +39,7 @@ export const AnkiField: FC<{
       id={`anki-field-${name}`}
       className={clsx(
         'anki-field',
+        'first:!mt-0 last:!mb-0',
         'overflow-x-auto',
         'prose prose-neutral dark:prose-invert',
         styleId,

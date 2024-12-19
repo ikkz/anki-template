@@ -2,7 +2,7 @@ import { CardShell } from '../components/card-shell';
 import { AnkiField } from '@/components/field';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
-import { tQuestion } from 'at/i18n';
+import * as t from 'at/i18n';
 import clsx from 'clsx';
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <CardShell
-      title={tQuestion}
+      title={t.question}
       answer={
         hasAnswer || hasNote ? (
           <>

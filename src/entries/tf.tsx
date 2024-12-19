@@ -7,7 +7,7 @@ import { extractTfItems } from '@/utils/extract-tf-items';
 import { isFieldEmpty } from '@/utils/field';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
-import { tQuestion, tYourWrongAnswer } from 'at/i18n';
+import * as t from 'at/i18n';
 import clsx from 'clsx';
 import { CheckCircle, XCircle, Triangle } from 'lucide-react';
 import { useCallback } from 'react';
@@ -134,13 +134,13 @@ export default () => {
 
   return (
     <CardShell
-      title={tQuestion}
+      title={t.question}
       questionExtra={
         <>
           {items}
           {back ? (
             <div className="flex items-center justify-end space-x-1 mt-2 text-xs text-gray-500">
-              {tYourWrongAnswer}
+              {t.yourWrongAnswer}
               <Triangle
                 size={12}
                 fill="#f87171"
