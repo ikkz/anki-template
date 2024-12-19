@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.3.2
+
+### Patch Changes
+
+- 8edbb60: fix(all): remove max-width of prose (移除 prose 的 max-width)
+
 ## 1.3.1
 
 ### Patch Changes
