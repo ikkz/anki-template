@@ -1,6 +1,5 @@
 import { About } from './about';
 import { Block } from './block';
-import { CardContainer } from './card-container';
 import { Dot } from './dot';
 import { AnkiField } from './field';
 import { SelectionMenu } from './selection-menu';
@@ -47,9 +46,10 @@ export const CardShell: FC<Props> = ({
   const [showSettings, setShowSettings] = useState(false);
 
   return (
-    <CardContainer
+    <div
       className={clsx(
-        'tappable m-auto w-full max-w-xl px-5 py-7 font-sans text-base lg:max-w-3xl',
+        'tappable m-auto px-5 py-7 font-sans text-base',
+        'w-full max-w-xl lg:max-w-3xl',
         `locale-${locale}`,
       )}
     >
@@ -114,6 +114,6 @@ export const CardShell: FC<Props> = ({
           </Block>
         )}
       </div>
-    </CardContainer>
+    </div>
   );
 };

@@ -18,13 +18,12 @@ import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import useSelections from 'ahooks/es/useSelections';
-import useTimeout from 'ahooks/es/useTimeout';
 import { locale } from 'at/locale';
 import { fields } from 'at/options';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
-import { shuffle } from 'remeda';
+import { doNothing, shuffle } from 'remeda';
 
 const fieldToAlpha = (field: string) => field.slice(field.length - 1);
 
@@ -90,11 +89,15 @@ export default () => {
   });
 
   const [parent] = useAutoAnimate();
-  useTimeout(() => {
+  useEffect(() => {
     if (back) {
-      setOptions(originOptions);
+      const timeout = setTimeout(() => {
+        setOptions(originOptions);
+      }, 600);
+      return () => clearTimeout(timeout);
     }
-  }, 600);
+    return doNothing;
+  }, [back]);
 
   const note = useField('note');
   const isMultipleChoice = answers.length > 1;

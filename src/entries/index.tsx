@@ -4,14 +4,17 @@ import { APP_CONTAINER_ID } from '@/utils/const';
 import { Provider } from 'jotai';
 import { render } from 'preact';
 import { ComponentType } from 'react';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
 let container: HTMLElement | null = document.getElementById(APP_CONTAINER_ID);
 
 export const setup = (App: ComponentType) => {
   render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <ErrorBoundary fallbackRender={fallbackRender}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ErrorBoundary>,
     container!,
   );
   const id = setInterval(() => {
@@ -22,3 +25,19 @@ export const setup = (App: ComponentType) => {
     }
   }, 500);
 };
+function fallbackRender({ error }: FallbackProps) {
+  return (
+    <div role="alert" className="p-10">
+      <p>Something went wrong.</p>
+      <p>
+        Please open an issue at{' '}
+        <a href="https://github.com/ikkz/anki-template/issues">
+          https://github.com/ikkz/anki-template/issues
+        </a>{' '}
+        with screenshot
+      </p>
+      <pre style={{ color: 'red' }}>{error?.message}</pre>
+      <pre style={{ color: 'red' }}>{error?.stack}</pre>
+    </div>
+  );
+}
