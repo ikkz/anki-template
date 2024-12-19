@@ -49,7 +49,7 @@ export const CardShell: FC<Props> = ({
   return (
     <CardContainer
       className={clsx(
-        'tappable m-auto w-full max-w-xl px-5 py-7 font-sans text-base lg:max-w-2xl',
+        'tappable m-auto w-full max-w-xl px-5 py-7 font-sans text-base lg:max-w-3xl',
         `locale-${locale}`,
       )}
     >

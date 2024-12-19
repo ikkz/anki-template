@@ -26,3 +26,7 @@ body {
 .anki-field::-webkit-scrollbar {
   scrollbar-width: none;
 }
+
+.prose {
+  @apply !max-w-none;
+}
