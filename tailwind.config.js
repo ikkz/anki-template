@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import en from './src/locales/en.json';
-import zh from './src/locales/zh.json';
+import en from './locales/en.json';
+import zh from './locales/zh.json';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

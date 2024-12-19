@@ -1,5 +1,6 @@
 import devServer from './plugins/dev-server/index.js';
 import generateTemplate from './plugins/generate-template.js';
+import i18n from './plugins/i18n.js';
 import { readJson, ensureValue } from './utils.js';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
@@ -13,7 +14,6 @@ import virtual from '@rollup/plugin-virtual';
 import { dataToEsm } from '@rollup/pluginutils';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
-import fs from 'node:fs/promises';
 import { resolve } from 'node:path';
 import postcss from 'rollup-plugin-postcss';
 import { swc } from 'rollup-plugin-swc3';
@@ -30,14 +30,10 @@ export async function rollupOptions(config) {
     return {
       input: 'entry',
       plugins: [
+        i18n(config.locale),
         virtual({
           'at/options': dataToEsm(templates[config.id]),
           'at/locale': dataToEsm({
-            map: JSON.parse(
-              await fs.readFile(`./src/locales/${config.locale}.json`, {
-                encoding: 'utf-8',
-              }),
-            ),
             locale: config.locale,
           }),
           entry: buildEntry(),

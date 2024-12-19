@@ -1,7 +1,18 @@
 import { About } from './about';
 import { Checkbox } from './checkbox';
-import { t } from '@/utils/locale';
 import { atomWithLocalStorage } from '@/utils/storage';
+import tBiggerText from 'at/i18n/biggerText';
+import tBlurOptions from 'at/i18n/blurOptions';
+import tBlurOptionsDetail from 'at/i18n/blurOptionsDetail';
+import tHideAbout from 'at/i18n/hideAbout';
+import tHideQuestionType from 'at/i18n/hideQuestionType';
+import tHideQuestionTypeDetail from 'at/i18n/hideQuestionTypeDetail';
+import tHideTimer from 'at/i18n/hideTimer';
+import tNoScroll from 'at/i18n/noScroll';
+import tRandomOption from 'at/i18n/randomOption';
+import tRandomOptionDetail from 'at/i18n/randomOptionDetail';
+import tSelMenu from 'at/i18n/selMenu';
+import tSelMenuDetail from 'at/i18n/selMenuDetail';
 import { id } from 'at/options';
 import { useAtom } from 'jotai';
 import { FC } from 'react';
@@ -40,28 +51,24 @@ const CommonOptions: FC = () => {
   return (
     <>
       <Checkbox
-        title={t('biggerText')}
+        title={tBiggerText}
         checked={biggerText}
         onChange={setBiggerText}
       />
+      <Checkbox title={tNoScroll} checked={noScorll} onChange={setNoScorll} />
       <Checkbox
-        title={t('noScroll')}
-        checked={noScorll}
-        onChange={setNoScorll}
-      />
-      <Checkbox
-        title={t('selMenu')}
-        subtitle={t('selMenuDetail')}
+        title={tSelMenu}
+        subtitle={tSelMenuDetail}
         checked={selectionMenu}
         onChange={setSelectionMenu}
       />
       <Checkbox
-        title={t('hideTimer')}
+        title={tHideTimer}
         checked={hideTimer}
         onChange={setHideTimer}
       />
       <Checkbox
-        title={t('hideAbout')}
+        title={tHideAbout}
         checked={hideAbout}
         onChange={setHideAbout}
       />
@@ -82,20 +89,20 @@ if (id === 'mcq') {
     return (
       <>
         <Checkbox
-          title={t('hideQuestionType')}
+          title={tHideQuestionType}
           checked={hideQuestionType}
           onChange={setHideQuestionType}
-          subtitle={t('hideQuestionTypeDetail')}
+          subtitle={tHideQuestionTypeDetail}
         />
         <Checkbox
-          title={t('randomOption')}
-          subtitle={t('randomOptionDetail')}
+          title={tRandomOption}
+          subtitle={tRandomOptionDetail}
           checked={randomOptions}
           onChange={setRandomOptions}
         />
         <Checkbox
-          title={t('blurOptions')}
-          subtitle={t('blurOptionsDetail')}
+          title={tBlurOptions}
+          subtitle={tBlurOptionsDetail}
           checked={blurOptions}
           onChange={setBlurOptions}
         />

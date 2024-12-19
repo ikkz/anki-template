@@ -5,9 +5,10 @@ import { useCrossState } from '@/hooks/use-cross-state';
 import { FIELD_ID } from '@/utils/const';
 import { extractTfItems } from '@/utils/extract-tf-items';
 import { isFieldEmpty } from '@/utils/field';
-import { t } from '@/utils/locale';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
+import tQuestion from 'at/i18n/question';
+import tYourWrongAnswer from 'at/i18n/yourWrongAnswer';
 import clsx from 'clsx';
 import { CheckCircle, XCircle, Triangle } from 'lucide-react';
 import { useCallback } from 'react';
@@ -134,13 +135,13 @@ export default () => {
 
   return (
     <CardShell
-      title={t('question')}
+      title={tQuestion}
       questionExtra={
         <>
           {items}
           {back ? (
             <div className="flex items-center justify-end space-x-1 mt-2 text-xs text-gray-500">
-              {t('yourWrongAnswer')}
+              {tYourWrongAnswer}
               <Triangle
                 size={12}
                 fill="#f87171"

@@ -13,7 +13,10 @@ import {
 import { TimerBlock } from './timer';
 import { useBack } from '@/hooks/use-back';
 import { useField } from '@/hooks/use-field';
-import { t } from '@/utils/locale';
+import tAbout from 'at/i18n/about';
+import tAnswer from 'at/i18n/answer';
+import tBack from 'at/i18n/back';
+import tTemplateSetting from 'at/i18n/templateSetting';
 import { locale } from 'at/locale';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
@@ -58,12 +61,12 @@ export const CardShell: FC<Props> = ({
         <Block
           name={
             <div className="flex flex-row justify-between">
-              <span>{t('templateSetting')}</span>
+              <span>{tTemplateSetting}</span>
               <div
                 className="cursor-pointer font-bold text-indigo-500"
                 onClick={() => setShowSettings(false)}
               >
-                {t('back')}
+                {tBack}
               </div>
             </div>
           }
@@ -89,7 +92,7 @@ export const CardShell: FC<Props> = ({
                 className="cursor-pointer font-bold text-indigo-500"
                 onClick={() => setShowSettings(true)}
               >
-                {t('templateSetting')}
+                {tTemplateSetting}
               </div>
             </div>
           }
@@ -103,13 +106,13 @@ export const CardShell: FC<Props> = ({
           {questionExtra}
         </Block>
         {back && answer ? (
-          <Block name={t('answer')} id={prefNoScroll ? undefined : 'answer'}>
+          <Block name={tAnswer} id={prefNoScroll ? undefined : 'answer'}>
             {answer}
           </Block>
         ) : null}
         <TimerBlock />
         {prefHideAbout ? null : (
-          <Block name={t('about')}>
+          <Block name={tAbout}>
             <About />
           </Block>
         )}

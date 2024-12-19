@@ -8,7 +8,6 @@ import {
 import { useBack } from '../hooks/use-back';
 import { useCrossState } from '../hooks/use-cross-state';
 import { useField } from '../hooks/use-field';
-import { t } from '../utils/locale';
 import { randomOptionsAtom } from '@/components/settings';
 import '@/styles/mcq.css';
 import { flipToBack } from '@/utils/bridge';
@@ -18,12 +17,24 @@ import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import useSelections from 'ahooks/es/useSelections';
+import tCorrectAnswer from 'at/i18n/correctAnswer';
+import tMissedAnswer from 'at/i18n/missedAnswer';
+import tMultipleAnswer from 'at/i18n/multipleAnswer';
+import tQuestion from 'at/i18n/question';
+import tSingleAnswer from 'at/i18n/singleAnswer';
+import tWrongAnswer from 'at/i18n/wrongAnswer';
 import { locale } from 'at/locale';
 import { fields } from 'at/options';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { doNothing, shuffle } from 'remeda';
+
+const ANSWER_TYPE_MAP = {
+  missedAnswer: tMissedAnswer,
+  correctAnswer: tCorrectAnswer,
+  wrongAnswer: tWrongAnswer,
+};
 
 const fieldToAlpha = (field: string) => field.slice(field.length - 1);
 
@@ -111,9 +122,9 @@ export default () => {
     <CardShell
       title={
         prefHideQuestionType || !options.length ? (
-          t('question')
+          tQuestion
         ) : (
-          <>{isMultipleChoice ? t('multipleAnswer') : t('singleAnswer')}</>
+          <>{isMultipleChoice ? tMultipleAnswer : tSingleAnswer}</>
         )
       }
       questionExtra={
@@ -143,11 +154,13 @@ export default () => {
                         selectResult === 'correct',
                       'before:text-amber-500 after:bg-amber-500':
                         selectResult === 'missed',
-                      [`after:content-['${t(
-                        `${
-                          selectResult as Exclude<typeof selectResult, 'none'>
-                        }Answer`,
-                      )}']`]: selectResult !== 'none',
+                      [`after:content-['${
+                        ANSWER_TYPE_MAP[
+                          `${
+                            selectResult as Exclude<typeof selectResult, 'none'>
+                          }Answer`
+                        ]
+                      }']`]: selectResult !== 'none',
                       [clsx(
                         `before:absolute before:content-['${fieldToAlpha(
                           name,
