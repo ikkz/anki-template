@@ -1,7 +1,7 @@
 import { Block } from './block';
 import { Input } from './input';
-import { hideTimerAtom } from './settings';
-import { atomWithLocalStorage } from '@/utils/storage';
+import { hideTimerAtom } from '@/store/settings';
+import { atomWithScopedStorage } from '@/utils/storage';
 import useCountDown from 'ahooks/es/useCountDown';
 import useCreation from 'ahooks/es/useCreation';
 import {
@@ -67,7 +67,7 @@ const defaultTimerProps = {
   title: tDefaultTimerTitle,
 };
 
-export const timerAtom = atomWithLocalStorage<TimerProps>(
+export const timerAtom = atomWithScopedStorage<TimerProps>(
   'timer',
   defaultTimerProps,
 );
@@ -84,17 +84,9 @@ export const TimerBlock = () => {
 
   return (
     <Block
-      name={
-        <div className="flex flex-row justify-between">
-          <span>{showSetting ? tTimerSetting : tTimer}</span>
-          <div
-            className="cursor-pointer font-bold text-indigo-500"
-            onClick={() => setShowSetting((p) => !p)}
-          >
-            {showSetting ? tClose : tSetting}
-          </div>
-        </div>
-      }
+      name={<span>{showSetting ? tTimerSetting : tTimer}</span>}
+      action={showSetting ? tClose : tSetting}
+      onAction={() => setShowSetting(false)}
     >
       {showSetting ? (
         <>

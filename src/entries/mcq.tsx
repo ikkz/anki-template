@@ -1,14 +1,14 @@
 import { CardShell } from '../components/card-shell';
 import { AnkiField } from '../components/field';
+import { useBack } from '../hooks/use-back';
+import { useCrossState } from '../hooks/use-cross-state';
+import { useField } from '../hooks/use-field';
 import {
   biggerTextAtom,
   blurOptionsAtom,
   hideQuestionTypeAtom,
-} from '../components/settings';
-import { useBack } from '../hooks/use-back';
-import { useCrossState } from '../hooks/use-cross-state';
-import { useField } from '../hooks/use-field';
-import { randomOptionsAtom } from '@/components/settings';
+  randomOptionsAtom,
+} from '@/store/settings';
 import '@/styles/mcq.css';
 import { flipToBack } from '@/utils/bridge';
 import { FIELD_ID } from '@/utils/const';
