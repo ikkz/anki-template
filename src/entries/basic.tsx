@@ -2,7 +2,7 @@ import { CardShell } from '../components/card-shell';
 import { AnkiField } from '@/components/field';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
-import tQuestion from 'at/i18n/question';
+import { tQuestion } from 'at/i18n';
 import clsx from 'clsx';
 
 export default () => {

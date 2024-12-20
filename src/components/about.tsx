@@ -1,4 +1,4 @@
-import packageJson from '../../package.json';
+import { version } from '../../package.json';
 import { locale } from 'at/locale';
 import clsx from 'clsx';
 
@@ -21,7 +21,7 @@ export const EnAbout = () => (
     </p>
 
     <blockquote>
-      Current version: {packageJson.version},{' '}
+      Current version: {version},{' '}
       <a href="https://github.com/ikkz/anki-template/releases">check</a> update
     </blockquote>
   </div>
@@ -44,7 +44,7 @@ export const ZhAbout = () => (
     </p>
 
     <blockquote>
-      当前版本： {packageJson.version}，{' '}
+      当前版本： {version}，{' '}
       <a href="https://github.com/ikkz/anki-template/releases">检查</a>更新
     </blockquote>
   </div>

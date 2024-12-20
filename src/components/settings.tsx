@@ -1,18 +1,20 @@
 import { About } from './about';
 import { Checkbox } from './checkbox';
 import { atomWithLocalStorage } from '@/utils/storage';
-import tBiggerText from 'at/i18n/biggerText';
-import tBlurOptions from 'at/i18n/blurOptions';
-import tBlurOptionsDetail from 'at/i18n/blurOptionsDetail';
-import tHideAbout from 'at/i18n/hideAbout';
-import tHideQuestionType from 'at/i18n/hideQuestionType';
-import tHideQuestionTypeDetail from 'at/i18n/hideQuestionTypeDetail';
-import tHideTimer from 'at/i18n/hideTimer';
-import tNoScroll from 'at/i18n/noScroll';
-import tRandomOption from 'at/i18n/randomOption';
-import tRandomOptionDetail from 'at/i18n/randomOptionDetail';
-import tSelMenu from 'at/i18n/selMenu';
-import tSelMenuDetail from 'at/i18n/selMenuDetail';
+import {
+  tBiggerText,
+  tBlurOptions,
+  tBlurOptionsDetail,
+  tHideAbout,
+  tHideQuestionType,
+  tHideQuestionTypeDetail,
+  tHideTimer,
+  tNoScroll,
+  tRandomOption,
+  tRandomOptionDetail,
+  tSelMenu,
+  tSelMenuDetail,
+} from 'at/i18n';
 import { id } from 'at/options';
 import { useAtom } from 'jotai';
 import { FC } from 'react';

@@ -13,10 +13,7 @@ import {
 import { TimerBlock } from './timer';
 import { useBack } from '@/hooks/use-back';
 import { useField } from '@/hooks/use-field';
-import tAbout from 'at/i18n/about';
-import tAnswer from 'at/i18n/answer';
-import tBack from 'at/i18n/back';
-import tTemplateSetting from 'at/i18n/templateSetting';
+import { tAbout, tAnswer, tBack, tTemplateSetting } from 'at/i18n';
 import { locale } from 'at/locale';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';

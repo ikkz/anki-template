@@ -4,17 +4,19 @@ import { hideTimerAtom } from './settings';
 import { atomWithLocalStorage } from '@/utils/storage';
 import useCountDown from 'ahooks/es/useCountDown';
 import useCreation from 'ahooks/es/useCreation';
-import tClose from 'at/i18n/close';
-import tDay from 'at/i18n/day';
-import tDefaultTimerTitle from 'at/i18n/defaultTimerTitle';
-import tHour from 'at/i18n/hour';
-import tMinute from 'at/i18n/minute';
-import tSecond from 'at/i18n/second';
-import tSetting from 'at/i18n/setting';
-import tTargetDate from 'at/i18n/targetDate';
-import tTimer from 'at/i18n/timer';
-import tTimerSetting from 'at/i18n/timerSetting';
-import tTimerTitle from 'at/i18n/timerTitle';
+import {
+  tClose,
+  tDay,
+  tDefaultTimerTitle,
+  tHour,
+  tMinute,
+  tSecond,
+  tSetting,
+  tTargetDate,
+  tTimer,
+  tTimerSetting,
+  tTimerTitle,
+} from 'at/i18n';
 import { useAtom, useAtomValue } from 'jotai';
 import { FC, useState } from 'react';
 

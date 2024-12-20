@@ -17,12 +17,14 @@ import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import useSelections from 'ahooks/es/useSelections';
-import tCorrectAnswer from 'at/i18n/correctAnswer';
-import tMissedAnswer from 'at/i18n/missedAnswer';
-import tMultipleAnswer from 'at/i18n/multipleAnswer';
-import tQuestion from 'at/i18n/question';
-import tSingleAnswer from 'at/i18n/singleAnswer';
-import tWrongAnswer from 'at/i18n/wrongAnswer';
+import {
+  tCorrectAnswer,
+  tMissedAnswer,
+  tMultipleAnswer,
+  tQuestion,
+  tSingleAnswer,
+  tWrongAnswer,
+} from 'at/i18n';
 import { locale } from 'at/locale';
 import { fields } from 'at/options';
 import clsx from 'clsx';

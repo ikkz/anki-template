@@ -1,6 +1,5 @@
 import devServer from './plugins/dev-server/index.js';
 import generateTemplate from './plugins/generate-template.js';
-import i18n from './plugins/i18n.js';
 import { readJson, ensureValue } from './utils.js';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
@@ -14,7 +13,9 @@ import virtual from '@rollup/plugin-virtual';
 import { dataToEsm } from '@rollup/pluginutils';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
-import { resolve } from 'node:path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import * as R from 'remeda';
 import postcss from 'rollup-plugin-postcss';
 import { swc } from 'rollup-plugin-swc3';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -26,16 +27,28 @@ const release = await readJson('./release.json');
 
 export async function rollupOptions(config) {
   async function buildInputOptions() {
+    const i18nMap = await fs
+      .readFile(
+        path.resolve(
+          import.meta.dirname,
+          '../locales/',
+          `${config.locale}.json`,
+        ),
+        { encoding: 'utf8' },
+      )
+      .then(JSON.parse);
     /** @type {import('rollup').InputOptions} */
     return {
       input: 'entry',
       plugins: [
-        i18n(config.locale),
         virtual({
           'at/options': dataToEsm(templates[config.id]),
           'at/locale': dataToEsm({
             locale: config.locale,
           }),
+          'at/i18n': dataToEsm(
+            R.mapKeys(i18nMap, (key) => `t${R.capitalize(key)}`),
+          ),
           entry: buildEntry(),
         }),
         replace({
@@ -49,12 +62,15 @@ export async function rollupOptions(config) {
           entries: [
             {
               find: 'lodash/isPlainObject',
-              replacement: resolve(
+              replacement: path.resolve(
                 import.meta.dirname,
                 '../src/polyfills/is-plain-object',
               ),
             },
-            { find: '@', replacement: resolve(import.meta.dirname, '../src') },
+            {
+              find: '@',
+              replacement: path.resolve(import.meta.dirname, '../src'),
+            },
             { find: 'react', replacement: 'preact/compat' },
             { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
             { find: 'react-dom', replacement: 'preact/compat' },

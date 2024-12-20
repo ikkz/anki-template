@@ -7,10 +7,7 @@ declare module 'at/locale' {
   export const locale: 'en' | 'zh';
 }
 
-declare module 'at/i18n/*' {
-  const value: string;
-  export default value;
-}
+declare module 'at/i18n';
 
 declare module '*.png' {
   const content: string;
