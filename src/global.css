@@ -11,14 +11,6 @@ body {
   @apply bg-neutral-100 text-black dark:bg-neutral-800 dark:text-white;
 }
 
-.anki-field p:first-child {
-  margin-top: 0 !important;
-}
-
-.anki-field p:last-child {
-  margin-bottom: 0 !important;
-}
-
 .anki-field {
   scrollbar-width: none;
 }

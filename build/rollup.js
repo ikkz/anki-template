@@ -164,6 +164,9 @@ ${buildFields()}
               compress: {
                 drop_console: true,
               },
+              format: {
+                comments: 'all',
+              },
             }),
           false,
         ),

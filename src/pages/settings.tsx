@@ -1,6 +1,17 @@
-import { About } from './about';
-import { Checkbox } from './checkbox';
-import { atomWithLocalStorage } from '@/utils/storage';
+import { About } from '@/components/about';
+import { Block } from '@/components/block';
+import { Checkbox } from '@/components/checkbox';
+import { Page, useNavigate } from '@/hooks/use-page';
+import {
+  biggerTextAtom,
+  blurOptionsAtom,
+  hideAboutAtom,
+  hideQuestionTypeAtom,
+  hideTimerAtom,
+  noScorllAtom,
+  randomOptionsAtom,
+  selectionMenuAtom,
+} from '@/store/settings';
 import {
   tBiggerText,
   tBlurOptions,
@@ -14,34 +25,13 @@ import {
   tRandomOptionDetail,
   tSelMenu,
   tSelMenuDetail,
+  tTemplateSetting,
+  tBack,
+  tSetting,
 } from 'at/i18n';
 import { id } from 'at/options';
 import { useAtom } from 'jotai';
 import { FC } from 'react';
-
-export const randomOptionsAtom = atomWithLocalStorage<boolean>(
-  'randomOptions',
-  true,
-);
-export const selectionMenuAtom = atomWithLocalStorage<boolean>(
-  'selectionMenu',
-  true,
-);
-export const hideAboutAtom = atomWithLocalStorage<boolean>('hideAbout', false);
-export const biggerTextAtom = atomWithLocalStorage<boolean>(
-  'biggerText',
-  false,
-);
-export const hideTimerAtom = atomWithLocalStorage<boolean>('hideTimer', false);
-export const hideQuestionTypeAtom = atomWithLocalStorage<boolean>(
-  'hideQuestionType',
-  false,
-);
-export const noScorllAtom = atomWithLocalStorage<boolean>('noScorll', true);
-export const blurOptionsAtom = atomWithLocalStorage<boolean>(
-  'blurOptions',
-  false,
-);
 
 const CommonOptions: FC = () => {
   const [selectionMenu, setSelectionMenu] = useAtom(selectionMenuAtom);
@@ -49,21 +39,32 @@ const CommonOptions: FC = () => {
   const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
   const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
   const [noScorll, setNoScorll] = useAtom(noScorllAtom);
+  const navigate = useNavigate();
 
   return (
     <>
+      <Checkbox
+        title={tSelMenu}
+        subtitle={
+          <span>
+            {tSelMenuDetail}
+            <span
+              className="text-indigo-500 font-bold cursor-pointer px-1 ml-auto float-right"
+              onClick={() => navigate(Page.Tools)}
+            >
+              {tSetting}
+            </span>
+          </span>
+        }
+        checked={selectionMenu}
+        onChange={setSelectionMenu}
+      />
       <Checkbox
         title={tBiggerText}
         checked={biggerText}
         onChange={setBiggerText}
       />
       <Checkbox title={tNoScroll} checked={noScorll} onChange={setNoScorll} />
-      <Checkbox
-        title={tSelMenu}
-        subtitle={tSelMenuDetail}
-        checked={selectionMenu}
-        onChange={setSelectionMenu}
-      />
       <Checkbox
         title={tHideTimer}
         checked={hideTimer}
@@ -120,14 +121,19 @@ if (id === 'mcq') {
   OptionList = () => null;
 }
 
-export const Settings: FC = () => {
+export default () => {
+  const navigate = useNavigate();
   return (
-    <>
+    <Block
+      name={tTemplateSetting}
+      action={tBack}
+      onAction={() => navigate(Page.Index)}
+    >
       <div className="flex flex-col gap-4">
         <OptionList />
       </div>
       <hr className="my-8" />
       <About />
-    </>
+    </Block>
   );
 };

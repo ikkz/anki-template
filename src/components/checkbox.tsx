@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC, useId } from 'react';
+import { FC, ReactNode, useId } from 'react';
 import { doNothing } from 'remeda';
 
 export const Checkbox: FC<{
@@ -7,7 +7,7 @@ export const Checkbox: FC<{
   checked?: boolean;
   className?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   disabled?: boolean;
 }> = ({ onChange, className, checked, title, subtitle, disabled }) => {
   const id = useId();
