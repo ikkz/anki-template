@@ -119,9 +119,7 @@ export async function rollupOptions(config) {
           ].filter(Boolean),
         }),
         url(),
-        visualizer({
-          emitFile: true,
-        }),
+        visualizer(),
         html({
           fileName: `front.html`,
           template({ files }) {

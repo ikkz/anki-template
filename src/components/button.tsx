@@ -13,14 +13,13 @@ export const Button: FC<PropsWithChildren & ButtonProps> = ({
   children,
   className,
 }) => (
-  <button
-    type="button"
-    className={clsx('font-bold', className, {
+  <span
+    className={clsx('cursor-pointer font-bold', className, {
       'text-indigo-500': status === 'normal',
       'text-red-500': status === 'danger',
     })}
     onClick={onClick}
   >
     {children}
-  </button>
+  </span>
 );

@@ -61,7 +61,7 @@ export default () => {
             {tools.map((tool) => (
               <div key={tool.id} className="flex items-center justify-between">
                 <div>{tool.name}</div>
-                <div className="space-x-2">
+                <div className="space-x-2 flex items-center">
                   <Button onClick={() => setEdit(tool)}>
                     <Pencil size={17} className="m-1" />
                   </Button>

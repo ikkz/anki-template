@@ -1,5 +1,6 @@
 import { About } from '@/components/about';
 import { Block } from '@/components/block';
+import { Button } from '@/components/button';
 import { Checkbox } from '@/components/checkbox';
 import { Page, useNavigate } from '@/hooks/use-page';
 import {
@@ -32,12 +33,12 @@ const CommonOptions: FC = () => {
         subtitle={
           <span>
             {t.selMenuDetail}
-            <span
-              className="text-indigo-500 font-bold cursor-pointer px-1 ml-auto float-right"
+            <Button
+              className="px-1 ml-auto float-right"
               onClick={() => navigate(Page.Tools)}
             >
               {t.setting}
-            </span>
+            </Button>
           </span>
         }
         checked={selectionMenu}
