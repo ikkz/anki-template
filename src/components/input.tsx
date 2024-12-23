@@ -12,7 +12,7 @@ export const Input: FC<{
     <div className={className}>
       <div
         className={clsx(
-          'block text-sm font-medium leading-6 text-gray-900',
+          'block text-sm font-medium leading-6 text-neutral-900',
           'dark:text-white',
         )}
       >
@@ -21,8 +21,8 @@ export const Input: FC<{
       <input
         type={type}
         className={clsx(
-          'block w-full rounded-md border border-gray-300 px-3 py-2 text-center text-gray-900 shadow-sm outline-none placeholder:text-gray-400',
-          'dark:border-gray-500 dark:bg-gray-800 dark:text-white',
+          'block w-full rounded-md border border-neutral-300 px-3 py-2 text-center text-neutral-900 shadow-sm outline-none placeholder:text-neutral-400',
+          'dark:border-gray-500 dark:bg-neutral-800 dark:text-white',
         )}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}

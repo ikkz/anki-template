@@ -26,7 +26,7 @@ export const ToolsContext: FC<PropsWithChildren> = ({ children }) => {
           zIndex: 999,
         }}
       >
-        <div className="pointer-events-auto mx-auto flex flex-col rounded-md border bg-white p-1 shadow-xl text-sm">
+        <div className="pointer-events-auto mx-auto flex flex-col rounded-md border bg-white dark:bg-neutral-600 p-1 shadow-xl text-sm">
           {tools.map((tool) => (
             <a
               key={tool.id}
