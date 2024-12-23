@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.4.0
+
+### Minor Changes
+
+- 5162a1f: feat(all): tool support for ChatGPT, search, translation and customization (工具支持ChatGPT、搜索、翻译和自定义)
+
 ## 1.3.2
 
 ### Patch Changes
