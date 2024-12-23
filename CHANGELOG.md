@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.4.1
+
+### Patch Changes
+
+- a1fa706: fix(all): tools color in dark mode
+
 ## 1.4.0
 
 ### Minor Changes
