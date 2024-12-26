@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.4.2
+
+### Patch Changes
+
+- e63d859: fix(all): ankidroid options not saved (ankidroid 选项未保存)
+
 ## 1.4.1
 
 ### Patch Changes
