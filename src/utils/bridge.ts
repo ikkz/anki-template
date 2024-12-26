@@ -23,3 +23,7 @@ export function flipToBack() {
     window.setBack?.(true);
   }
 }
+
+export function isAnkiDroid() {
+  return typeof AnkiDroidJS !== 'undefined';
+}
