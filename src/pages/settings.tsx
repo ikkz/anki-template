@@ -7,6 +7,7 @@ import {
   biggerTextAtom,
   blurOptionsAtom,
   hideAboutAtom,
+  hideMcqAnswerAtom,
   hideQuestionTypeAtom,
   hideTimerAtom,
   noScorllAtom,
@@ -73,6 +74,7 @@ if (id === 'mcq') {
     const [hideQuestionType, setHideQuestionType] =
       useAtom(hideQuestionTypeAtom);
     const [blurOptions, setBlurOptions] = useAtom(blurOptionsAtom);
+    const [hideMcqAnswer, setHideMcqAnswer] = useAtom(hideMcqAnswerAtom);
 
     return (
       <>
@@ -93,6 +95,11 @@ if (id === 'mcq') {
           subtitle={t.blurOptionsDetail}
           checked={blurOptions}
           onChange={setBlurOptions}
+        />
+        <Checkbox
+          title={t.hideMcqAnswer}
+          checked={hideMcqAnswer}
+          onChange={setHideMcqAnswer}
         />
         <CommonOptions />
       </>

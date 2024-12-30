@@ -23,3 +23,7 @@ export const blurOptionsAtom = atomWithScopedStorage<boolean>(
   'blurOptions',
   false,
 );
+export const hideMcqAnswerAtom = atomWithScopedStorage<boolean>(
+  'hideMcqAnswer',
+  false,
+);

@@ -6,6 +6,7 @@ import { useField } from '../hooks/use-field';
 import {
   biggerTextAtom,
   blurOptionsAtom,
+  hideMcqAnswerAtom,
   hideQuestionTypeAtom,
   randomOptionsAtom,
 } from '@/store/settings';
@@ -113,6 +114,8 @@ export default () => {
     useAtomValue(blurOptionsAtom),
   );
 
+  const hideMcqAnswer = useAtomValue(hideMcqAnswerAtom);
+
   return (
     <CardShell
       title={
@@ -197,35 +200,37 @@ export default () => {
       answer={
         <>
           {options.length ? (
-            <div className="text-center text-3xl font-bold italic text-opacity-50">
-              <span className="align-super">
-                {selected.length ? (
-                  originOptions.map((name) => {
-                    const selectResult = getSelectResult(name);
-                    if (!['wrong', 'correct'].includes(selectResult)) {
-                      return null;
-                    }
-                    return (
-                      <span
-                        key={name}
-                        className={clsx({
-                          'text-red-400': selectResult === 'wrong',
-                          'text-green-400': selectResult === 'correct',
-                        })}
-                      >
-                        {fieldToAlpha(name)}
-                      </span>
-                    );
-                  })
-                ) : (
-                  <span className="text-amber-400">-</span>
-                )}
-              </span>
-              <span className="text-5xl text-gray-200">/</span>
-              <span className="align-sub text-green-400">
-                {answers.map((name) => fieldToAlpha(name))}
-              </span>
-            </div>
+            hideMcqAnswer ? null : (
+              <div className="text-center text-3xl font-bold italic text-opacity-50">
+                <span className="align-super">
+                  {selected.length ? (
+                    originOptions.map((name) => {
+                      const selectResult = getSelectResult(name);
+                      if (!['wrong', 'correct'].includes(selectResult)) {
+                        return null;
+                      }
+                      return (
+                        <span
+                          key={name}
+                          className={clsx({
+                            'text-red-400': selectResult === 'wrong',
+                            'text-green-400': selectResult === 'correct',
+                          })}
+                        >
+                          {fieldToAlpha(name)}
+                        </span>
+                      );
+                    })
+                  ) : (
+                    <span className="text-amber-400">-</span>
+                  )}
+                </span>
+                <span className="text-5xl text-gray-200">/</span>
+                <span className="align-sub text-green-400">
+                  {answers.map((name) => fieldToAlpha(name))}
+                </span>
+              </div>
+            )
           ) : (
             <>
               <AnkiField name="answer" />

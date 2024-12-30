@@ -34,6 +34,7 @@
   "noScroll": "翻转时不要自动滚动",
   "blurOptions": "选项模糊",
   "blurOptionsDetail": "开启后选项会被模糊，点击选项区域后恢复",
+  "hideMcqAnswer": "隐藏背面答案（AC/ABC）显示",
   "yourWrongAnswer": "你的错误答案",
   "help": "帮助",
   "tool": "工具",

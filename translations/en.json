@@ -34,6 +34,7 @@
   "noScroll": "Don't auto scroll when flipping",
   "blurOptions": "Blur options",
   "blurOptionsDetail": "When enabled, options will be blurred and will become clear after clicking on the option area.",
+  "hideMcqAnswer": "Hide the answers(AC/ABC) on the back",
   "yourWrongAnswer": "Your wrong answer",
   "help": "Help",
   "tool": "Tool",
