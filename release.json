@@ -44,7 +44,7 @@
       {
         "fields": {
           "question": "This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.",
-          "items": "<ul><li>T: All sub-questions should be in an unordered list format</li><li>T: Each sub-question must begin with \"T:\" or \"F:\", indicating whether the sub-question is true or false<br></li><li>T: Pay special attention to ensuring \"T/F\" is followed by an English half-width colon<br></li></ul>",
+          "items": "T===<br>All sub-questions should meet the format constriant<br><br>T===<br>Each sub-question must begin with a line \"T===\" or \"F===\", indicating whether the sub-question is true or false<br><br>T===<br>Pay special attention to ensuring \"T/F\" is followed by three or more equal signs",
           "note": "note"
         }
       }

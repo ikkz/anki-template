@@ -1,3 +1,7 @@
+function isBrNode(node?: Node | null): node is HTMLBRElement {
+  return node?.nodeType === Node.ELEMENT_NODE && node.nodeName === 'BR';
+}
+
 export interface TfItem {
   node: HTMLDivElement;
   answer: boolean;
@@ -7,6 +11,40 @@ export function extractTfItems(field: HTMLElement): TfItem[] {
   if (!field) {
     return [];
   }
+  const textContent = field.textContent?.trim();
+  if (!textContent) {
+    return [];
+  }
+  if (!/^[TF]={3,}/.test(textContent)) {
+    return extractTfItemsLegacy(field);
+  }
+
+  const items: TfItem[] = [];
+  const childNodes = Array.from(field.childNodes);
+  for (const node of childNodes) {
+    const childText = node.textContent || '';
+    const match = childText.match(/^(T|F)={3,}/);
+    const last = items[items.length - 1];
+    if (match) {
+      items.push({
+        answer: match[1] === 'T',
+        node: document.createElement('div'),
+      });
+      if (last) {
+        while (isBrNode(last.node.lastChild)) {
+          last.node.lastChild.remove();
+        }
+      }
+    } else {
+      if (last && !(last.node.childNodes.length === 0 && isBrNode(node))) {
+        last.node.appendChild(node);
+      }
+    }
+  }
+  return items;
+}
+
+export function extractTfItemsLegacy(field: HTMLElement): TfItem[] {
   const itemNodes = field.querySelector('ul')?.querySelectorAll(':scope > li');
   if (!itemNodes?.length) {
     return [];

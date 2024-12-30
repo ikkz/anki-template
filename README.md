@@ -39,9 +39,9 @@ Note: When all options are empty, the template will behave as a basic Q&A templa
 
 Notes for `items`
 
-- All sub-questions should be in an unordered list format
-- Each sub-question must begin with "T:" or "F:", indicating whether the sub-question is true or false
-- Pay special attention to ensuring "T/F" is followed by an English half-width colon
+- All sub-questions should meet the format constriant
+- Each sub-question must begin with a line "T===" or "F===", indicating whether the sub-question is true or false
+- Pay special attention to ensuring "T/F" is followed by three or more equal signs
 
 | Field name | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
