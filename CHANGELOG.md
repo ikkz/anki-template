@@ -1,5 +1,12 @@
 # anki-templates
 
+## 1.4.3
+
+### Patch Changes
+
+- 7d7a880: feat(tf): optimize experience of `items` in mobile (优化移动端`items` 字段体验)
+- fb223a7: feat(mcq): add switch for answer in back (添加背面答案开关)
+
 ## 1.4.2
 
 ### Patch Changes
