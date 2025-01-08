@@ -194,6 +194,31 @@ const entries = {
       },
     ],
   }),
+  cloze: defineEntry({
+    desc: 'Cloze template',
+    fields: ['question', 'note', 'Tags'],
+    notes: [
+      {
+        config: {
+          field: 'native',
+        },
+        fields: {
+          question:
+            '<ul><li>T: All {{sub-questions}} should be {{in}} an unordered {{list format</li><li>T: Each sub-question}} must}} begin with "T:" or "F:", indicating whether the sub-question is true or {{false<br></li><li>T: Pay special attention to ensuring "T/F" is followed by an English half-width colon<br></li></ul>}}',
+          note: 'note',
+        },
+      },
+      {
+        config: {
+          field: 'markdown',
+        },
+        fields: {
+          question: mdQuestion,
+          note: 'note',
+        },
+      },
+    ],
+  }),
 };
 
 export { entries };

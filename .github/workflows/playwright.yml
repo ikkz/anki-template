@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        entry: ['mcq', 'tf', 'basic', 'mcq_10', 'match']
+        entry: ['mcq', 'tf', 'basic', 'mcq_10', 'match', 'cloze']
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
