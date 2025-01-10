@@ -124,6 +124,17 @@ export async function rollupOptions(config) {
           fileName: `front.html`,
           template({ files }) {
             let frontHtml = '';
+            frontHtml += `<script>
+window.atDefaultOptions =
+
+/* options begin */
+{
+	"at:test:test": "test"
+}
+/* options end */
+
+</script>
+`;
             frontHtml += `<div data-at-version="${packageJson.version}" id="at-root"></div>`;
             frontHtml += `<style>${files?.css?.map(({ source }) => source).join('')}</style>`;
             frontHtml += `

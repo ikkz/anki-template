@@ -121,6 +121,10 @@ export default () => {
       action={t.back}
       onAction={() => navigate(Page.Index)}
     >
+      <div className="text-gray-500 dark:text-gray-400 text-sm mb-3">
+        {t.optionsHint}
+        <Button onClick={() => navigate(Page.Options)}>{t.optionsPage}</Button>
+      </div>
       <div className="flex flex-col gap-4">
         <OptionList />
       </div>

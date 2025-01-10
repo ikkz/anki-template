@@ -2,7 +2,7 @@
   "question": "题目",
   "singleAnswer": "单选",
   "multipleAnswer": "多选",
-  "templateSetting": "模板设置",
+  "templateSetting": "设置",
   "back": "返回",
   "missingAnswer": "缺少答案",
   "missingOptions": "缺少选项",
@@ -49,5 +49,8 @@
   "translate": "翻译",
   "search": "搜索",
   "explainFollowing": "解释以下内容: ",
-  "toolHelp": "<p>每一个工具都需要设置 url。以谷歌搜索为例</p><pre><code>https://www.google.com/search?q={q}</code></pre><p>在选中文本后点击对应的工具时，链接中的 <code>{q}</code> 将会被替换为您选择的文本，然后将自动跳转到替换后的链接。</p><p>前置文本和后置文本是指在选中的文本前后添加对应的文本，然后作为 <code>{q}</code> 来执行替换。</p>"
+  "toolHelp": "<p>每一个工具都需要设置 url。以谷歌搜索为例</p><pre><code>https://www.google.com/search?q={q}</code></pre><p>在选中文本后点击对应的工具时，链接中的 <code>{q}</code> 将会被替换为您选择的文本，然后将自动跳转到替换后的链接。</p><p>前置文本和后置文本是指在选中的文本前后添加对应的文本，然后作为 <code>{q}</code> 来执行替换。</p>",
+  "optionsHint": "如果在重新打开Anki之后丢失了以前的设置，或者希望以下设置在设备之间同步，请前往",
+  "optionsPage": "选项配置",
+  "optionsHelp": "以下内容可以选中复制，详细步骤请查看 <a target=\"_blank\" href=\"https://github.com/ikkz/anki-template/blob/main/docs/embed-options.md\">这里</a>"
 }

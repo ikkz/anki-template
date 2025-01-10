@@ -5,6 +5,7 @@ export enum Page {
   Index = 'index',
   Settings = 'settings',
   Tools = 'tools',
+  Options = 'options',
 }
 
 export type PageMap = Partial<Record<Page, FC>>;
