@@ -1,5 +1,11 @@
 # anki-templates
 
+## 1.5.0
+
+### Minor Changes
+
+- 5b5e34a: feat(all): embed options (嵌入选项)
+
 ## 1.4.3
 
 ### Patch Changes
