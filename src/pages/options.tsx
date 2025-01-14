@@ -1,7 +1,7 @@
 import { Block } from '@/components/block';
 import { useNavigate, Page } from '@/hooks/use-page';
 import * as t from 'at/i18n';
-import { id } from 'at/options';
+import { entry } from 'at/options';
 import { useMemo } from 'react';
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
       Object.keys(localStorage)
         .filter(
           (key) =>
-            (key.startsWith('at:_global:') || key.startsWith(`at:${id}:`)) &&
+            (key.startsWith('at:_global:') || key.startsWith(`at:${entry}:`)) &&
             !!localStorage.getItem(key),
         )
         .map((key) => [key, localStorage.getItem(key)]),

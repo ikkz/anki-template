@@ -1,10 +1,18 @@
 {
   "mcq": {
-    "id": {
-      "en": 1725616643031,
-      "zh": 1730012858034
-    },
-    "deck": 1551516477,
+    "name": "Multiple Choice Question",
+    "fields": [
+      "question",
+      "optionA",
+      "optionB",
+      "optionC",
+      "optionD",
+      "optionE",
+      "optionF",
+      "answer",
+      "note",
+      "Tags"
+    ],
     "notes": [
       {
         "fields": {
@@ -19,11 +27,8 @@
     ]
   },
   "basic": {
-    "id": {
-      "zh": 1382768988,
-      "en": 1971232741
-    },
-    "deck": 1962326180,
+    "name": "Basic",
+    "fields": ["question", "answer", "note", "Tags"],
     "notes": [
       {
         "fields": {
@@ -35,11 +40,8 @@
     ]
   },
   "tf": {
-    "id": {
-      "zh": 1356462000,
-      "en": 1693362483
-    },
-    "deck": 1598429921,
+    "name": "True or False",
+    "fields": ["question", "items", "note", "Tags"],
     "notes": [
       {
         "fields": {
