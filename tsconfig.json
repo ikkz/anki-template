@@ -1,5 +1,5 @@
 {
-  "extends": ["@tsconfig/node20", "@tsconfig/vite-react/tsconfig.json"],
+  "extends": ["@tsconfig/node23", "@tsconfig/vite-react"],
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]

@@ -3,13 +3,13 @@ import Koa from 'koa';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { PassThrough } from 'node:stream';
+import type { Plugin } from 'rollup';
 
-/** @returns {import("rollup").Plugin} */
 const devServer = ({ port = 3000 } = {}) => {
   const koa = new Koa();
   const router = new Router();
 
-  let sendCommand = null;
+  let sendCommand: null | ((cmd: string) => void) = null;
   router.get('/__dev_server', (ctx) => {
     ctx.set('Content-Type', 'text/event-stream');
     ctx.set('Cache-Control', 'no-cache');
@@ -42,6 +42,7 @@ const devServer = ({ port = 3000 } = {}) => {
       let body = '';
       Object.values(bundle).forEach((file) => {
         if (
+          file.type === 'asset' &&
           path.extname(file.fileName) === '.html' &&
           !file.fileName.endsWith('back.html')
         ) {
@@ -55,7 +56,7 @@ const devServer = ({ port = 3000 } = {}) => {
 `;
       sendCommand?.('refresh');
     },
-  };
+  } as Plugin;
 };
 
 export default devServer;

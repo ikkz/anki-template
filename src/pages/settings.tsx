@@ -15,7 +15,7 @@ import {
   selectionMenuAtom,
 } from '@/store/settings';
 import * as t from 'at/i18n';
-import { id } from 'at/options';
+import { entry } from 'at/options';
 import { useAtom } from 'jotai';
 import { FC } from 'react';
 
@@ -68,7 +68,7 @@ const CommonOptions: FC = () => {
 let OptionList: FC;
 
 // these branches can be treeshaken by rollup
-if (id === 'mcq') {
+if (entry === 'mcq') {
   OptionList = () => {
     const [randomOptions, setRandomOptions] = useAtom(randomOptionsAtom);
     const [hideQuestionType, setHideQuestionType] =
@@ -105,9 +105,9 @@ if (id === 'mcq') {
       </>
     );
   };
-} else if (id === 'basic') {
+} else if (entry === 'basic') {
   OptionList = CommonOptions;
-} else if (id === 'tf') {
+} else if (entry === 'tf') {
   OptionList = CommonOptions;
 } else {
   OptionList = () => null;

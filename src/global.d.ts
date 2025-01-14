@@ -1,6 +1,6 @@
 declare module 'at/options' {
   export const fields: string[];
-  export const id: string;
+  export const entry: string;
   export const locale: 'en' | 'zh';
 }
 

@@ -1,6 +1,7 @@
-import devServer from './plugins/dev-server/index.js';
-import generateTemplate from './plugins/generate-template.js';
-import { readJson, ensureValue } from './utils.js';
+import type { BuildConfig } from './config.ts';
+import devServer from './plugins/dev-server/index.ts';
+import generateTemplate from './plugins/generate-template.ts';
+import { readJson, ensureValue } from './utils.ts';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import html from '@rollup/plugin-html';
@@ -15,16 +16,22 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import type {
+  InputOptions,
+  OutputAsset,
+  OutputChunk,
+  OutputOptions,
+} from 'rollup';
 import postcss from 'rollup-plugin-postcss';
 import { swc } from 'rollup-plugin-swc3';
 import { visualizer } from 'rollup-plugin-visualizer';
 import tailwindcss from 'tailwindcss';
 
 const packageJson = await readJson('./package.json');
-const templates = await readJson('./templates.json');
-const release = await readJson('./release.json');
+const entries = await readJson('./build/entries.json');
 
-export async function rollupOptions(config) {
+export async function rollupOptions(config: BuildConfig, dev?: boolean) {
+  const id = `${config.entry}_${config.locale}`;
   async function buildInputOptions() {
     const i18nMap = await fs
       .readFile(
@@ -36,14 +43,13 @@ export async function rollupOptions(config) {
         { encoding: 'utf8' },
       )
       .then(JSON.parse);
-    /** @type {import('rollup').InputOptions} */
     return {
       input: 'entry',
       plugins: [
         virtual({
           'at/options': dataToEsm({
-            ...templates[config.id],
-            locale: config.locale,
+            ...entries[config.entry],
+            ...config,
           }),
           'at/i18n': dataToEsm(i18nMap),
           entry: buildEntry(),
@@ -75,7 +81,7 @@ export async function rollupOptions(config) {
           ],
           customResolver: nodeResolve({
             extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'],
-          }),
+          }) as any,
         }),
         nodeResolve({
           extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'],
@@ -86,6 +92,7 @@ export async function rollupOptions(config) {
             target: 'es5',
             parser: {
               tsx: true,
+              syntax: 'typescript',
             },
             transform: {
               react: {
@@ -95,7 +102,6 @@ export async function rollupOptions(config) {
                 runtime: 'automatic',
               },
             },
-            minify: false,
           },
         }),
         postcss({
@@ -122,7 +128,8 @@ export async function rollupOptions(config) {
         visualizer(),
         html({
           fileName: `front.html`,
-          template({ files }) {
+          template(options) {
+            const { files = {} } = options || {};
             let frontHtml = '';
             frontHtml += `<script>
 window.atDefaultOptions =
@@ -136,20 +143,20 @@ window.atDefaultOptions =
 </script>
 `;
             frontHtml += `<div data-at-version="${packageJson.version}" id="at-root"></div>`;
-            frontHtml += `<style>${files?.css?.map(({ source }) => source).join('')}</style>`;
+            frontHtml += `<style>${(files?.css as OutputAsset[])?.map(({ source }) => source).join('')}</style>`;
             frontHtml += `
 <div id="at-fields" style="display:none;">
 ${buildFields()}
 </div>
 `;
             frontHtml +=
-              files.js
+              (files.js as OutputChunk[])
                 ?.map(({ code }) => `<script>${code}</script>`)
                 .join('') || '';
             return frontHtml;
           },
         }),
-        generateTemplate(),
+        generateTemplate(config),
         envValue(false, () => devServer()),
       ],
       onwarn(warning, warn) {
@@ -158,13 +165,12 @@ ${buildFields()}
         }
         warn(warning);
       },
-    };
+    } as InputOptions;
   }
-  /** @return {import('rollup').OutputOptions} */
   function buildOutputOptions() {
     return {
       format: 'iife',
-      dir: `dist/${config.id}/${config.locale}`,
+      dir: `dist/${id}`,
       plugins: [
         envValue(
           () =>
@@ -179,7 +185,7 @@ ${buildFields()}
           false,
         ),
       ],
-    };
+    } as OutputOptions;
   }
 
   return {
@@ -187,18 +193,18 @@ ${buildFields()}
     outputOptions: buildOutputOptions(),
   };
 
-  function envValue(prodValue, devValue) {
-    return config.dev ? ensureValue(devValue) : ensureValue(prodValue);
+  function envValue<P, D>(prodValue: P, devValue: D) {
+    return dev ? ensureValue(devValue) : ensureValue(prodValue);
   }
 
   function buildFields() {
-    const options = templates[config.id];
+    const options = entries[config.entry];
     return options.fields
       .map(
-        (field) =>
+        (field: string) =>
           `    <div id="at-field-${field}">${envValue(
             `{{${field}}}`,
-            release[config.id].notes[0].fields[field] || '',
+            entries[config.entry].notes[0].fields[field] || '',
           )}</div>`,
       )
       .join('\n');
@@ -206,7 +212,7 @@ ${buildFields()}
 
   function buildEntry() {
     return `${envValue('', 'import "preact/debug";')}
-  import App from '@/entries/${config.id}.tsx';
+  import App from '@/entries/${config.entry}.tsx';
   import { setup } from '@/entries';
   setup(App);`;
   }

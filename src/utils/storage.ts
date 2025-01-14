@@ -1,6 +1,6 @@
 import { isAnkiDroid } from './bridge';
 import { getAnkiStorage } from 'anki-storage';
-import { id } from 'at/options';
+import { entry } from 'at/options';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { doNothing } from 'remeda';
 
@@ -14,7 +14,7 @@ const { atDefaultOptions } = window;
 
 // set default options to localStorage when this template type is displayed first time
 // users can still change the options, which will take effects during this Anki execution
-const initKey = `at:init:${id}`;
+const initKey = `at:init:${entry}`;
 if (atDefaultOptions && !sessionStorage.getItem(initKey)) {
   Object.entries(atDefaultOptions).forEach(([key, value]) => {
     localStorage.setItem(key, value);
@@ -98,7 +98,7 @@ const storage = isAnkiDroid()
 export const atomWithScopedStorage =
   /*@__NO_SIDE_EFFECTS__*/
   <T>(key: string, initialValue: T) =>
-    atomWithStorage<T>(`at:${id}:${key}`, initialValue, storage, {
+    atomWithStorage<T>(`at:${entry}:${key}`, initialValue, storage, {
       getOnInit: true,
     });
 
