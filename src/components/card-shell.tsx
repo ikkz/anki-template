@@ -1,7 +1,6 @@
 import { About } from './about';
 import { Block } from './block';
 import { Dot } from './dot';
-import { AnkiField } from './field';
 import { TimerBlock } from './timer';
 import { useBack } from '@/hooks/use-back';
 import { useField } from '@/hooks/use-field';
@@ -10,6 +9,7 @@ import { DEFAULT_PAGES } from '@/pages';
 import { biggerTextAtom, hideAboutAtom, noScorllAtom } from '@/store/settings';
 import * as t from 'at/i18n';
 import { locale } from 'at/options';
+import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { FC, ReactNode, useState } from 'react';
@@ -68,7 +68,7 @@ export const CardShell: FC<Props> = ({
           >
             <AnkiField
               name="question"
-              className={clsx('font-bold', prefBiggerText ? 'prose-xl' : '')}
+              className={clsx(prefBiggerText ? 'prose-xl' : '')}
             />
             {questionExtra}
           </Block>

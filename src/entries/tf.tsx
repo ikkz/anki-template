@@ -1,16 +1,16 @@
 import { CardShell } from '@/components/card-shell';
-import { AnkiField } from '@/components/field';
 import { useBack } from '@/hooks/use-back';
 import { useCrossState } from '@/hooks/use-cross-state';
 import { FIELD_ID } from '@/utils/const';
-import { extractTfItems } from '@/utils/extract-tf-items';
 import { isFieldEmpty } from '@/utils/field';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import * as t from 'at/i18n';
+import { extractItems } from 'at/virtual/extract-tf-items';
+import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
 import { CheckCircle, XCircle, Triangle } from 'lucide-react';
-import { useCallback } from 'react';
+import { type ReactElement } from 'react';
 
 const WrongAnwserIndicator = () => (
   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1">
@@ -25,21 +25,11 @@ const WrongAnwserIndicator = () => (
 
 interface ItemProp {
   index: number;
-  node: HTMLDivElement;
+  node: ReactElement;
   answer: boolean;
 }
 
 const Item = ({ node, answer, index }: ItemProp) => {
-  const attachNode = useCallback(
-    (ref: HTMLDivElement) => {
-      if (node && ref) {
-        node.remove();
-        ref.appendChild(node);
-      }
-    },
-    [node],
-  );
-
   const [back] = useBack();
 
   const [status, setStatus] = useCrossState<boolean | undefined>(
@@ -71,12 +61,13 @@ const Item = ({ node, answer, index }: ItemProp) => {
       )}
     >
       <div
-        ref={attachNode}
         className={clsx(
-          'prose prose-neutral dark:prose-invert',
+          'prose prose-neutral dark:prose-invert rm-prose-y',
           'flex-grow mr-2',
         )}
-      />
+      >
+        {node}
+      </div>
       <div className="relative">
         <div className="flex space-x-2">
           <div
@@ -124,7 +115,7 @@ export default () => {
     if (!field) {
       return [];
     }
-    return extractTfItems(field).map(({ node, answer }, idx) => (
+    return extractItems(field).map(({ node, answer }, idx) => (
       <Item index={idx} key={idx} node={node} answer={answer} />
     ));
   }, []);

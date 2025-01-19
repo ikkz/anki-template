@@ -16,6 +16,7 @@ jobs:
           node-version: '23.6'
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm run build
 
@@ -45,6 +46,7 @@ jobs:
           node-version: 22.x
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm typecheck
       - run: pnpm run lint
 
       - name: Install uv

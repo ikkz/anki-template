@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { configs } from './config.ts';
+import { type BuildConfig, configs } from './config.ts';
+import { entries } from './entries.ts';
 import { rollupOptions } from './rollup.ts';
 import { parseArgs } from 'node:util';
 import { rollup } from 'rollup';
@@ -13,6 +14,10 @@ const { values: args } = parseArgs({
     locale: {
       type: 'string',
       default: 'en',
+    },
+    field: {
+      type: 'string',
+      default: 'markdown',
     },
   },
 });
@@ -28,9 +33,10 @@ if (!args.dev) {
 } else {
   const { inputOptions, outputOptions } = await rollupOptions(
     {
-      entry: args.dev,
+      entry: args.dev as keyof typeof entries,
       locale: args.locale || 'en',
       name: 'dev',
+      field: (args.field as BuildConfig['field']) || 'markdown',
       type_id: 0,
       deck_id: 0,
     },

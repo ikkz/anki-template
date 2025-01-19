@@ -1,9 +1,12 @@
+import type { entries } from './entries';
+
 export interface BuildConfig {
   type_id: number;
   deck_id: number;
   name: string;
   locale: string;
-  entry: string;
+  entry: keyof typeof entries;
+  field: 'native' | 'markdown';
 }
 
 interface ConfigItem {
@@ -15,7 +18,7 @@ interface ConfigItem {
 const items: ConfigItem[] = [
   {
     key: 'entry',
-    len: 4,
+    len: 5,
     variants: ['mcq', 'tf', 'basic'],
   },
   {
@@ -23,7 +26,11 @@ const items: ConfigItem[] = [
     len: 4,
     variants: ['zh', 'en'],
   },
-  // field extension
+  {
+    key: 'field',
+    len: 2,
+    variants: ['native', 'markdown'],
+  },
 ];
 
 const configs: BuildConfig[] = [];
@@ -58,11 +65,11 @@ extendVariant(0, 0, { type_id: TEMPLATE_TAG << 28, deck_id: DECK_TAG << 28 });
 
 const LEGACY_TEMPLATE_MAP: Record<number, number> = {
   1879048192: 1730012858034,
-  1879048208: 1725616643031,
+  1879048224: 1725616643031,
   1879048193: 1356462000,
-  1879048209: 1693362483,
+  1879048225: 1693362483,
   1879048194: 1382768988,
-  1879048210: 1971232741,
+  1879048226: 1971232741,
 };
 
 configs.forEach((config) => {

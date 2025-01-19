@@ -1,13 +1,17 @@
+import { type TfItem } from '.';
+import { DomRenderer } from '@/components/dom-renderer';
+import { createElement } from 'react';
+
 function isBrNode(node?: Node | null): node is HTMLBRElement {
   return node?.nodeType === Node.ELEMENT_NODE && node.nodeName === 'BR';
 }
 
-export interface TfItem {
+export interface NativeItem {
   node: HTMLDivElement;
   answer: boolean;
 }
 
-export function extractTfItems(field: HTMLElement): TfItem[] {
+export function extractTfItems(field: HTMLElement): NativeItem[] {
   if (!field) {
     return [];
   }
@@ -19,7 +23,7 @@ export function extractTfItems(field: HTMLElement): TfItem[] {
     return extractTfItemsLegacy(field);
   }
 
-  const items: TfItem[] = [];
+  const items: NativeItem[] = [];
   const childNodes = Array.from(field.childNodes);
   for (const node of childNodes) {
     const childText = node.textContent || '';
@@ -44,7 +48,7 @@ export function extractTfItems(field: HTMLElement): TfItem[] {
   return items;
 }
 
-export function extractTfItemsLegacy(field: HTMLElement): TfItem[] {
+export function extractTfItemsLegacy(field: HTMLElement): NativeItem[] {
   const itemNodes = field.querySelector('ul')?.querySelectorAll(':scope > li');
   if (!itemNodes?.length) {
     return [];
@@ -76,4 +80,11 @@ export function extractTfItemsLegacy(field: HTMLElement): TfItem[] {
 
     return { answer, node: container };
   });
+}
+
+export function extractItems(field: HTMLElement): TfItem[] {
+  return extractTfItems(field).map(({ node, answer }) => ({
+    answer,
+    node: createElement(DomRenderer, { dom: node }),
+  }));
 }

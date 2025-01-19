@@ -1,8 +1,7 @@
-import { CardShell } from '../components/card-shell';
-import { AnkiField } from '../components/field';
-import { useBack } from '../hooks/use-back';
-import { useCrossState } from '../hooks/use-cross-state';
-import { useField } from '../hooks/use-field';
+import { CardShell } from '@/components/card-shell';
+import { useBack } from '@/hooks/use-back';
+import { useCrossState } from '@/hooks/use-cross-state';
+import { useField } from '@/hooks/use-field';
 import {
   biggerTextAtom,
   blurOptionsAtom,
@@ -21,6 +20,7 @@ import useSelections from 'ahooks/es/useSelections';
 import * as t from 'at/i18n';
 import { locale } from 'at/options';
 import { fields } from 'at/options';
+import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';

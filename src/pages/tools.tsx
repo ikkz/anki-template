@@ -1,6 +1,6 @@
 import { Block } from '@/components/block';
 import { Button } from '@/components/button';
-import { ToolEdit } from '@/components/tools/edit';
+import { ToolEdit } from '@/features/tools/edit';
 import { useNavigate, Page } from '@/hooks/use-page';
 import { Tool, toolsAtom } from '@/store/tools';
 import * as t from 'at/i18n';

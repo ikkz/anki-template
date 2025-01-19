@@ -1,5 +1,5 @@
-import { Button } from '../button';
-import { Input } from '../input';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
 import { Tool } from '@/store/tools';
 import * as t from 'at/i18n';
 import { FC, useState } from 'react';

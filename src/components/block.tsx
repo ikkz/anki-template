@@ -1,5 +1,5 @@
 import { Button } from './button';
-import { ToolsContext } from './tools/context';
+import { ToolsContext } from '@/features/tools/context';
 import { selectionMenuAtom } from '@/store/settings';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai/react';

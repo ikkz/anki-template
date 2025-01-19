@@ -3,7 +3,7 @@ import useCreation from 'ahooks/es/useCreation';
 import clsx from 'clsx';
 import { FC, memo, useCallback, useEffect, useId } from 'react';
 
-export const AnkiField: FC<{
+export const NativeField: FC<{
   name: string;
   className?: string;
 }> = memo(({ name, className }) => {
@@ -38,8 +38,7 @@ export const AnkiField: FC<{
       ref={attachNode}
       id={`anki-field-${name}`}
       className={clsx(
-        'anki-field',
-        'first:!mt-0 last:!mb-0',
+        'anki-field anki-native-field',
         'overflow-x-auto',
         'prose prose-neutral dark:prose-invert',
         styleId,
@@ -48,3 +47,5 @@ export const AnkiField: FC<{
     />
   );
 });
+
+export default NativeField;

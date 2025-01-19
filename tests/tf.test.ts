@@ -1,4 +1,4 @@
-import { extractTfItems } from '../src/utils/extract-tf-items';
+import { extractTfItems } from '../src/features/tf/extract-native-items';
 import { describe, test, expect } from 'vitest';
 
 describe('extractTfItems', () => {

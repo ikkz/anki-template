@@ -1,6 +1,19 @@
 import type { BuildConfig } from '../config.ts';
+import { entries } from '../entries.ts';
+import { findMatchNote } from '../utils.ts';
 import { extname } from 'node:path';
+import * as R from 'remeda';
 import type { Plugin } from 'rollup';
+
+const BUILTIN_FIELDS = [
+  'Tags',
+  'Type',
+  'Deck',
+  'Subdeck',
+  'CardFlag',
+  'Card',
+  'FrontSide',
+];
 
 export default (config: BuildConfig) =>
   ({
@@ -24,7 +37,11 @@ export default (config: BuildConfig) =>
       this.emitFile({
         type: 'asset',
         fileName: 'build.json',
-        source: JSON.stringify(config),
+        source: JSON.stringify({
+          config,
+          notes: findMatchNote(config),
+          fields: R.difference(entries[config.entry].fields, BUILTIN_FIELDS),
+        }),
       });
     },
   }) as Plugin;

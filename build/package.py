@@ -17,22 +17,18 @@ if not path.exists(dist_dir):
     print("dist folder not found")
     exit(1)
 
-
-with open(path.join(build_dir, "entries.json")) as file:
-    entries = json.load(file)
-
-BUILTIN_FIELDS = ["Tags", "Type", "Deck", "Subdeck", "CardFlag", "Card", "FrontSide"]
-
 for name in os.listdir(dist_dir):
     folder = path.join(dist_dir, name)
     with open(path.join(folder, "build.json")) as f:
-        config = json.load(f)
+        build = json.load(f)
+    config = build["config"]
+    notes = build["notes"]
+    fields = build["fields"]
+    print(f"package {config['name']}")
     with open(f"{folder}/front.html") as f:
         front = f.read()
     with open(f"{folder}/back.html") as f:
         back = f.read()
-    template = entries[config["entry"]]
-    fields = list(filter(lambda field: field not in BUILTIN_FIELDS, template["fields"]))
 
     model = genanki.Model(
         config["type_id"],
@@ -44,7 +40,10 @@ for name in os.listdir(dist_dir):
         deck_id=config["deck_id"], name=f"{config['name']} demo by ikkz"
     )
 
-    for note_config in template["notes"]:
+    for note_config in notes:
+        if "question" in note_config["fields"]:
+            note_config["fields"]["question"] += f"<br>[{config['deck_id']}]"
+
         note = genanki.Note(
             model=model,
             fields=list(
