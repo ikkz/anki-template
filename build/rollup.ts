@@ -228,7 +228,7 @@ ${buildFields()}
 
   function buildEntry() {
     return `${envValue('', 'import "preact/debug";')}
-  import App from '@/entries/${config.entry}.tsx';
+  import App from '@/entries/${config.entry.split('_')[0]}.tsx';
   import { setup } from '@/entries';
   setup(App);`;
   }

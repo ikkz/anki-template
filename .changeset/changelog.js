@@ -7,7 +7,8 @@ Each template has multiple variants available for download, with the filename fo
 
 \`\`\`
 template:
-- mcq: Multiple choice question
+- mcq: Multiple choice question (6 options)
+- mcq_10: Multiple choice question (10 options)
 - tf: True or false
 - basic: Basic Q&A
 

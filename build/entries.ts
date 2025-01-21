@@ -1,13 +1,13 @@
 import type { BuildConfig } from './config';
 
-interface Note<F extends readonly string[]> {
+interface Note<F extends string> {
   config: Partial<BuildConfig>;
-  fields: Partial<Record<F[number], string>>;
+  fields: Partial<Record<F, string>>;
 }
 
 interface Entry<F extends readonly string[]> {
   fields: F;
-  notes: Note<F>[];
+  notes: Note<F[number]>[];
 }
 
 function defineEntry<F extends readonly string[]>(
@@ -19,52 +19,75 @@ function defineEntry<F extends readonly string[]>(
 const mdQuestion =
   "## Markdown Basic Syntax<br><br>I just love **bold text**. Italicized text is the _cat's meow_. At the command prompt, type `nano`.<br><br>My favorite markdown editor is [ByteMD](https://github.com/bytedance/bytemd).<br><br>1. First item<br>2. Second item<br>3. Third item<br><br>&gt; Dorothy followed her through many of the beautiful rooms in her castle.<br><br>```js<br>import gfm from '@bytemd/plugin-gfm'<br>import { Editor, Viewer } from 'bytemd'<br><br>const plugins = [<br>&nbsp; gfm(),<br>&nbsp; // Add more plugins here<br>]<br><br>const editor = new Editor({<br>&nbsp; target: document.body, // DOM to render<br>&nbsp; props: {<br>&nbsp;&nbsp;&nbsp; value: '',<br>&nbsp;&nbsp;&nbsp; plugins,<br>&nbsp; },<br>})<br><br>editor.on('change', (e) =&gt; {<br>&nbsp; editor.$set({ value: e.detail.value })<br>})<br>```<br><br>## GFM Extended Syntax<br><br>Automatic URL Linking: <a href=\"https://github.com/bytedance/bytemd\">https://github.com/bytedance/bytemd</a><br><br>~~The world is flat.~~ We now know that the world is round.<br><br>- [x] Write the press release<br>- [ ] Update the website<br>- [ ] Contact the media<br><br>| Syntax&nbsp;&nbsp;&nbsp; | Description |<br>| --------- | ----------- |<br>| Header&nbsp;&nbsp;&nbsp; | Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| Paragraph | Text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br><br>## Math Equation<br><br>Inline math equation: $a+b$<br><br>$$<br>\\displaystyle \\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)<br>$$<br><br>## Mermaid Diagrams<br><br>```mermaid<br><div>mindmap<br>&nbsp; root((mindmap))<br>&nbsp;&nbsp;&nbsp; Origins<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Long history<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::icon(fa fa-book)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Popularisation<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; British popular psychology author Tony Buzan<br>&nbsp;&nbsp;&nbsp; Research<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; On effectiveness&lt;br/&gt;and features<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; On Automatic creation<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Uses<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Creative techniques<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strategic planning<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Argument mapping<br>&nbsp;&nbsp;&nbsp; Tools<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pen and paper<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mermaid<br><br></div>```";
 
+const mcq = defineEntry({
+  fields: [
+    'question',
+    'optionA',
+    'optionB',
+    'optionC',
+    'optionD',
+    'optionE',
+    'optionF',
+    'answer',
+    'note',
+    'Tags',
+  ],
+  notes: [
+    {
+      config: {
+        field: 'native',
+      },
+      fields: {
+        question:
+          'This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.',
+        optionA: 'This is the content of the question options.',
+        optionB: 'Options that are not filled in will not be displayed.',
+        optionC: 'And various formats are also supported.',
+        answer: 'AC',
+        note: 'Above is the answer to the question. For multiple-choice questions, please write the uppercase letter of the correct answer, for example, A. For multiple-choice questions, write all the correct answer letters, such as ABC.',
+      },
+    },
+    {
+      config: {
+        field: 'markdown',
+      },
+      fields: {
+        question: mdQuestion,
+        optionA: 'This is the content of the question options.',
+        optionB: 'Options that are not filled in will not be displayed.',
+        optionC: 'And various formats are also supported.',
+        answer: 'AC',
+        note: 'Above is the answer to the question. For multiple-choice questions, please write the uppercase letter of the correct answer, for example, A. For multiple-choice questions, write all the correct answer letters, such as ABC.',
+      },
+    },
+  ],
+});
+
+const mcq_10 = defineEntry({
+  fields: [
+    'question',
+    'optionA',
+    'optionB',
+    'optionC',
+    'optionD',
+    'optionE',
+    'optionF',
+    'optionG',
+    'optionH',
+    'optionI',
+    'optionJ',
+    'answer',
+    'note',
+    'Tags',
+  ],
+  notes: mcq.notes,
+});
+
 const entries = {
-  mcq: defineEntry({
-    fields: [
-      'question',
-      'optionA',
-      'optionB',
-      'optionC',
-      'optionD',
-      'optionE',
-      'optionF',
-      'answer',
-      'note',
-      'Tags',
-    ],
-    notes: [
-      {
-        config: {
-          field: 'native',
-        },
-        fields: {
-          question:
-            'This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.',
-          optionA: 'This is the content of the question options.',
-          optionB: 'Options that are not filled in will not be displayed.',
-          optionC: 'And various formats are also supported.',
-          answer: 'AC',
-          note: 'Above is the answer to the question. For multiple-choice questions, please write the uppercase letter of the correct answer, for example, A. For multiple-choice questions, write all the correct answer letters, such as ABC.',
-        },
-      },
-      {
-        config: {
-          field: 'markdown',
-        },
-        fields: {
-          question: mdQuestion,
-          optionA: 'This is the content of the question options.',
-          optionB: 'Options that are not filled in will not be displayed.',
-          optionC: 'And various formats are also supported.',
-          answer: 'AC',
-          note: 'Above is the answer to the question. For multiple-choice questions, please write the uppercase letter of the correct answer, for example, A. For multiple-choice questions, write all the correct answer letters, such as ABC.',
-        },
-      },
-    ],
-  }),
+  mcq,
+  mcq_10,
   basic: defineEntry({
-    fields: ['question', 'answer', 'note', 'Tags'] as const,
+    fields: ['question', 'answer', 'note', 'Tags'],
     notes: [
       {
         config: {
@@ -90,7 +113,7 @@ const entries = {
     ],
   }),
   tf: defineEntry({
-    fields: ['question', 'items', 'note', 'Tags'] as const,
+    fields: ['question', 'items', 'note', 'Tags'],
     notes: [
       {
         config: {

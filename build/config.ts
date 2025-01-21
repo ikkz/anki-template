@@ -19,7 +19,7 @@ const items: ConfigItem[] = [
   {
     key: 'entry',
     len: 5,
-    variants: ['mcq', 'tf', 'basic'],
+    variants: ['mcq', 'tf', 'basic', 'mcq_10'],
   },
   {
     key: 'locale',
