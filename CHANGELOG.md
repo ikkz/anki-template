@@ -1,5 +1,16 @@
 # anki-templates
 
+## 2.0.0
+
+### Major Changes
+
+- a02f6d9: feat(all): markdown support
+
+### Patch Changes
+
+- 2fe8e19: feat(mcq_10): add mcq template with 10 options
+- c90c477: feat(all): add japanese support
+
 ## 1.5.0
 
 ### Minor Changes
