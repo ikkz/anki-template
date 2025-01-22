@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import en from './translations/en.json';
+import ja from './translations/ja.json';
 import zh from './translations/zh.json';
 
 /** @type {import('tailwindcss').Config} */
@@ -21,7 +22,7 @@ module.exports = {
   safelist: [
     'ABCDEFGHIJ'.split('').map((alpha) => `before:content-['${alpha}']`),
     ['missedAnswer', 'correctAnswer', 'wrongAnswer']
-      .map((key) => [zh, en].map((map) => `after:content-['${map[key]}']`))
+      .map((key) => [zh, en, ja].map((map) => `after:content-['${map[key]}']`))
       .flat(),
   ].flat(),
 };

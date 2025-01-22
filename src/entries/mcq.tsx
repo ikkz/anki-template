@@ -145,7 +145,8 @@ export default () => {
                       'after:absolute after:left-px after:top-0 after:block after:-translate-x-full after:rounded-l after:px-0.5 after:py-1 after:text-xs after:text-white':
                         selectResult !== 'none',
                       'after:origin-top-right after:scale-75':
-                        selectResult !== 'none' && locale === 'en',
+                        selectResult !== 'none' &&
+                        ['en', 'ja'].includes(locale),
                       'before:text-red-500 after:bg-red-500':
                         selectResult === 'wrong',
                       'before:text-green-500 after:bg-green-500':

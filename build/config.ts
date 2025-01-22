@@ -24,7 +24,7 @@ const items: ConfigItem[] = [
   {
     key: 'locale',
     len: 4,
-    variants: ['zh', 'en'],
+    variants: ['zh', 'en', 'ja'],
   },
   {
     key: 'field',
