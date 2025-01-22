@@ -2,7 +2,7 @@ import type { BuildConfig } from '../config.ts';
 import { entries, type Note } from '../entries.ts';
 import { findMatchNote } from '../utils.ts';
 import * as R from 'remeda';
-import type { Plugin } from 'rollup';
+import type { Plugin } from 'rolldown';
 
 export const BUILTIN_FIELDS = [
   'Tags',
