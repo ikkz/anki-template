@@ -1,8 +1,25 @@
-# Anki Templates
-
-This repository contains all the Anki templates I made.
+# ikkz Templates
 
 For the directly usable version, please download it from the [release](https://github.com/ikkz/anki-template/releases).
+
+> [!TIP]
+> Each template has multiple variants available for download, with the filename format being `{template}.{locale}.{field}.apkg`
+```
+template:
+- mcq   : Multiple choice question (6 options)
+- mcq_10: Multiple choice question (10 options)
+- tf    : True or false
+- basic : Basic Q&A
+
+locale:
+- zh: 中文
+- en: English
+- ja: Japanese
+
+field:
+- native  : The native Anki field
+- markdown: With markdown support, but larger size
+```
 
 For suggestions and feedback, please submit them [here](https://github.com/ikkz/anki-template/issues).
 
@@ -10,6 +27,7 @@ For suggestions and feedback, please submit them [here](https://github.com/ikkz/
 
 All of the templates have the following common features:
 
+- Markdown support: see [here](/docs/markdown.md) for details
 - After selecting text, you can directly click to ask gpt, search or translate the corresponding text, and customization is also supported
 - Support larger question text.
 - Support dark mode and light mode.
