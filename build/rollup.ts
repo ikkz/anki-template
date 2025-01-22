@@ -3,13 +3,8 @@ import { entries } from './entries.ts';
 import devServer from './plugins/dev-server/index.ts';
 import generateTemplate from './plugins/generate-template.ts';
 import { readJson, ensureValue, findMatchNote } from './utils.ts';
-import alias from '@rollup/plugin-alias';
-import commonjs from '@rollup/plugin-commonjs';
+import nodePolyfills from '@rolldown/plugin-node-polyfills';
 import html from '@rollup/plugin-html';
-import json from '@rollup/plugin-json';
-import nodeResolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
-import url from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { dataToEsm } from '@rollup/pluginutils';
 import autoprefixer from 'autoprefixer';
@@ -18,13 +13,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import type {
   InputOptions,
-  OutputAsset,
   OutputChunk,
   OutputOptions,
-} from 'rollup';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+  Plugin,
+} from 'rolldown';
+import { replacePlugin, aliasPlugin } from 'rolldown/experimental';
 import postcss from 'rollup-plugin-postcss';
-import { swc, minify } from 'rollup-plugin-swc3';
+import { minify } from 'rollup-plugin-swc3';
 // import { visualizer } from 'rollup-plugin-visualizer';
 import tailwindcss from 'tailwindcss';
 
@@ -44,6 +39,13 @@ export async function rollupOptions(config: BuildConfig, dev?: boolean) {
       .then(JSON.parse);
     return {
       input: 'entry',
+      jsx: {
+        mode: 'automatic',
+        factory: 'h',
+        fragment: 'Fragment',
+        importSource: 'preact',
+      },
+      treeshake: true,
       plugins: [
         virtual({
           'at/options': dataToEsm({
@@ -55,14 +57,21 @@ export async function rollupOptions(config: BuildConfig, dev?: boolean) {
           'at/virtual/field': `export {default as AnkiField} from '${path.resolve(import.meta.dirname, config.field === 'markdown' ? '../src/features/markdown/field.tsx' : '../src/components/native-field.tsx')}'`,
           'at/virtual/extract-tf-items': `export {extractItems} from '${path.resolve(import.meta.dirname, config.field === 'markdown' ? '../src/features/tf/extract-markdown-items.ts' : '../src/features/tf/extract-native-items.ts')}'`,
         }),
-        replace({
-          'process.env.NODE_ENV': JSON.stringify(
-            envValue('production', 'development'),
-          ),
-          preventAssignment: true,
-        }),
-        json(),
-        alias({
+        replacePlugin(
+          {
+            'process.env.NODE_ENV': JSON.stringify(
+              envValue('production', 'development'),
+            ),
+            'import.meta.env': '({})',
+            'import.meta.env.MODE': JSON.stringify(
+              envValue('production', 'development'),
+            ),
+          },
+          {
+            preventAssignment: true,
+          },
+        ),
+        aliasPlugin({
           entries: [
             {
               find: 'lodash/isPlainObject',
@@ -81,53 +90,41 @@ export async function rollupOptions(config: BuildConfig, dev?: boolean) {
             { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' },
           ].filter(Boolean),
         }),
-        nodeResolve({
-          extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'],
-        }),
-        commonjs(),
         nodePolyfills(),
-        swc({
-          jsc: {
-            target: 'es5',
-            parser: {
-              tsx: true,
-              syntax: 'typescript',
-            },
-            transform: {
-              react: {
-                pragma: 'h',
-                pragmaFrag: 'Fragment',
-                importSource: 'preact',
-                runtime: 'automatic',
-              },
-            },
-            minify: {
-              compress: true,
+        new Proxy(
+          postcss({
+            extract: true,
+            plugins: [
+              autoprefixer(),
+              tailwindcss(),
+              envValue(
+                cssnano({
+                  preset: [
+                    'default',
+                    {
+                      discardComments: {
+                        removeAll: true,
+                      },
+                    },
+                  ],
+                }),
+                false,
+              ),
+            ].filter(Boolean),
+          }),
+          {
+            get(target, p) {
+              const value = Reflect.get(target, p);
+              if (p === 'generateBundle') {
+                return function (...args: any[]) {
+                  this.getModuleInfo = this.getModuleInfo.bind(this);
+                  return value.apply(this, args);
+                } as Plugin['generateBundle'];
+              }
+              return value;
             },
           },
-          minify: true,
-        }),
-        postcss({
-          extract: true,
-          plugins: [
-            autoprefixer(),
-            tailwindcss(),
-            envValue(
-              cssnano({
-                preset: [
-                  'default',
-                  {
-                    discardComments: {
-                      removeAll: true,
-                    },
-                  },
-                ],
-              }),
-              false,
-            ),
-          ].filter(Boolean),
-        }),
-        url(),
+        ),
         // visualizer(),
         html({
           fileName: `front.html`,
@@ -146,7 +143,7 @@ window.atDefaultOptions =
 </script>
 `;
             frontHtml += `<div data-at-version="${packageJson.version}" id="at-root"></div>`;
-            frontHtml += `<style>${(files?.css as OutputAsset[])?.map(({ source }) => source).join('')}</style>`;
+            frontHtml += `<style>${(files?.css as { source: string }[])?.map(({ source }) => source).join('')}</style>`;
             frontHtml += `
 <div id="at-fields" style="display:none;">
 ${buildFields()}
