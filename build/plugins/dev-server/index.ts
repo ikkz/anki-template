@@ -3,7 +3,7 @@ import Koa from 'koa';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { PassThrough } from 'node:stream';
-import type { Plugin } from 'rollup';
+import type { Plugin } from 'rolldown';
 
 const log = (...args: any[]) => console.log('[devServer]', ...args);
 

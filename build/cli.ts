@@ -3,8 +3,7 @@ import { type BuildConfig, configs } from './config.ts';
 import { rollupOptions } from './rollup.ts';
 import { configMatch } from './utils.ts';
 import { parseArgs } from 'node:util';
-import { rollup } from 'rollup';
-import { watch } from 'rollup';
+import { rolldown, watch } from 'rolldown';
 
 const { values: args } = parseArgs({
   options: {
@@ -43,7 +42,7 @@ if (!args.dev) {
       dev: false,
       e2e: args.e2e ?? false,
     });
-    const bundle = await rollup(inputOptions);
+    const bundle = await rolldown(inputOptions);
     bundle.write(outputOptions);
     bundle.close();
   }
@@ -67,7 +66,6 @@ if (!args.dev) {
     output: outputOptions,
     watch: {
       buildDelay: 1000,
-      clearScreen: false,
       exclude: ['node_modules/**', 'dist/**'],
     },
   });
