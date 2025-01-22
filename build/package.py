@@ -32,7 +32,7 @@ for name in os.listdir(dist_dir):
 
     model = genanki.Model(
         config["type_id"],
-        f"IKKZ_TEMPLATE_{config['name']}".upper(),
+        f"IKKZ__{config['name']}".upper(),
         fields=list(map(lambda field: {"name": field}, fields)),
         templates=[{"name": "Card 1", "qfmt": front, "afmt": back}],
     )
