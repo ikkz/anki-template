@@ -1,29 +1,39 @@
 #!/usr/bin/env node
 import { type BuildConfig, configs } from './config.ts';
-import { entries } from './entries.ts';
 import { rollupOptions } from './rollup.ts';
+import { configMatch } from './utils.ts';
 import { parseArgs } from 'node:util';
 import { rollup } from 'rollup';
 import { watch } from 'rollup';
 
 const { values: args } = parseArgs({
   options: {
-    dev: {
+    entry: {
       type: 'string',
     },
     locale: {
       type: 'string',
-      default: 'en',
     },
     field: {
       type: 'string',
-      default: 'markdown',
+    },
+    dev: {
+      type: 'boolean',
+      default: false,
     },
   },
 });
 
+const argConfig: Partial<Pick<BuildConfig, 'entry' | 'locale' | 'field'>> = {
+  entry: args.entry as BuildConfig['entry'],
+  locale: args.locale as BuildConfig['locale'],
+  field: args.field as BuildConfig['field'],
+};
+
 if (!args.dev) {
-  for (const config of configs) {
+  for (const config of configs.filter((config) =>
+    configMatch(argConfig, config),
+  )) {
     console.log('build', config);
     const { inputOptions, outputOptions } = await rollupOptions(config);
     const bundle = await rollup(inputOptions);
@@ -33,10 +43,10 @@ if (!args.dev) {
 } else {
   const { inputOptions, outputOptions } = await rollupOptions(
     {
-      entry: args.dev as keyof typeof entries,
-      locale: args.locale || 'en',
+      entry: argConfig.entry || 'basic',
+      locale: argConfig.locale || 'en',
+      field: argConfig.field || 'native',
       name: 'dev',
-      field: (args.field as BuildConfig['field']) || 'markdown',
       type_id: 0,
       deck_id: 0,
     },

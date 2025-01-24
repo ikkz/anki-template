@@ -56,7 +56,7 @@ export const CardShell: FC<Props> = ({
                 {tags?.length ? (
                   <>
                     <Dot />
-                    {tags.join(' / ')}
+                    <span data-testid="tags">{tags.join(' / ')}</span>
                   </>
                 ) : null}
               </span>

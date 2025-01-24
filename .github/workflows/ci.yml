@@ -18,14 +18,14 @@ jobs:
       - run: pnpm install
       - run: pnpm typecheck
       - run: pnpm test
-      - run: pnpm run build
+      - run: pnpm run build-p
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
         with:
           version: '0.4.27'
       - name: Package Test
-        run: uv run --frozen build/package.py
+        run: pnpm run package
 
       - name: Upload APKGs
         uses: actions/upload-artifact@v4.4.3

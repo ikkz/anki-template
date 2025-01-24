@@ -14,11 +14,18 @@ export async function readJson(path: string) {
   );
 }
 
+export function configMatch(
+  pattern: Partial<BuildConfig>,
+  config: BuildConfig,
+) {
+  return Object.entries(pattern)
+    .filter(([, v]) => !!v)
+    .every(([k, v]) => config[k as keyof BuildConfig] === v);
+}
+
 export function findMatchNote(config: BuildConfig) {
   const notes = entries[config.entry].notes;
-  return notes.filter(({ config: noteConfig }: { config: any }) => {
-    return Object.entries(noteConfig).every(
-      ([key, value]) => config[key as keyof BuildConfig] === value,
-    );
-  });
+  return notes.filter(({ config: noteConfig }: { config: any }) =>
+    configMatch(noteConfig, config),
+  );
 }

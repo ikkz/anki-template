@@ -1,6 +1,6 @@
 import type { BuildConfig } from './config';
 
-interface Note<F extends string> {
+export interface Note<F extends string> {
   config: Partial<BuildConfig>;
   fields: Partial<Record<F, string>>;
 }

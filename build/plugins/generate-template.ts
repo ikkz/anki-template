@@ -1,11 +1,11 @@
 import type { BuildConfig } from '../config.ts';
-import { entries } from '../entries.ts';
+import { entries, type Note } from '../entries.ts';
 import { findMatchNote } from '../utils.ts';
 import { extname } from 'node:path';
 import * as R from 'remeda';
 import type { Plugin } from 'rollup';
 
-const BUILTIN_FIELDS = [
+export const BUILTIN_FIELDS = [
   'Tags',
   'Type',
   'Deck',
@@ -13,7 +13,13 @@ const BUILTIN_FIELDS = [
   'CardFlag',
   'Card',
   'FrontSide',
-];
+] as const;
+
+export interface BuildJson {
+  config: BuildConfig;
+  notes: Note<string>[];
+  fields: string[];
+}
 
 export default (config: BuildConfig) =>
   ({

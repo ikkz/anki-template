@@ -36,7 +36,7 @@ jobs:
 
       - name: Build templates
         if: steps.changesets.outputs.published == 'true'
-        run: pnpm run build
+        run: pnpm run build-p
 
       - name: Install uv
         if: steps.changesets.outputs.published == 'true'
@@ -45,7 +45,7 @@ jobs:
           version: '0.4.27'
       - name: Gen APKG
         if: steps.changesets.outputs.published == 'true'
-        run: uv run --frozen build/package.py
+        run: pnpm run package
 
       - name: Release
         if: steps.changesets.outputs.published == 'true'

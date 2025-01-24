@@ -15,7 +15,7 @@ interface ConfigItem {
   variants: string[];
 }
 
-const items: ConfigItem[] = [
+export const items: ConfigItem[] = [
   {
     key: 'entry',
     len: 5,
