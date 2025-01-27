@@ -140,6 +140,34 @@ const entries = {
       },
     ],
   }),
+  match: defineEntry({
+    fields: ['question', 'items', 'note', 'Tags'],
+    notes: [
+      {
+        config: {
+          field: 'native',
+        },
+        fields: {
+          question:
+            'This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc.',
+          items:
+            'Mammals::Tiger,,Elephant<br>Birds::Penguin,,Parrot<br>Reptiles::Cobra,,Crocodile',
+          note: 'note',
+        },
+      },
+      {
+        config: {
+          field: 'markdown',
+        },
+        fields: {
+          question: mdQuestion,
+          items:
+            'Mammals::Tiger,,Elephant<br>Birds::Penguin,,Parrot<br>Reptiles::Cobra,,Crocodile',
+          note: 'note',
+        },
+      },
+    ],
+  }),
 };
 
 export { entries };

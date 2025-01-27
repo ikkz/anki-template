@@ -118,12 +118,8 @@ if (entry === 'mcq' || entry === 'mcq_10') {
       </>
     );
   };
-} else if (entry === 'basic') {
-  OptionList = CommonOptions;
-} else if (entry === 'tf') {
-  OptionList = CommonOptions;
 } else {
-  OptionList = () => null;
+  OptionList = CommonOptions;
 }
 
 export default () => {

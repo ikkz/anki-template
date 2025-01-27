@@ -1,4 +1,4 @@
-import { CardShell } from '../components/card-shell';
+import { CardShell } from '@/components/card-shell';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
 import * as t from 'at/i18n';

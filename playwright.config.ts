@@ -42,10 +42,6 @@ export default defineConfig<TestOptions>({
         use: { ...devices['Desktop Chrome'], build },
       },
       {
-        name: `${build.config.name}:firefox`,
-        use: { ...devices['Desktop Firefox'], build },
-      },
-      {
         name: `${build.config.name}:webkit`,
         use: { ...devices['Desktop Safari'], build },
       },

@@ -1,10 +1,10 @@
 import { type TfItem } from '.';
-import { domToMd } from '../markdown/dom-to-md';
 import { Markdown } from '../markdown/renderer';
+import { domToText } from '@/utils/dom-to-text';
 import { createElement } from 'react';
 
 export function extractItems(field: HTMLElement): TfItem[] {
-  const lines = domToMd(field).split('\n');
+  const lines = domToText(field).split('\n');
   const items: { lines: string[]; answer: boolean }[] = [];
   for (const line of lines) {
     const match = line.match(/^(T|F)={3,}/);

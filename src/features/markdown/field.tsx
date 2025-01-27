@@ -1,6 +1,6 @@
-import { domToMd } from './dom-to-md';
 import { Markdown } from './renderer';
 import { FIELD_ID } from '@/utils/const';
+import { domToText } from '@/utils/dom-to-text';
 import useCreation from 'ahooks/es/useCreation';
 import clsx from 'clsx';
 import { FC, memo } from 'react';
@@ -11,7 +11,7 @@ export const MarkdownField: FC<{
 }> = memo(({ name, className }) => {
   const markdown = useCreation(() => {
     const node = document.getElementById(FIELD_ID(name));
-    return node ? domToMd(node) : '';
+    return node ? domToText(node) : '';
   }, [name]);
 
   return (

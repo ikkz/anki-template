@@ -1,9 +1,14 @@
 import { isBack } from '@/utils/is-back';
+import useCreation from 'ahooks/es/useCreation';
 import { useState } from 'react';
 
 const storageKey = (key: string) => `as-storage-${key}`;
 
-export function useCrossState<T>(key: string, initialValue: T) {
+export function useCrossState<T>(key: string, init: T | (() => T)) {
+  const initialValue = useCreation(
+    () => (typeof init === 'function' ? (init as () => T)() : init),
+    [],
+  );
   const getStoreValue = (): T => {
     try {
       const str = sessionStorage.getItem(storageKey(key));

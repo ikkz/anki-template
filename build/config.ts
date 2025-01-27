@@ -1,4 +1,4 @@
-import type { entries } from './entries';
+import type { entries } from './entries.ts';
 
 export interface BuildConfig {
   type_id: number;
@@ -19,7 +19,13 @@ export const items: ConfigItem[] = [
   {
     key: 'entry',
     len: 5,
-    variants: ['mcq', 'tf', 'basic', 'mcq_10'],
+    variants: [
+      'mcq',
+      'tf',
+      'basic',
+      'mcq_10',
+      'match',
+    ] as const satisfies (keyof typeof entries)[],
   },
   {
     key: 'locale',

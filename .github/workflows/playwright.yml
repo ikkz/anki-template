@@ -4,8 +4,11 @@ on: [push, pull_request]
 
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ['mcq', 'tf', 'basic', 'mcq_10', 'match']
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -16,7 +19,7 @@ jobs:
           node-version: '23.6'
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm run build --e2e
+      - run: pnpm run build --e2e --entry=${{matrix.entry}}
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
@@ -25,6 +28,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report
+          name: playwright-report-${{matrix.entry}}
           path: playwright-report/
           retention-days: 30
