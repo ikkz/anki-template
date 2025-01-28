@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.1.0
+
+### Minor Changes
+
+- 6557869: feat(match): new match template
+
 ## 2.0.0
 
 ### Major Changes
