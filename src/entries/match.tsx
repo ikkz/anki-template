@@ -5,7 +5,15 @@ import { useCrossState } from '@/hooks/use-cross-state';
 import { FIELD_ID } from '@/utils/const';
 import { domToText } from '@/utils/dom-to-text';
 import { isFieldEmpty } from '@/utils/field';
-import { useDraggable, useDroppable, DndContext } from '@dnd-kit/core';
+import {
+  useDraggable,
+  useDroppable,
+  DndContext,
+  useSensors,
+  useSensor,
+  MouseSensor,
+  TouchSensor,
+} from '@dnd-kit/core';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import * as t from 'at/i18n';
@@ -143,16 +151,18 @@ const Playground: FC<{ collections: Collection[] }> = ({ collections }) => {
   });
 
   const [back] = useBack();
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   return (
     <DndContext
+      sensors={sensors}
       onDragEnd={(event) => {
         if (event.over) {
           onDrop(event.active.id.toString(), event.over.id.toString());
         }
       }}
     >
-      <div className="mt-2">
+      <div className={clsx('mt-2', back ? '' : 'select-none')}>
         <div className="flex flex-wrap gap-2">
           {items.map((item) => (
             <ItemComponent key={item.id} item={item} />

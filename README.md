@@ -4,12 +4,14 @@ For the directly usable version, please download it from the [release](https://g
 
 > [!TIP]
 > Each template has multiple variants available for download, with the filename format being `{template}.{locale}.{field}.apkg`
+
 ```
 template:
 - mcq   : Multiple choice question (6 options)
 - mcq_10: Multiple choice question (10 options)
 - tf    : True or false
 - basic : Basic Q&A
+- match : Drag and drop interactive matching
 
 locale:
 - zh: 中文
@@ -50,6 +52,34 @@ Note: When all options are empty, the template will behave as a basic Q&A templa
 | optionA...F | This is the content of the question options. Options that are not filled in will not be displayed, and various formats are also supported.                                                                                    |
 | answer      | This is the answer to the question. For multiple-choice questions, please write the uppercase letter of the correct answer, for example, A. For multiple-choice questions, write all the correct answer letters, such as ABC. |
 | note        | You can fill in detailed explanations, notes, etc., here.                                                                                                                                                                     |
+
+### Match
+
+Drag and drop interactive matching question template.
+
+> [!TIP]
+> It is best to disable all swipe gesture controls in Anki's review settings.
+
+#### Fields
+
+Notes for `items`
+
+- Each line starts with a category, followed by two colons separating it from the items under that category
+- Each item is separated by two commas
+
+An example:
+
+```
+Mammals::Tiger,,Elephant
+Birds::Penguin,,Parrot
+Reptiles::Cobra,,Crocodile
+```
+
+| Field name | Description                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| question   | This is the stem of the question. It supports various content formats in Anki, including bold, formulas, etc. |
+| items      | The category and items                                                                                        |
+| note       | You can fill in detailed explanations, notes, etc., here.                                                     |
 
 ### True or False
 
