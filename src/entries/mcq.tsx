@@ -43,12 +43,15 @@ export default () => {
     () => (getFieldText('answer') || '').split('').map((c) => `option${c}`),
     [],
   );
-  const [originOptions, shuffledOptions] = useCreation(() => {
+  const [originOptions, shuffledOptions, notedOptions] = useCreation(() => {
     const options = fields.filter(
       (name) => name.startsWith('option') && !isFieldEmpty(FIELD_ID(name)),
     );
+    const notedOptions = options.filter(
+      (name) => !isFieldEmpty(FIELD_ID(`note${name.slice('option'.length)}`)),
+    );
 
-    return [options, shuffle(options)] as const;
+    return [options, shuffle(options), notedOptions] as const;
   }, []);
   const [options, setOptions] = useCrossState(
     'options-array',
@@ -128,7 +131,10 @@ export default () => {
       questionExtra={
         options.length ? (
           <div
-            className={clsx('mt-5', prefBiggerText ? 'prose-xl' : '')}
+            className={clsx(
+              'mt-5 space-y-3 lg:space-y-6',
+              prefBiggerText ? 'prose-xl' : '',
+            )}
             ref={parent}
             onClick={() => setBlurred(false)}
           >
@@ -139,10 +145,10 @@ export default () => {
                   key={name}
                   onClick={() => onClick(name)}
                   className={clsx(
-                    'select-type-hint relative mb-3 cursor-pointer transition-transform before:select-none after:select-none last:mb-0 lg:mb-6',
+                    'select-type-hint relative cursor-pointer transition-transform before:select-none after:select-none',
                     {
                       'active:scale-95': !back,
-                      'after:absolute after:left-px after:top-0 after:block after:-translate-x-full after:rounded-l after:px-0.5 after:py-1 after:text-xs after:text-white':
+                      'after:absolute after:left-0 after:top-[-2px] after:block after:-translate-x-full after:rounded-l after:px-0.5 after:py-1 after:text-xs after:text-white':
                         selectResult !== 'none',
                       'after:origin-top-right after:scale-75':
                         selectResult !== 'none' &&
@@ -163,7 +169,7 @@ export default () => {
                       [clsx(
                         `before:absolute before:content-['${fieldToAlpha(
                           name,
-                        )}'] before:-top-4 before:right-1 before:text-4xl before:font-extrabold before:italic before:opacity-20`,
+                        )}'] before:-top-5 before:right-1 before:text-4xl before:font-extrabold before:italic before:opacity-20`,
                         'dark:before:opacity-50',
                       )]: back,
                       'before:text-indigo-500 after:hidden':
@@ -172,26 +178,27 @@ export default () => {
                     {
                       [`pointer-events-none blur`]: blurred,
                     },
+                    'rounded-xl border-2 border-transparent bg-indigo-50 px-4 py-2 transition-colors',
+                    {
+                      '!border-indigo-500 !bg-indigo-50':
+                        !back && isSelected(name),
+                      '!border-red-500 !bg-red-50': selectResult === 'wrong',
+                      '!border-green-500 !bg-green-50':
+                        selectResult === 'correct',
+                      '!border-amber-500 !bg-amber-50':
+                        selectResult === 'missed',
+                      '!rounded-tl-none': selectResult !== 'none',
+                    },
+                    'dark:!bg-opacity-10',
                   )}
                 >
-                  <AnkiField
-                    name={name}
-                    className={clsx(
-                      'rounded-xl border-2 border-transparent bg-indigo-50 px-4 py-2 transition-colors',
-                      {
-                        '!border-indigo-500 !bg-indigo-50 !text-indigo-500':
-                          !back && isSelected(name),
-                        '!border-red-500 !bg-red-50 !text-red-500':
-                          selectResult === 'wrong',
-                        '!border-green-500 !bg-green-50 !text-green-500':
-                          selectResult === 'correct',
-                        '!border-amber-500 !bg-amber-50 !text-amber-500':
-                          selectResult === 'missed',
-                        '!rounded-tl-none': selectResult !== 'none',
-                      },
-                      'dark:!bg-opacity-10',
-                    )}
-                  />
+                  <AnkiField name={name} />
+                  {back && notedOptions.includes(name) ? (
+                    <AnkiField
+                      name={`note${name.slice('option'.length)}`}
+                      className="prose-sm border-t mt-2"
+                    />
+                  ) : null}
                 </div>
               );
             })}
