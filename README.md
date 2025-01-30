@@ -4,6 +4,8 @@ For the directly usable version, please download it from the [release](https://g
 
 > [!TIP]
 > Each template has multiple variants available for download, with the filename format being `{template}.{locale}.{field}.apkg`
+> 
+> Be sure to read the specific instructions and tips for each template below before use
 
 ```
 template:
