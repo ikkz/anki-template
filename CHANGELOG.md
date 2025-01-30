@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.2.0
+
+### Minor Changes
+
+- fd7d731: feat(mcq): support note for option (支持选项笔记)
+
 ## 2.1.0
 
 ### Minor Changes
