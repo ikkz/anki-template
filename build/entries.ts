@@ -1,4 +1,4 @@
-import type { BuildConfig } from './config';
+import type { BuildConfig } from './config.ts';
 
 export interface Note<F extends string> {
   config: Partial<BuildConfig>;
@@ -7,6 +7,7 @@ export interface Note<F extends string> {
 
 interface Entry<F extends readonly string[]> {
   fields: F;
+  desc: string;
   notes: Note<F[number]>[];
 }
 
@@ -20,6 +21,7 @@ const mdQuestion =
   "## Markdown Basic Syntax<br><br>I just love **bold text**. Italicized text is the _cat's meow_. At the command prompt, type `nano`.<br><br>My favorite markdown editor is [ByteMD](https://github.com/bytedance/bytemd).<br><br>1. First item<br>2. Second item<br>3. Third item<br><br>&gt; Dorothy followed her through many of the beautiful rooms in her castle.<br><br>```js<br>import gfm from '@bytemd/plugin-gfm'<br>import { Editor, Viewer } from 'bytemd'<br><br>const plugins = [<br>&nbsp; gfm(),<br>&nbsp; // Add more plugins here<br>]<br><br>const editor = new Editor({<br>&nbsp; target: document.body, // DOM to render<br>&nbsp; props: {<br>&nbsp;&nbsp;&nbsp; value: '',<br>&nbsp;&nbsp;&nbsp; plugins,<br>&nbsp; },<br>})<br><br>editor.on('change', (e) =&gt; {<br>&nbsp; editor.$set({ value: e.detail.value })<br>})<br>```<br><br>## GFM Extended Syntax<br><br>Automatic URL Linking: <a href=\"https://github.com/bytedance/bytemd\">https://github.com/bytedance/bytemd</a><br><br>~~The world is flat.~~ We now know that the world is round.<br><br>- [x] Write the press release<br>- [ ] Update the website<br>- [ ] Contact the media<br><br>| Syntax&nbsp;&nbsp;&nbsp; | Description |<br>| --------- | ----------- |<br>| Header&nbsp;&nbsp;&nbsp; | Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br>| Paragraph | Text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br><br>## Math Equation<br><br>Inline math equation: $a+b$<br><br>$$<br>\\displaystyle \\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)<br>$$<br><br>## Mermaid Diagrams<br><br>```mermaid<br><div>mindmap<br>&nbsp; root((mindmap))<br>&nbsp;&nbsp;&nbsp; Origins<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Long history<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::icon(fa fa-book)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Popularisation<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; British popular psychology author Tony Buzan<br>&nbsp;&nbsp;&nbsp; Research<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; On effectiveness&lt;br/&gt;and features<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; On Automatic creation<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Uses<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Creative techniques<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strategic planning<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Argument mapping<br>&nbsp;&nbsp;&nbsp; Tools<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pen and paper<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mermaid<br><br></div>```";
 
 const mcq = defineEntry({
+  desc: 'Multiple choice question (6 options)',
   fields: [
     'question',
     'optionA',
@@ -74,6 +76,7 @@ const mcq = defineEntry({
 });
 
 const mcq_10 = defineEntry({
+  desc: 'Multiple choice question (10 options)',
   fields: [
     'question',
     'optionA',
@@ -107,6 +110,7 @@ const entries = {
   mcq,
   mcq_10,
   basic: defineEntry({
+    desc: 'Basic Q&A',
     fields: ['question', 'answer', 'note', 'Tags'],
     notes: [
       {
@@ -133,6 +137,7 @@ const entries = {
     ],
   }),
   tf: defineEntry({
+    desc: 'True or false',
     fields: ['question', 'items', 'note', 'Tags'],
     notes: [
       {
@@ -161,6 +166,7 @@ const entries = {
     ],
   }),
   match: defineEntry({
+    desc: 'Drag and drop interactive matching',
     fields: ['question', 'items', 'note', 'Tags'],
     notes: [
       {

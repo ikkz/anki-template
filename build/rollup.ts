@@ -2,7 +2,7 @@ import type { BuildConfig } from './config.ts';
 import { entries } from './entries.ts';
 import devServer from './plugins/dev-server/index.ts';
 import generateTemplate from './plugins/generate-template.ts';
-import { readJson, ensureValue, findMatchNote } from './utils.ts';
+import { ensureValue, findMatchNote } from './utils.ts';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import html from '@rollup/plugin-html';
@@ -25,10 +25,13 @@ import type {
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import postcss from 'rollup-plugin-postcss';
 import { swc, minify } from 'rollup-plugin-swc3';
-// import { visualizer } from 'rollup-plugin-visualizer';
 import tailwindcss from 'tailwindcss';
 
-const packageJson = await readJson('./package.json');
+const packageJson = JSON.parse(
+  await fs.readFile(path.resolve(import.meta.dirname, '../package.json'), {
+    encoding: 'utf8',
+  }),
+);
 
 export async function rollupOptions(
   config: BuildConfig,

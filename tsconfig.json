@@ -1,9 +1,7 @@
 {
-  "extends": ["@tsconfig/node23", "@tsconfig/vite-react"],
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "allowSyntheticDefaultImports": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

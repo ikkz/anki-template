@@ -2,9 +2,9 @@ import {
   type BuildJson,
   BUILTIN_FIELDS,
 } from '../build/plugins/generate-template';
+import { renderTemplate } from '../build/utils';
 import { readTemplate } from './utils';
 import { type Page } from '@playwright/test';
-import { template } from 'lodash-es';
 
 declare const e2eAnki: {
   clean(): void;
@@ -66,10 +66,4 @@ export class Anki {
       e2eAnki.clean();
     });
   }
-}
-
-function renderTemplate(html: string, data: object) {
-  return template(html, {
-    interpolate: /{{([\s\S]+?)}}/g,
-  })(data);
 }

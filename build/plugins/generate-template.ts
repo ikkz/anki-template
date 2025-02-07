@@ -1,7 +1,6 @@
 import type { BuildConfig } from '../config.ts';
 import { entries, type Note } from '../entries.ts';
 import { findMatchNote } from '../utils.ts';
-import { extname } from 'node:path';
 import * as R from 'remeda';
 import type { Plugin } from 'rollup';
 
@@ -26,7 +25,7 @@ export default (config: BuildConfig) =>
     name: 'generate-template',
     generateBundle(_, bundle) {
       Object.keys(bundle)
-        .filter((fileName) => extname(fileName) !== '.html')
+        .filter((fileName) => fileName.split('.').pop() !== 'html')
         .forEach((fileName) => {
           delete bundle[fileName];
         });

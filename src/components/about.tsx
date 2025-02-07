@@ -6,13 +6,20 @@ export const EnAbout = () => (
   <div className={clsx('prose prose-sm', 'dark:prose-invert')}>
     <p>
       Thank you for using my carefully crafted Anki template! If you like my
-      template, consider supporting me{' '}
-      <a href="https://afdian.com/a/leoly">here</a> ❤️.
+      template, consider sponsoring me
+      <a href="https://ko-fi.com/M4M212WUCI" target="_blank" rel="noreferrer">
+        <img
+          height="36"
+          className="border-none h-9"
+          src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
+          alt="Buy Me a Coffee at ko-fi.com"
+        />
+      </a>
     </p>
 
     <p>
       You can find all the templates I&apos;ve created{' '}
-      <a href="https://github.com/ikkz/anki-template">here</a>.
+      <a href="https://template.ikkz.fun/?from=anki">here</a>.
     </p>
 
     <p>
@@ -34,7 +41,7 @@ export const ZhAbout = () => (
       <a href="https://afdian.com/a/leoly">这里</a> 支持我 ❤️
     </p>
     <p>
-      您可以在 <a href="https://github.com/ikkz/anki-template">这里</a>{' '}
+      您可以在 <a href="https://template.ikkz.fun/?from=anki">这里</a>{' '}
       找到我创建的所有模板
     </p>
 

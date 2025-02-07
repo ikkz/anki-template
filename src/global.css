@@ -24,11 +24,13 @@ body {
 }
 
 .prose > :first-child,
-.rm-prose-y > :first-child {
+.rm-prose-y > :first-child,
+div[id^='at-field'] > :first-child {
   @apply !mt-0;
 }
 
 .prose > :last-child,
-.rm-prose-y > :last-child {
+.rm-prose-y > :last-child,
+div[id^='at-field'] > :last-child {
   @apply !mb-0;
 }

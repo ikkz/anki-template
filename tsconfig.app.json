@@ -1,0 +1,11 @@
+{
+  "extends": ["@tsconfig/vite-react"],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src", "playground/src"]
+}
