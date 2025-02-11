@@ -1,7 +1,7 @@
 {
   "name": "anki-templates",
   "type": "module",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "",
   "scripts": {
     "build": "node --max-old-space-size=4096 build/cli.ts",

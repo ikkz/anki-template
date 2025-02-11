@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.2.1
+
+### Patch Changes
+
+- ff34a59: fix: remove p tag margin
+
 ## 2.2.0
 
 ### Minor Changes
