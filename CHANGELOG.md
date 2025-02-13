@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.2.2
+
+### Patch Changes
+
+- 24ba148: feat: enable anki storage for all clients
+
 ## 2.2.1
 
 ### Patch Changes
