@@ -27,3 +27,7 @@ export function flipToBack() {
 export function isAnkiDroid() {
   return typeof AnkiDroidJS !== 'undefined';
 }
+
+export function isAnkiClient() {
+  return typeof window.e2eAnki === 'undefined';
+}

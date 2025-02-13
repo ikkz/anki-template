@@ -1,4 +1,4 @@
-import { isAnkiDroid } from './bridge';
+import { isAnkiClient } from './bridge';
 import { getAnkiStorage } from 'anki-storage';
 import { entry } from 'at/options';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
@@ -30,7 +30,7 @@ function isDefaultOptionKey(key: string) {
 function createAnkiDroidStorage() {
   const as: ReturnType<typeof getAnkiStorage> = new Promise((resolve) => {
     setTimeout(() => {
-      resolve(getAnkiStorage());
+      resolve(getAnkiStorage('https://anki-storage.pages.dev/ikkz-template'));
     }, 0);
   });
   const updaters = new Map<string, Array<(value: string | null) => void>>();
@@ -91,7 +91,7 @@ function createAnkiDroidStorage() {
   }));
 }
 
-const storage = isAnkiDroid()
+const storage = isAnkiClient()
   ? createAnkiDroidStorage()
   : createJSONStorage<any>(() => localStorage);
 
