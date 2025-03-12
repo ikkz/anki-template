@@ -37,8 +37,8 @@ type Collection = {
   items: Item[];
 };
 
-const belongTo = (item: Item, category: Category) =>
-  item.id.startsWith(`${category.id}-`);
+const belongTo = (item: Item, items: Item[]) =>
+  !!items.find(({ name }) => name === item.name);
 
 const ItemComponent: FC<{
   item: Item;
@@ -78,19 +78,15 @@ const ItemComponent: FC<{
 };
 
 const CategoryContainer: FC<{
-  category: Category;
+  collection: Collection;
   dropped: Item[];
-  allItems: Item[];
-}> = ({ category, dropped, allItems }) => {
+}> = ({ collection, dropped }) => {
+  const { category } = collection;
   const [back] = useBack();
   const { setNodeRef } = useDroppable({ id: category.id, disabled: back });
   const missedItems = useMemo(
-    () =>
-      allItems.filter(
-        (item) =>
-          belongTo(item, category) && !dropped.find(({ id }) => id === item.id),
-      ),
-    [allItems, dropped],
+    () => collection.items.filter((item) => !belongTo(item, dropped)),
+    [collection.items, dropped],
   );
   return (
     <div ref={setNodeRef} className={clsx('border p-2 min-h-20')}>
@@ -100,7 +96,7 @@ const CategoryContainer: FC<{
           <ItemComponent
             status={
               back
-                ? belongTo(item, category)
+                ? belongTo(item, collection.items)
                   ? 'correct'
                   : 'wrong'
                 : 'default'
@@ -109,11 +105,13 @@ const CategoryContainer: FC<{
             item={item}
           />
         ))}
-        {back
-          ? missedItems.map((item) => (
+        {back ? (
+          <>
+            {missedItems.map((item) => (
               <ItemComponent status="missed" key={item.id} item={item} />
-            ))
-          : null}
+            ))}
+          </>
+        ) : null}
       </div>
     </div>
   );
@@ -169,12 +167,11 @@ const Playground: FC<{ collections: Collection[] }> = ({ collections }) => {
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-4">
-          {collections.map(({ category }) => (
+          {collections.map((collection) => (
             <CategoryContainer
-              allItems={allItems}
-              key={category.id}
-              category={category}
-              dropped={dropped[category.id] || []}
+              key={collection.category.id}
+              collection={collection}
+              dropped={dropped[collection.category.id] || []}
             />
           ))}
         </div>

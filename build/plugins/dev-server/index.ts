@@ -5,6 +5,8 @@ import path from 'node:path';
 import { PassThrough } from 'node:stream';
 import type { Plugin } from 'rollup';
 
+const log = (...args: any[]) => console.log('[devServer]', ...args);
+
 const devServer = ({ port = 3000 } = {}) => {
   const koa = new Koa();
   const router = new Router();
@@ -33,10 +35,15 @@ const devServer = ({ port = 3000 } = {}) => {
   koa.use(router.routes()).use(router.allowedMethods());
   koa.listen(port, '0.0.0.0');
 
+  let firstBundle = true;
+
+  log('bundling...');
+
   return {
     name: 'dev-server',
     watchChange() {
       sendCommand?.('update');
+      log('rebundling...');
     },
     async generateBundle(_, bundle) {
       let body = '';
@@ -55,6 +62,12 @@ const devServer = ({ port = 3000 } = {}) => {
 <body>${body}</body>
 `;
       sendCommand?.('refresh');
+      if (firstBundle) {
+        firstBundle = false;
+        log('ready to dev:', `http://localhost:${port}`);
+      } else {
+        log('refresh sent');
+      }
     },
   } as Plugin;
 };
