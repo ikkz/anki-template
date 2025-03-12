@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.2.3
+
+### Patch Changes
+
+- e10ccfe: fix(match): improve the logic of `belongTo(item, category)`
+
 ## 2.2.2
 
 ### Patch Changes
