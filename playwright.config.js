@@ -1,5 +1,5 @@
-import { builds } from './e2e/dist.ts';
-import type { TestOptions } from './e2e/test.ts';
+import { builds } from './dist.ts';
+// import type { TestOptions } from './test.ts';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -13,7 +13,8 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig<TestOptions>({
+// export default defineConfig<TestOptions>({
+export default defineConfig({
   testDir: './e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -70,7 +71,7 @@ export default defineConfig<TestOptions>({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm exec serve -p 3001 e2e',
+    command: 'pnpm nx serve e2e',
     port: 3001,
     reuseExistingServer: !process.env.CI,
   },

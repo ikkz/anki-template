@@ -3,8 +3,8 @@
   "include": [
     "build",
     "e2e",
-    "eslint.config.js",
-    "playwright.config.ts",
+    "eslint.config.mjs",
+    "playwright.config.js",
     "tailwind.config.js",
     "vitest.config.ts",
     "vite.config.ts",

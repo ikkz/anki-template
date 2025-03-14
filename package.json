@@ -6,16 +6,34 @@
   "scripts": {
     "build": "node --max-old-space-size=4096 build/cli.ts",
     "dev": "ROLLUP_WATCH=true node --max-old-space-size=4096 build/cli.ts --dev --entry",
-    "lint": "pnpm eslint .",
     "format": "pnpm eslint --fix .",
-    "package": "uv run --frozen build/package.py",
     "typecheck": "tsc --build --noEmit",
-    "e2e-test": "pnpm exec playwright test",
-    "e2e-serve": "pnpm exec serve -p 3001 e2e",
-    "test": "vitest",
-    "pg-build": "vite build --config playground/vite.config.ts",
-    "pg-dev": "vite --config playground/vite.config.ts",
-    "pg-preview": "vite preview --config playground/vite.config.ts"
+    "test": "nx vite:test",
+    "e2e": "pnpm exec playwright test",
+    "serve": "pnpm exec serve -p 3001 e2e",
+    "lint:py": "uv run ruff check"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "input": [
+          "default",
+          "!{projectRoot}/CHANGELOG.md"
+        ]
+      },
+      "package": {
+        "command": "uv run --frozen build/package.py",
+        "input": [
+          "{projectRoot}/build"
+        ],
+        "output": [
+          "{projectRoot}/release"
+        ],
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +43,10 @@
     "@changesets/cli": "^2.27.10",
     "@eslint/js": "^9.9.1",
     "@koa/router": "^13.1.0",
+    "@nx/eslint": "20.5.0",
+    "@nx/eslint-plugin": "20.5.0",
+    "@nx/vite": "20.5.0",
+    "@nx/web": "20.5.0",
     "@playwright/test": "^1.49.1",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^26.0.1",
@@ -50,15 +72,21 @@
     "@types/react-dom": "^18.3.5",
     "@types/webfontloader": "^1.6.38",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "^3.0.0",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.5",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^15.9.0",
+    "jiti": "2.4.2",
     "jsdom": "^25.0.1",
     "koa": "^2.15.3",
+    "nx": "20.5.0",
     "pnpm": "^9.9.0",
     "postcss": "^8.5.1",
     "prettier": "^3.3.3",

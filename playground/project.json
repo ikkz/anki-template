@@ -1,0 +1,14 @@
+{
+  "implicitDependencies": ["anki-templates"],
+  "targets": {
+    "build": {
+      "dependsOn": ["^build", "^package"]
+    },
+    "preview": {
+      "dependsOn": ["^build", "build"]
+    },
+    "dev": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

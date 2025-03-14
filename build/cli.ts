@@ -29,9 +29,9 @@ const { values: args } = parseArgs({
 });
 
 const argConfig: Partial<Pick<BuildConfig, 'entry' | 'locale' | 'field'>> = {
-  entry: args.entry as BuildConfig['entry'],
-  locale: args.locale as BuildConfig['locale'],
-  field: args.field as BuildConfig['field'],
+  entry: (args.entry as BuildConfig['entry']) || 'basic',
+  locale: (args.locale as BuildConfig['locale']) || 'en',
+  field: (args.field as BuildConfig['field']) || 'native',
 };
 
 if (!args.dev) {

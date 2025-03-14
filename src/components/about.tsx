@@ -28,8 +28,8 @@ export const EnAbout = () => (
     </p>
 
     <blockquote>
-      Current version: {version},{' '}
-      <a href="https://github.com/ikkz/anki-template/releases">check</a> update
+      Current version: {version}, <a href="https://template.ikkz.fun/">check</a>{' '}
+      update
     </blockquote>
   </div>
 );
@@ -51,8 +51,7 @@ export const ZhAbout = () => (
     </p>
 
     <blockquote>
-      当前版本： {version}，{' '}
-      <a href="https://github.com/ikkz/anki-template/releases">检查</a>更新
+      当前版本： {version}， <a href="https://template.ikkz.fun/">检查</a>更新
     </blockquote>
   </div>
 );
