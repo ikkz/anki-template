@@ -31,3 +31,10 @@ stats.html
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+
+
+.nx/cache
+.nx/workspace-data
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
