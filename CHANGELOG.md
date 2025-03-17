@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.2.4
+
+### Patch Changes
+
+- 56f0cd7: feat: Add category shuffle feature to match template
+
 ## 2.2.3
 
 ### Patch Changes
