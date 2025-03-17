@@ -11,6 +11,7 @@ Notes for `items`
 
 - Each line starts with a category, followed by two colons separating it from the items under that category
 - Each item is separated by two commas
+- Categories and items are shuffled to enhance active recall
 
 An example:
 

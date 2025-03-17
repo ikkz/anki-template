@@ -228,10 +228,15 @@ export default () => {
       );
   }, []);
 
+  const [shuffledCollections, setShuffledCollections] = useCrossState(
+    'shuffled-collections',
+    () => shuffle(collections),
+  );
+
   return (
     <CardShell
       title={t.question}
-      questionExtra={<Playground collections={collections} />}
+      questionExtra={<Playground collections={shuffledCollections} />}
       answer={
         hasNote ? (
           <AnkiField
