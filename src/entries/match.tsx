@@ -228,9 +228,8 @@ export default () => {
       );
   }, []);
 
-  const [shuffledCollections] = useCrossState(
-    'shuffled-collections',
-    () => shuffle(collections),
+  const [shuffledCollections] = useCrossState('shuffled-collections', () =>
+    shuffle(collections),
   );
 
   return (
