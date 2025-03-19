@@ -206,7 +206,7 @@ const entries = {
         },
         fields: {
           question:
-            '<ul><li>T: All {{sub-questions}} should be {{in}} an unordered {{list format</li><li>T: Each sub-question}} must}} begin with "T:" or "F:", indicating whether the sub-question is true or {{false<br></li><li>T: Pay special attention to ensuring "T/F" is followed by an English half-width colon<br></li></ul>}} {{<img src="https://developer.mozilla.org/favicon.ico" />}}',
+            '<h1>Cloze</h1><p>Cloze {{template}}.</p><p>Besides the dedicated {{cloze}} template, all other templates can enable the cloze function in settings (effective on the next card).</p><p>To use, wrap the text you want to cloze with double curly braces, for example, {{text}}. Multiple clozes and image clozes are also supported.</p><h2>Fields</h2><p>All fields are consistent with the basic template.</p>',
           answer: 'answer',
           note: 'note',
         },
