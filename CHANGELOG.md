@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.3.0
+
+### Minor Changes
+
+- 7344ea8: feat(cloze): new cloze template (新增 cloze 模板)
+
 ## 2.2.4
 
 ### Patch Changes
