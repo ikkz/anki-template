@@ -48,3 +48,15 @@ span.at-cloze-unit {
 span[data-at-cloze-hide='true'] {
   @apply whitespace-pre;
 }
+
+[data-at-cloze-type='whole'][data-at-cloze-hide='true']:not(img) {
+  visibility: hidden;
+  position: relative;
+}
+
+[data-at-cloze-type='whole'][data-at-cloze-hide='true']:not(img)::after {
+  visibility: visible;
+  content: ' ';
+  @apply absolute bottom-0 left-0 right-0 top-0;
+  @apply cursor-pointer bg-neutral-200 dark:bg-neutral-600;
+}

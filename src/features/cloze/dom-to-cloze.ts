@@ -17,29 +17,61 @@ function insertAfter(node: Node, toInsert: Node) {
 export const CLOZE_CLASS = 'at-cloze-unit';
 export const CLOZE_ANSWER_ATTR = 'data-at-cloze-answer';
 export const CLOZE_INDEX_ATTR = 'data-at-cloze-unit';
+export const CLOZE_TYPE = 'data-at-cloze-type';
+
+type ClozeType = 'text' | 'whole';
+
+function setClozeType(node: Element, type: ClozeType) {
+  node.setAttribute(CLOZE_TYPE, type);
+}
+
+export function getClozeType(node: Element): ClozeType | null {
+  return (node.getAttribute(CLOZE_TYPE) as ClozeType) || null;
+}
 
 function tagUnit(node: Element, index: number) {
   node.classList.add(CLOZE_CLASS);
   node.setAttribute(CLOZE_INDEX_ATTR, String(index));
-  switch (node.tagName) {
-    case 'SPAN': {
-      node.setAttribute(CLOZE_ANSWER_ATTR, node.textContent || '');
-      break;
-    }
-    case 'IMG': {
-      node.setAttribute(CLOZE_ANSWER_ATTR, node.getAttribute('src') || '');
+  const type = getClozeType(node);
+  if (!type) {
+    return;
+  }
+  if (type === 'text') {
+    node.setAttribute(CLOZE_ANSWER_ATTR, node.textContent || '');
+    return;
+  } else if (type === 'whole') {
+    switch (node.nodeName) {
+      case 'IMG': {
+        node.setAttribute(CLOZE_ANSWER_ATTR, node.getAttribute('src') || '');
+        break;
+      }
     }
   }
 }
 
-function createUnit(content: string, index: number) {
+function createTextUnit(content: string, index: number) {
   const text = document.createTextNode(content);
   const span = document.createElement('span');
+  setClozeType(span, 'text');
   span.appendChild(text);
   if (content) {
     tagUnit(span, index);
   }
   return span;
+}
+
+function asWhole(node: Node): node is HTMLElement {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return false;
+  }
+  const el = node as HTMLElement;
+  if (['IMG', 'MJX-CONTAINER', 'SVG'].includes(el.nodeName)) {
+    return true;
+  }
+  if (['math', 'bytemd-mermaid'].some((cls) => el.classList.contains(cls))) {
+    return true;
+  }
+  return false;
 }
 
 export function domToCloze(container: HTMLElement): number {
@@ -58,13 +90,13 @@ export function domToCloze(container: HTMLElement): number {
       const hasStart = startIndex >= 0;
       const hasEnd = endIndex >= 0;
       if (inUnit && !hasStart && !hasEnd) {
-        const unit = createUnit(content, unitIndex);
+        const unit = createTextUnit(content, unitIndex);
         node.parentNode?.replaceChild(unit, node);
         return;
       }
 
       if (inUnit && hasEnd) {
-        const unit = createUnit(content.slice(0, endIndex), unitIndex++);
+        const unit = createTextUnit(content.slice(0, endIndex), unitIndex++);
         node.parentNode?.insertBefore(unit, node);
         inUnit = false;
         node.textContent = content.slice(endIndex + UNIT_END.length);
@@ -74,7 +106,7 @@ export function domToCloze(container: HTMLElement): number {
 
         const endIndex = content.indexOf(UNIT_END, startIndex);
         if (endIndex >= 0) {
-          const unit = createUnit(
+          const unit = createTextUnit(
             content.slice(startIndex + UNIT_START.length, endIndex),
             unitIndex++,
           );
@@ -86,7 +118,7 @@ export function domToCloze(container: HTMLElement): number {
           insertAfter(unit, remain);
           traverseNode(remain);
         } else {
-          const unit = createUnit(
+          const unit = createTextUnit(
             content.slice(startIndex + UNIT_START.length),
             unitIndex,
           );
@@ -94,15 +126,11 @@ export function domToCloze(container: HTMLElement): number {
           inUnit = true;
         }
       }
+    } else if (inUnit && asWhole(node)) {
+      setClozeType(node, 'whole');
+      tagUnit(node, unitIndex);
     } else if (node.hasChildNodes()) {
       Array.from(node.childNodes).forEach((node) => traverseNode(node));
-    } else if (node.nodeType === Node.ELEMENT_NODE && inUnit) {
-      switch (node.nodeName) {
-        case 'IMG': {
-          tagUnit(node as Element, unitIndex);
-          break;
-        }
-      }
     }
   }
 

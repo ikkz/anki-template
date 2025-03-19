@@ -5,11 +5,12 @@ import {
   CLOZE_CLASS,
   CLOZE_INDEX_ATTR,
   domToCloze,
+  getClozeType,
 } from '@/features/cloze/dom-to-cloze';
 import { clozeAtom } from '@/store/settings';
 import { entry } from 'at/options';
 import { useAtomValue } from 'jotai';
-import { RefObject, useLayoutEffect } from 'react';
+import { RefObject, useEffect, useLayoutEffect } from 'react';
 import { doNothing } from 'remeda';
 
 const CLOZE_HIDDEN = 'data-at-cloze-hide';
@@ -32,14 +33,20 @@ function getClozeNodes(container: Element, node: Element) {
 
 function showAnswer(node: Element) {
   node.setAttribute(CLOZE_HIDDEN, 'false');
+  const type = getClozeType(node);
+  if (!type) {
+    return;
+  }
   const answer = getAnswer(node);
-  switch (node.tagName) {
-    case 'IMG': {
-      node.setAttribute('src', answer || '');
+  switch (type) {
+    case 'text': {
+      node.textContent = answer;
       break;
     }
-    case 'SPAN': {
-      node.textContent = answer;
+    case 'whole': {
+      if (node.nodeName === 'IMG') {
+        node.setAttribute('src', answer || '');
+      }
       break;
     }
   }
@@ -47,13 +54,19 @@ function showAnswer(node: Element) {
 
 function hideAnswer(node: Element) {
   node.setAttribute(CLOZE_HIDDEN, 'true');
-  switch (node.tagName) {
-    case 'IMG': {
-      node.setAttribute('src', hiddenImg);
+  const type = getClozeType(node);
+  if (!type) {
+    return;
+  }
+  switch (type) {
+    case 'text': {
+      node.textContent = '        ';
       break;
     }
-    case 'SPAN': {
-      node.textContent = '          ';
+    case 'whole': {
+      if (node.nodeName === 'IMG') {
+        node.setAttribute('src', hiddenImg);
+      }
       break;
     }
   }
@@ -64,7 +77,16 @@ const CLOZED_ATTR = 'data-at-clozed';
 const useCloze = (ref: RefObject<HTMLElement>) => {
   const [back] = useBack();
   const clozeEnabled = useAtomValue(clozeAtom) || entry === 'cloze';
+
   useLayoutEffect(() => {
+    const { current: el } = ref;
+    if (!el || !clozeEnabled) {
+      return;
+    }
+    el.style.visibility = 'hidden';
+  }, [clozeEnabled]);
+
+  useEffect(() => {
     const { current: el } = ref;
     if (!el || !clozeEnabled) {
       return doNothing;
@@ -81,13 +103,15 @@ const useCloze = (ref: RefObject<HTMLElement>) => {
         showAnswer(el);
       }
     });
+    el.style.visibility = 'visible';
 
     const onClick = (event: MouseEvent) => {
-      if (back) {
+      const { target } = event;
+      if (back || !target || !(target instanceof Element)) {
         return;
       }
-      const node = event.target as Element | null;
-      if (!node?.classList.contains(CLOZE_CLASS)) {
+      const node = target.closest(`.${CLOZE_CLASS}`);
+      if (!node) {
         return;
       }
       getClozeNodes(el, node).forEach((node) => {

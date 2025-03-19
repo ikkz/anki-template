@@ -206,7 +206,7 @@ const entries = {
         },
         fields: {
           question:
-            '<h1>Cloze</h1><p>Cloze {{template}}.</p><p>Besides the dedicated {{cloze}} template, all other templates can enable the cloze function in settings (effective on the next card).</p><p>To use, wrap the text you want to cloze with double curly braces, for example, {{text}}. Multiple clozes and image clozes are also supported.</p><h2>Fields</h2><p>All fields are consistent with the basic template.</p>',
+            '<h1>Cloze</h1><p>Cloze {{template}}.</p><p>Besides the dedicated {{cloze}} template, all other templates can enable the cloze function in settings (effective on the next card).</p><p>To use, wrap the text you want to cloze with double curly braces, for example, {{text}}. Multiple clozes and image/formula clozes are also supported.</p>{{<img src="https://developer.mozilla.org/favicon.ico"/>}}<h2>Fields</h2><p>All fields are consistent with the basic template.</p>',
           answer: 'answer',
           note: 'note',
         },
@@ -218,7 +218,8 @@ const entries = {
         fields: {
           question: mdQuestion
             .replace('Basic Syntax', wrapClozeUnit)
-            .replace('love **bold', wrapClozeUnit),
+            .replace('love **bold', wrapClozeUnit)
+            .replace('$a+b$', wrapClozeUnit),
           answer: 'answer',
           note: 'note',
         },

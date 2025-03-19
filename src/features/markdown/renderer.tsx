@@ -8,7 +8,7 @@ import { useCreation, useExternal } from 'ahooks';
 import { locale } from 'at/options';
 import { getProcessor } from 'bytemd';
 import clsx from 'clsx';
-import { FC, memo, useLayoutEffect, useMemo, useRef } from 'react';
+import { FC, memo, useEffect, useMemo, useRef } from 'react';
 
 export const Markdown: FC<{
   value: string;
@@ -42,7 +42,7 @@ export const Markdown: FC<{
     }
   }, [value, processer]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const markdownBody = ref.current;
     if (!markdownBody || !file) return;
 
