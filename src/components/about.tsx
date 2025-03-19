@@ -5,8 +5,10 @@ import clsx from 'clsx';
 export const EnAbout = () => (
   <div className={clsx('prose prose-sm', 'dark:prose-invert')}>
     <p>
-      Thank you for using my carefully crafted Anki template! If you like my
-      template, consider sponsoring me
+      Thank you for using my carefully crafted Anki template! The best way to
+      support me is giving me a star at{' '}
+      <a href="https://github.com/ikkz/anki-template">github</a>, or consider
+      sponsoring me
       <a href="https://ko-fi.com/M4M212WUCI" target="_blank" rel="noreferrer">
         <img
           height="36"
@@ -29,7 +31,7 @@ export const EnAbout = () => (
 
     <blockquote>
       Current version: {version},{' '}
-      <a href="https://github.com/ikkz/anki-template/releases">check</a> update
+      <a href="https://template.ikkz.fun/?from=anki">check</a> update
     </blockquote>
   </div>
 );
@@ -37,8 +39,10 @@ export const EnAbout = () => (
 export const ZhAbout = () => (
   <div className={clsx('prose prose-sm', 'dark:prose-invert')}>
     <p>
-      感谢您使用我精心制作的 Anki 模板！ 如果你喜欢我的模板，可以考虑在{' '}
-      <a href="https://afdian.com/a/leoly">这里</a> 支持我 ❤️
+      感谢您使用我精心制作的 Anki 模板！ 支持我的最好方式是在{' '}
+      <a href="https://github.com/ikkz/anki-template">github</a> 为我点一颗
+      star，或者可以考虑在 <a href="https://afdian.com/a/leoly">这里</a> 赞助我
+      ❤️
     </p>
     <p>
       您可以在 <a href="https://template.ikkz.fun/?from=anki">这里</a>{' '}
@@ -52,7 +56,7 @@ export const ZhAbout = () => (
 
     <blockquote>
       当前版本： {version}，{' '}
-      <a href="https://github.com/ikkz/anki-template/releases">检查</a>更新
+      <a href="https://template.ikkz.fun/?from=anki">检查</a>更新
     </blockquote>
   </div>
 );
