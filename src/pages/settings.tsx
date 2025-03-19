@@ -6,6 +6,7 @@ import { Page, useNavigate } from '@/hooks/use-page';
 import {
   biggerTextAtom,
   blurOptionsAtom,
+  clozeAtom,
   hideAboutAtom,
   hideMcqAnswerAtom,
   hideQuestionTypeAtom,
@@ -25,6 +26,7 @@ const CommonOptions: FC = () => {
   const [biggerText, setBiggerText] = useAtom(biggerTextAtom);
   const [hideTimer, setHideTimer] = useAtom(hideTimerAtom);
   const [noScorll, setNoScorll] = useAtom(noScrollAtom);
+  const [cloze, setCloze] = useAtom(clozeAtom);
   const navigate = useNavigate();
 
   return (
@@ -46,6 +48,15 @@ const CommonOptions: FC = () => {
         onChange={setSelectionMenu}
         data-testid="setting:selectionMenu"
       />
+      {entry !== 'cloze' ? (
+        <Checkbox
+          title={t.cloze}
+          subtitle={t.clozeDetail}
+          checked={cloze}
+          onChange={setCloze}
+          data-testid="setting:cloze"
+        />
+      ) : null}
       <Checkbox
         title={t.biggerText}
         checked={biggerText}

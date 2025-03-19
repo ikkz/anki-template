@@ -22,7 +22,7 @@ export default () => {
             {hasNote ? (
               <AnkiField
                 name="note"
-                className={clsx('prose prose-sm mt-3', 'dark:prose-invert')}
+                className={clsx('prose prose-sm', 'dark:prose-invert')}
               />
             ) : null}
           </>

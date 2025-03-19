@@ -1,37 +1,26 @@
-import { domToCloze } from '@/features/cloze/dom-to-cloze';
+import { useCloze } from '@/features/cloze/use-cloze';
 import { FIELD_ID, FIELDS_CONTAINER_ID } from '@/utils/const';
 import useCreation from 'ahooks/es/useCreation';
 import clsx from 'clsx';
-import {
-  FC,
-  memo,
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useId,
-} from 'react';
+import { FC, memo, useCallback, useEffect, useId, useRef } from 'react';
 
 export const NativeField: FC<{
   name: string;
   className?: string;
-  enableCloze?: boolean;
-  fieldRef?: MutableRefObject<HTMLDivElement | null>;
-}> = memo(({ name, className, enableCloze, fieldRef }) => {
+}> = memo(({ name, className }) => {
   const fieldNode = useCreation(
     () => document.getElementById(FIELD_ID(name)) as HTMLDivElement | null,
     [name],
   );
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const attachNode = useCallback(
-    (ref: HTMLDivElement) => {
-      if (fieldNode && ref) {
+    (node: HTMLDivElement) => {
+      if (fieldNode && node) {
         fieldNode.remove();
-        if (enableCloze) {
-          domToCloze(fieldNode);
-        }
-        ref.appendChild(fieldNode);
-        if (fieldRef) {
-          fieldRef.current = ref;
+        node.appendChild(fieldNode);
+        if (ref) {
+          ref.current = node;
         }
       }
     },
@@ -48,6 +37,11 @@ export const NativeField: FC<{
   }, [fieldNode]);
 
   const styleId = useId();
+
+  if (name === 'question') {
+    // wont change
+    useCloze(ref);
+  }
 
   return (
     <div

@@ -24,6 +24,7 @@ export const MarkdownField: FC<{
         className,
       )}
       value={markdown}
+      cloze={name === 'question'}
     />
   );
 });

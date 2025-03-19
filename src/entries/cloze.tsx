@@ -1,5 +1,4 @@
 import { CardShell } from '@/components/card-shell';
-import { useClozeRef } from '@/features/cloze/use-cloze-ref';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
 import * as t from 'at/i18n';
@@ -9,13 +8,10 @@ import clsx from 'clsx';
 export default () => {
   const hasNote = !isFieldEmpty(FIELD_ID('note'));
   const hasAnswer = !isFieldEmpty(FIELD_ID('answer'));
-  const ref = useClozeRef();
 
   return (
     <CardShell
       title={t.question}
-      enableCloze
-      questionRef={ref}
       answer={
         hasAnswer || hasNote ? (
           <>
@@ -26,7 +22,7 @@ export default () => {
             {hasNote ? (
               <AnkiField
                 name="note"
-                className={clsx('prose prose-sm mt-3', 'dark:prose-invert')}
+                className={clsx('prose prose-sm', 'dark:prose-invert')}
               />
             ) : null}
           </>

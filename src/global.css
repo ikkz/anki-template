@@ -34,3 +34,17 @@ div[id^='at-field'] > :first-child {
 div[id^='at-field'] > :last-child {
   @apply !mb-0;
 }
+
+/* cloze styles */
+
+.at-cloze-unit {
+  @apply cursor-pointer bg-neutral-200 dark:bg-neutral-600;
+}
+
+span.at-cloze-unit {
+  @apply py-[1px];
+}
+
+span[data-at-cloze-hide='true'] {
+  @apply whitespace-pre;
+}

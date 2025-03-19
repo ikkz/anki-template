@@ -13,13 +13,11 @@ import { locale } from 'at/options';
 import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
-import { FC, MutableRefObject, ReactNode, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 interface Props {
   header?: ReactNode;
   title: ReactNode;
-  enableCloze?: boolean;
-  questionRef?: MutableRefObject<HTMLDivElement | null>;
   questionExtra?: ReactNode;
   answer?: ReactNode;
 }
@@ -27,8 +25,6 @@ interface Props {
 export const CardShell: FC<Props> = ({
   header,
   title,
-  enableCloze,
-  questionRef,
   questionExtra,
   answer,
 }) => {
@@ -79,9 +75,7 @@ export const CardShell: FC<Props> = ({
           >
             <AnkiField
               name="question"
-              enableCloze={enableCloze}
               className={clsx(prefBiggerText ? 'prose-xl' : '')}
-              fieldRef={questionRef}
             />
             {questionExtra}
           </Block>

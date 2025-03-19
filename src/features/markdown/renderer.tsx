@@ -1,3 +1,4 @@
+import { useCloze } from '../cloze/use-cloze';
 import pluginBreaks from '@bytemd/plugin-breaks';
 import pluginGfm from '@bytemd/plugin-gfm';
 import pluginMath from '@bytemd/plugin-math';
@@ -7,13 +8,14 @@ import { useCreation, useExternal } from 'ahooks';
 import { locale } from 'at/options';
 import { getProcessor } from 'bytemd';
 import clsx from 'clsx';
-import { FC, memo, useEffect, useMemo, useRef } from 'react';
+import { FC, memo, useLayoutEffect, useMemo, useRef } from 'react';
 
 export const Markdown: FC<{
   value: string;
   id?: string;
   className?: string;
-}> = memo(({ value, className, id }) => {
+  cloze?: boolean;
+}> = memo(({ value, className, id, cloze }) => {
   const ref = useRef<HTMLDivElement>(null);
   const plugins = useCreation(
     () => [
@@ -40,7 +42,7 @@ export const Markdown: FC<{
     }
   }, [value, processer]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const markdownBody = ref.current;
     if (!markdownBody || !file) return;
 
@@ -51,6 +53,11 @@ export const Markdown: FC<{
       cbs?.forEach((cb) => cb && cb());
     };
   }, [file, plugins]);
+
+  if (cloze) {
+    // wont change
+    useCloze(ref);
+  }
 
   useExternal(
     locale === 'zh'

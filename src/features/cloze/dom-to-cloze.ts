@@ -15,23 +15,34 @@ function insertAfter(node: Node, toInsert: Node) {
 }
 
 export const CLOZE_CLASS = 'at-cloze-unit';
-export const ANSWER_ATTR = 'data-at-cloze-answer';
+export const CLOZE_ANSWER_ATTR = 'data-at-cloze-answer';
+export const CLOZE_INDEX_ATTR = 'data-at-cloze-unit';
 
 function tagUnit(node: Element, index: number) {
-  node.classList.add(CLOZE_CLASS, `at-cloze-unit-index-${index}`);
-  node.setAttribute('data-at-cloze-unit', String(index));
+  node.classList.add(CLOZE_CLASS);
+  node.setAttribute(CLOZE_INDEX_ATTR, String(index));
+  switch (node.tagName) {
+    case 'SPAN': {
+      node.setAttribute(CLOZE_ANSWER_ATTR, node.textContent || '');
+      break;
+    }
+    case 'IMG': {
+      node.setAttribute(CLOZE_ANSWER_ATTR, node.getAttribute('src') || '');
+    }
+  }
 }
 
 function createUnit(content: string, index: number) {
   const text = document.createTextNode(content);
   const span = document.createElement('span');
-  tagUnit(span, index);
   span.appendChild(text);
-  span.setAttribute(ANSWER_ATTR, content);
+  if (content) {
+    tagUnit(span, index);
+  }
   return span;
 }
 
-export function domToCloze(container: HTMLDivElement): number {
+export function domToCloze(container: HTMLElement): number {
   let unitIndex = 0;
   let inUnit = false;
 
@@ -85,7 +96,7 @@ export function domToCloze(container: HTMLDivElement): number {
       }
     } else if (node.hasChildNodes()) {
       Array.from(node.childNodes).forEach((node) => traverseNode(node));
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
+    } else if (node.nodeType === Node.ELEMENT_NODE && inUnit) {
       switch (node.nodeName) {
         case 'IMG': {
           tagUnit(node as Element, unitIndex);

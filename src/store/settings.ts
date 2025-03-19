@@ -27,3 +27,4 @@ export const hideMcqAnswerAtom = atomWithScopedStorage<boolean>(
   'hideMcqAnswer',
   false,
 );
+export const clozeAtom = atomWithScopedStorage<boolean>('cloze', false);

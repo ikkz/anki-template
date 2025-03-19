@@ -106,6 +106,8 @@ const mcq_10 = defineEntry({
   notes: mcq.notes,
 });
 
+const wrapClozeUnit = (str: string) => `{{${str}}}`;
+
 const entries = {
   mcq,
   mcq_10,
@@ -196,7 +198,7 @@ const entries = {
   }),
   cloze: defineEntry({
     desc: 'Cloze template',
-    fields: ['question', 'note', 'Tags'],
+    fields: ['question', 'answer', 'note', 'Tags'],
     notes: [
       {
         config: {
@@ -204,7 +206,8 @@ const entries = {
         },
         fields: {
           question:
-            '<ul><li>T: All {{sub-questions}} should be {{in}} an unordered {{list format</li><li>T: Each sub-question}} must}} begin with "T:" or "F:", indicating whether the sub-question is true or {{false<br></li><li>T: Pay special attention to ensuring "T/F" is followed by an English half-width colon<br></li></ul>}}',
+            '<ul><li>T: All {{sub-questions}} should be {{in}} an unordered {{list format</li><li>T: Each sub-question}} must}} begin with "T:" or "F:", indicating whether the sub-question is true or {{false<br></li><li>T: Pay special attention to ensuring "T/F" is followed by an English half-width colon<br></li></ul>}} {{<img src="https://developer.mozilla.org/favicon.ico" />}}',
+          answer: 'answer',
           note: 'note',
         },
       },
@@ -213,7 +216,10 @@ const entries = {
           field: 'markdown',
         },
         fields: {
-          question: mdQuestion,
+          question: mdQuestion
+            .replace('Basic Syntax', wrapClozeUnit)
+            .replace('love **bold', wrapClozeUnit),
+          answer: 'answer',
           note: 'note',
         },
       },
