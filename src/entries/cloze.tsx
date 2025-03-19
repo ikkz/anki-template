@@ -1,5 +1,5 @@
 import { CardShell } from '@/components/card-shell';
-import { useClozeRef } from '@/hooks/use-cloze-ref';
+import { useClozeRef } from '@/features/cloze/use-cloze-ref';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
 import * as t from 'at/i18n';

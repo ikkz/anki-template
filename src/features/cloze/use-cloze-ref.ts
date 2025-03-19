@@ -1,4 +1,4 @@
-import { useBack } from './use-back';
+import { useBack } from '../../hooks/use-back';
 import { CLOZE_CLASS } from '@/features/cloze/dom-to-cloze';
 import { useLayoutEffect, useRef } from 'react';
 import { doNothing } from 'remeda';
