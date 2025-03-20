@@ -3,9 +3,9 @@ import hiddenImg from '@/assets/cloze-img-hide.svg';
 import {
   CLOZE_ANSWER_ATTR,
   CLOZE_CLASS,
-  CLOZE_INDEX_ATTR,
   domToCloze,
-  getClozeType,
+  getClozeData,
+  getClozeNodes,
 } from '@/features/cloze/dom-to-cloze';
 import { clozeAtom } from '@/store/settings';
 import { entry } from 'at/options';
@@ -23,17 +23,9 @@ function getAnswer(node: Element) {
   return node.getAttribute(CLOZE_ANSWER_ATTR);
 }
 
-function getClozeNodes(container: Element, node: Element) {
-  const index = node.getAttribute(CLOZE_INDEX_ATTR);
-  if (index === null) {
-    return [];
-  }
-  return container.querySelectorAll(`[${CLOZE_INDEX_ATTR}='${index}'`);
-}
-
 function showAnswer(node: Element) {
   node.setAttribute(CLOZE_HIDDEN, 'false');
-  const type = getClozeType(node);
+  const type = getClozeData(node)?.type;
   if (!type) {
     return;
   }
@@ -54,7 +46,7 @@ function showAnswer(node: Element) {
 
 function hideAnswer(node: Element) {
   node.setAttribute(CLOZE_HIDDEN, 'true');
-  const type = getClozeType(node);
+  const type = getClozeData(node)?.type;
   if (!type) {
     return;
   }
