@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.3.1
+
+### Patch Changes
+
+- b25b316: feat: support displaying next cloze when clicking outside, and improve style
+
 ## 2.3.0
 
 ### Minor Changes
