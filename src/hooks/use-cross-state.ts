@@ -1,40 +1,19 @@
+import { crossStorage } from '@/utils/cross-storage';
 import { isBack } from '@/utils/is-back';
 import useCreation from 'ahooks/es/useCreation';
 import { useState } from 'react';
-
-const storageKey = (key: string) => `as-storage-${key}`;
 
 export function useCrossState<T>(key: string, init: T | (() => T)) {
   const initialValue = useCreation(
     () => (typeof init === 'function' ? (init as () => T)() : init),
     [],
   );
-  const getStoreValue = (): T => {
-    try {
-      const str = sessionStorage.getItem(storageKey(key));
-      if (str) {
-        return JSON.parse(str);
-      }
-      return initialValue;
-    } catch (error) {
-      console.error(error);
-      return initialValue;
-    }
-  };
-
-  const setStoreValue = (value: T) => {
-    try {
-      sessionStorage.setItem(storageKey(key), JSON.stringify(value));
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const [state, setState] = useState(() => {
     if (isBack()) {
-      return getStoreValue();
+      return crossStorage.getItem(key, initialValue) as T;
     } else {
-      setStoreValue(initialValue);
+      crossStorage.setItem(key, initialValue);
       return initialValue;
     }
   });
@@ -43,7 +22,7 @@ export function useCrossState<T>(key: string, init: T | (() => T)) {
     state,
     (value: T) => {
       setState(value);
-      setStoreValue(value);
+      crossStorage.setItem(key, value);
     },
   ] as const;
 }

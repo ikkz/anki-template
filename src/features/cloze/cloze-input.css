@@ -1,0 +1,7 @@
+.at-cloze-input {
+  @apply mx-1 my-px p-1 leading-none;
+}
+
+.at-cloze-input.at-input-correct {
+  @apply border-green-400 shadow-green-400 ring-green-400;
+}

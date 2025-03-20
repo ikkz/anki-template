@@ -17,22 +17,35 @@ function insertAfter(node: Node, toInsert: Node) {
 export const CLOZE_CLASS = 'at-cloze-unit';
 export const CLOZE_ANSWER_ATTR = 'data-at-cloze-answer';
 export const CLOZE_INDEX_ATTR = 'data-at-cloze-unit';
-export const CLOZE_TYPE = 'data-at-cloze-type';
+export const CLOZE_TYPE_ATTR = 'data-at-cloze-type';
 
 type ClozeType = 'text' | 'whole';
 
 function setClozeType(node: Element, type: ClozeType) {
-  node.setAttribute(CLOZE_TYPE, type);
+  node.setAttribute(CLOZE_TYPE_ATTR, type);
 }
 
-export function getClozeType(node: Element): ClozeType | null {
-  return (node.getAttribute(CLOZE_TYPE) as ClozeType) || null;
+export type ClozeUnitData = {
+  type: ClozeType;
+  answer: string;
+  index: number;
+};
+
+export function getClozeData(node: Element): ClozeUnitData | undefined {
+  if (!node.classList.contains(CLOZE_CLASS)) {
+    return undefined;
+  }
+  return {
+    type: node.getAttribute(CLOZE_TYPE_ATTR) as ClozeType,
+    index: Number(node.getAttribute(CLOZE_INDEX_ATTR)),
+    answer: node.getAttribute(CLOZE_ANSWER_ATTR) || '',
+  };
 }
 
-function tagUnit(node: Element, index: number) {
+function markUnit(node: Element, index: number) {
   node.classList.add(CLOZE_CLASS);
   node.setAttribute(CLOZE_INDEX_ATTR, String(index));
-  const type = getClozeType(node);
+  const type = getClozeData(node)?.type;
   if (!type) {
     return;
   }
@@ -55,7 +68,7 @@ function createTextUnit(content: string, index: number) {
   setClozeType(span, 'text');
   span.appendChild(text);
   if (content) {
-    tagUnit(span, index);
+    markUnit(span, index);
   }
   return span;
 }
@@ -64,14 +77,19 @@ function asWhole(node: Node): node is HTMLElement {
   if (node.nodeType !== Node.ELEMENT_NODE) {
     return false;
   }
-  const el = node as HTMLElement;
-  if (['IMG', 'MJX-CONTAINER', 'SVG'].includes(el.nodeName)) {
-    return true;
+  const selectors = ['img', 'mjx-container', 'svg', '.math', '.bytemd-mermaid'];
+  return (node as HTMLElement).matches(selectors.join(','));
+}
+
+export function getClozeNodes(container: Element, node: Element | number) {
+  const index =
+    typeof node === 'number' ? node : node.getAttribute(CLOZE_INDEX_ATTR);
+  if (index === null) {
+    return [];
   }
-  if (['math', 'bytemd-mermaid'].some((cls) => el.classList.contains(cls))) {
-    return true;
-  }
-  return false;
+  return Array.from(
+    container.querySelectorAll(`[${CLOZE_INDEX_ATTR}='${index}'`),
+  );
 }
 
 export function domToCloze(container: HTMLElement): number {
@@ -125,7 +143,7 @@ export function domToCloze(container: HTMLElement): number {
       }
     } else if (inUnit && asWhole(node)) {
       setClozeType(node, 'whole');
-      tagUnit(node, unitIndex);
+      markUnit(node, unitIndex);
     } else if (node.hasChildNodes()) {
       Array.from(node.childNodes).forEach((node) => traverseNode(node));
     }

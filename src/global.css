@@ -13,26 +13,26 @@ body {
 
 .anki-field {
   scrollbar-width: none;
-}
 
-.anki-field::-webkit-scrollbar {
-  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    scrollbar-width: none;
+  }
 }
 
 .prose {
   @apply !max-w-none;
 }
 
-.prose > :first-child,
-.rm-prose-y > :first-child,
-div[id^='at-field'] > :first-child {
-  @apply !mt-0;
-}
+.prose,
+.rm-prose-y,
+div[id^='at-field'] {
+  > :first-child {
+    @apply !mt-0;
+  }
 
-.prose > :last-child,
-.rm-prose-y > :last-child,
-div[id^='at-field'] > :last-child {
-  @apply !mb-0;
+  > :last-child {
+    @apply !mb-0;
+  }
 }
 
 /* cloze styles */
@@ -41,22 +41,25 @@ div[id^='at-field'] > :last-child {
   @apply cursor-pointer bg-neutral-200 dark:bg-neutral-600;
 }
 
-span.at-cloze-unit {
-  @apply py-[1px];
+[data-at-cloze-type='text'] {
+  @apply py-px;
 }
+[data-at-cloze-hide='true'] {
+  &[data-at-cloze-type='text'] {
+    @apply whitespace-pre;
+  }
 
-span[data-at-cloze-hide='true'] {
-  @apply whitespace-pre;
-}
+  &[data-at-cloze-type='whole'] {
+    &:not(img) {
+      visibility: hidden;
+      position: relative;
 
-[data-at-cloze-type='whole'][data-at-cloze-hide='true']:not(img) {
-  visibility: hidden;
-  position: relative;
-}
-
-[data-at-cloze-type='whole'][data-at-cloze-hide='true']:not(img)::after {
-  visibility: visible;
-  content: ' ';
-  @apply absolute bottom-0 left-0 right-0 top-0;
-  @apply cursor-pointer bg-neutral-200 dark:bg-neutral-600;
+      &::after {
+        visibility: visible;
+        content: ' ';
+        @apply absolute bottom-0 left-0 right-0 top-0;
+        @apply cursor-pointer bg-neutral-200 dark:bg-neutral-600;
+      }
+    }
+  }
 }

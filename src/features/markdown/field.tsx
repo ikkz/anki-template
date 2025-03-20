@@ -3,12 +3,13 @@ import { FIELD_ID } from '@/utils/const';
 import { domToText } from '@/utils/dom-to-text';
 import useCreation from 'ahooks/es/useCreation';
 import clsx from 'clsx';
-import { FC, memo } from 'react';
+import { FC, memo, RefObject } from 'react';
 
 export const MarkdownField: FC<{
   name: string;
   className?: string;
-}> = memo(({ name, className }) => {
+  domRef?: RefObject<HTMLDivElement>;
+}> = memo(({ name, className, domRef }) => {
   const markdown = useCreation(() => {
     const node = document.getElementById(FIELD_ID(name));
     return node ? domToText(node) : '';
@@ -24,7 +25,7 @@ export const MarkdownField: FC<{
         className,
       )}
       value={markdown}
-      cloze={name === 'question'}
+      domRef={domRef}
     />
   );
 });

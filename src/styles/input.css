@@ -1,0 +1,14 @@
+.at-cloze-unit {
+  @apply transition duration-300;
+
+  img& {
+    @apply scale-100;
+  }
+
+  &.at-cloze-highlight {
+    @apply bg-indigo-400;
+    img& {
+      @apply scale-110;
+    }
+  }
+}

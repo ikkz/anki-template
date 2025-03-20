@@ -1,4 +1,3 @@
-import { useCloze } from '../cloze/use-cloze';
 import pluginBreaks from '@bytemd/plugin-breaks';
 import pluginGfm from '@bytemd/plugin-gfm';
 import pluginMath from '@bytemd/plugin-math';
@@ -8,14 +7,15 @@ import { useCreation, useExternal } from 'ahooks';
 import { locale } from 'at/options';
 import { getProcessor } from 'bytemd';
 import clsx from 'clsx';
-import { FC, memo, useEffect, useMemo, useRef } from 'react';
+import mergeRefs from 'merge-refs';
+import { FC, memo, RefObject, useEffect, useMemo, useRef } from 'react';
 
 export const Markdown: FC<{
   value: string;
   id?: string;
   className?: string;
-  cloze?: boolean;
-}> = memo(({ value, className, id, cloze }) => {
+  domRef?: RefObject<HTMLDivElement>;
+}> = memo(({ value, className, id, domRef }) => {
   const ref = useRef<HTMLDivElement>(null);
   const plugins = useCreation(
     () => [
@@ -54,11 +54,6 @@ export const Markdown: FC<{
     };
   }, [file, plugins]);
 
-  if (cloze) {
-    // wont change
-    useCloze(ref);
-  }
-
   useExternal(
     locale === 'zh'
       ? 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/katex.min.css'
@@ -70,7 +65,7 @@ export const Markdown: FC<{
 
   return (
     <div
-      ref={ref}
+      ref={mergeRefs(ref, domRef)}
       className={clsx('markdown-body', className)}
       id={id}
       dangerouslySetInnerHTML={{ __html: file?.toString() || '' }}

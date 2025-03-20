@@ -1,4 +1,4 @@
-import { BACK_INDICATOR_ID } from '@/utils/const';
+import { BACK_INDICATOR_ID, IS_DEV } from '@/utils/const';
 import { atom, useAtom } from 'jotai';
 
 declare global {
@@ -11,7 +11,7 @@ const backAtom = atom(Boolean(document.getElementById(BACK_INDICATOR_ID)));
 
 export const useBack = () => {
   const [back, setBack] = useAtom(backAtom);
-  if (process.env.NODE_ENV === 'development') {
+  if (IS_DEV) {
     window.setBack = setBack;
   }
   return [back, setBack] as const;

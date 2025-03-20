@@ -54,5 +54,8 @@
   "optionsPage": "选项配置",
   "optionsHelp": "以下内容可以选中复制，详细步骤请查看 <a target=\"_blank\" href=\"https://template.ikkz.fun/docs/embed-options?from=anki\">这里</a>",
   "cloze": "启用填空",
-  "clozeDetail": "具体用法请查看官网填空模板文档"
+  "clozeDetail": "具体用法请查看官网填空模板文档",
+  "unsupportedClozeType": "不支持这种类型的答案比较",
+  "caseSensitiveCompare": "大小写敏感的答案比较",
+  "instantFeedback": "输入答案时实时颜色反馈"
 }
