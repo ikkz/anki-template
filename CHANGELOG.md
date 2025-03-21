@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.3.2
+
+### Patch Changes
+
+- a835910: fix: wrap text in unit by default
+
 ## 2.3.1
 
 ### Patch Changes
