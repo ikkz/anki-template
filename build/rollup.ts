@@ -16,6 +16,7 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import postcssNested from 'postcss-nested';
 import type {
   InputOptions,
   OutputAsset,
@@ -128,6 +129,7 @@ export async function rollupOptions(
         postcss({
           extract: true,
           plugins: [
+            postcssNested(),
             autoprefixer(),
             tailwindcss(),
             envValue(
