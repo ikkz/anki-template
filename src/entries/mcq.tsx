@@ -212,7 +212,7 @@ export default () => {
               <div className="text-center text-3xl font-bold italic text-opacity-50">
                 <span className="align-super">
                   {selected.length ? (
-                    originOptions.map((name) => {
+                    options.map((name) => {
                       const selectResult = getSelectResult(name);
                       if (!['wrong', 'correct'].includes(selectResult)) {
                         return null;
