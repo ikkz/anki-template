@@ -6,11 +6,13 @@ import { Page, useNavigate } from '@/hooks/use-page';
 import {
   biggerTextAtom,
   blurOptionsAtom,
+  caseSensitiveAtom,
   clozeAtom,
   hideAboutAtom,
   hideMcqAnswerAtom,
   hideQuestionTypeAtom,
   hideTimerAtom,
+  instantFeedbackAtom,
   noScrollAtom,
   randomOptionsAtom,
   selectionMenuAtom,
@@ -124,6 +126,26 @@ if (entry === 'mcq' || entry === 'mcq_10') {
           checked={hideMcqAnswer}
           onChange={setHideMcqAnswer}
           data-testid="setting:hideMcqAnswer"
+        />
+        <CommonOptions />
+      </>
+    );
+  };
+} else if (entry === 'input') {
+  OptionList = () => {
+    const [caseSensitive, setCaseSensitive] = useAtom(caseSensitiveAtom);
+    const [instantFeedback, setInstantFeedback] = useAtom(instantFeedbackAtom);
+    return (
+      <>
+        <Checkbox
+          title={t.caseSensitiveCompare}
+          checked={caseSensitive}
+          onChange={setCaseSensitive}
+        />
+        <Checkbox
+          title={t.instantFeedback}
+          checked={instantFeedback}
+          onChange={setInstantFeedback}
         />
         <CommonOptions />
       </>

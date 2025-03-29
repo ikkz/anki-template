@@ -1,5 +1,6 @@
 import { ToolsContext } from '@/features/tools/context';
 import { selectionMenuAtom } from '@/store/settings';
+import { tw } from '@/styles/tw';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai/react';
 import { FC, PropsWithChildren, ReactNode } from 'react';
@@ -24,7 +25,8 @@ export const Block: FC<
       <div
         className={clsx(
           'sm:rounded-xl border-y sm:border bg-white px-5 py-5',
-          'dark:border-gray-500 dark:bg-opacity-5',
+          'dark:bg-opacity-5',
+          tw.borderColor,
         )}
       >
         {enableTools && prefSelectionMenu ? (

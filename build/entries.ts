@@ -226,6 +226,35 @@ const entries = {
       },
     ],
   }),
+  input: defineEntry({
+    desc: 'Type in answer',
+    fields: ['question', 'answer', 'note', 'Tags'],
+    notes: [
+      {
+        config: {
+          field: 'native',
+        },
+        fields: {
+          question:
+            '<p>The three essential technologies to learn for web development are: {{HTML}}, {{CSS}}, and {{JavaScript}}.</p> <p>{{<img src="https://developer.mozilla.org/favicon.ico" />}}</p>',
+          answer: 'answer',
+          note: 'note',
+        },
+      },
+      {
+        config: {
+          field: 'markdown',
+        },
+        fields: {
+          question: mdQuestion
+            .replace('Basic Syntax', wrapClozeUnit)
+            .replace('love **bold', wrapClozeUnit),
+          answer: 'answer',
+          note: 'note',
+        },
+      },
+    ],
+  }),
 };
 
 export { entries };

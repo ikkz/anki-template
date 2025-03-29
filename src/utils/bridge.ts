@@ -1,3 +1,5 @@
+import { IS_DEV } from './const';
+
 declare const pycmd: (cmd: string) => void | undefined;
 declare const study: { drawAnswer: () => void } | undefined;
 declare const AnkiDroidJS: any;
@@ -19,7 +21,7 @@ export function flipToBack() {
     showAnswer();
   } else if (window.anki && window.sendMessage2) {
     window.sendMessage2('ankitap', 'midCenter');
-  } else if (process.env.NODE_ENV === 'development') {
+  } else if (IS_DEV) {
     window.setBack?.(true);
   }
 }
@@ -29,5 +31,5 @@ export function isAnkiDroid() {
 }
 
 export function isAnkiClient() {
-  return typeof window.e2eAnki === 'undefined';
+  return !IS_DEV && typeof window.e2eAnki === 'undefined';
 }

@@ -54,5 +54,8 @@
   "optionsPage": "オプション設定",
   "optionsHelp": "以下の内容を選択してコピーできます。詳細手順は <a target=\"_blank\" href=\"https://template.ikkz.fun/docs/embed-options?from=anki\">こちら</a> をご覧ください。",
   "cloze": "クローズを有効にする",
-  "clozeDetail": "具体的な使い方は、公式のクローズテンプレートのドキュメントをご覧ください"
+  "clozeDetail": "具体的な使い方は、公式のクローズテンプレートのドキュメントをご覧ください",
+  "unsupportedClozeType": "このタイプの回答の比較はサポートされていません",
+  "caseSensitiveCompare": "大文字と小文字を区別する回答の比較",
+  "instantFeedback": "回答を入力する際のリアルタイムカラーのフィードバック"
 }

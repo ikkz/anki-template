@@ -28,3 +28,8 @@ export const hideMcqAnswerAtom = atomWithScopedStorage<boolean>(
   false,
 );
 export const clozeAtom = atomWithScopedStorage<boolean>('cloze', false);
+export const instantFeedbackAtom = atomWithScopedStorage<boolean>(
+  'instantFeedback',
+  false,
+);
+export const caseSensitiveAtom = atomWithScopedStorage('caseSensitive', true);

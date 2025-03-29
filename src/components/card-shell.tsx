@@ -3,14 +3,15 @@ import { Block } from './block';
 import { Button } from './button';
 import { Dot } from './dot';
 import { TimerBlock } from './timer';
+import { ClozeField } from '@/features/cloze/cloze-field';
 import { useBack } from '@/hooks/use-back';
 import { useField } from '@/hooks/use-field';
 import { Page, PageContext } from '@/hooks/use-page';
 import { DEFAULT_PAGES } from '@/pages';
 import { biggerTextAtom, hideAboutAtom, noScrollAtom } from '@/store/settings';
+import { IS_DEV } from '@/utils/const';
 import * as t from 'at/i18n';
-import { locale } from 'at/options';
-import { AnkiField } from 'at/virtual/field';
+import { entry, locale } from 'at/options';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { FC, ReactNode, useState } from 'react';
@@ -18,6 +19,7 @@ import { FC, ReactNode, useState } from 'react';
 interface Props {
   header?: ReactNode;
   title: ReactNode;
+  question?: ReactNode;
   questionExtra?: ReactNode;
   answer?: ReactNode;
 }
@@ -25,13 +27,14 @@ interface Props {
 export const CardShell: FC<Props> = ({
   header,
   title,
+  question,
   questionExtra,
   answer,
 }) => {
   const prefHideAbout = useAtomValue(hideAboutAtom);
   const prefBiggerText = useAtomValue(biggerTextAtom);
   const prefNoScroll = useAtomValue(noScrollAtom);
-  const [back] = useBack();
+  const [back, setBack] = useBack();
 
   const tags = useField('Tags')?.split(' ');
 
@@ -45,6 +48,7 @@ export const CardShell: FC<Props> = ({
         'w-full max-w-2xl lg:max-w-3xl',
         `locale-${locale}`,
       )}
+      data-at-entry={entry}
     >
       {header}
       <PageContext.Provider value={{ page, setPage }}>
@@ -73,10 +77,14 @@ export const CardShell: FC<Props> = ({
             className="relative"
             enableTools
           >
-            <AnkiField
-              name="question"
-              className={clsx(prefBiggerText ? 'prose-xl' : '')}
-            />
+            {question ? (
+              question
+            ) : (
+              <ClozeField
+                name="question"
+                className={clsx(prefBiggerText ? 'prose-xl' : '')}
+              />
+            )}
             {questionExtra}
           </Block>
           {back && answer ? (
@@ -96,6 +104,11 @@ export const CardShell: FC<Props> = ({
           )}
         </div>
       </PageContext.Provider>
+      {IS_DEV ? (
+        <button className="fixed top-1 left-1" onClick={() => setBack(true)}>
+          Back
+        </button>
+      ) : null}
     </div>
   );
 };

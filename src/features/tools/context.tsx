@@ -1,6 +1,8 @@
 import { useTextSelection } from '@/hooks/use-text-selection';
 import { toolsAtom } from '@/store/tools';
+import { tw } from '@/styles/tw';
 import { getUrl } from '@/utils/tool';
+import clsx from 'clsx';
 import { useAtomValue } from 'jotai/react';
 import { FC, PropsWithChildren, useMemo, useRef } from 'react';
 import { useThrottle } from 'react-use';
@@ -26,7 +28,12 @@ export const ToolsContext: FC<PropsWithChildren> = ({ children }) => {
           zIndex: 999,
         }}
       >
-        <div className="pointer-events-auto mx-auto flex flex-col rounded-md border bg-white dark:bg-neutral-600 p-1 shadow-xl text-sm">
+        <div
+          className={clsx(
+            'pointer-events-auto mx-auto flex flex-col rounded-md border bg-white dark:bg-neutral-600 p-1 shadow-xl text-sm',
+            tw.borderColor,
+          )}
+        >
           {tools.map((tool) => (
             <a
               key={tool.id}
