@@ -1,6 +1,7 @@
 import { CardShell } from '@/components/card-shell';
 import { ClozeInputField, Report } from '@/features/cloze/cloze-input-field';
 import '@/styles/input.css';
+import { tw } from '@/styles/tw';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
 import * as t from 'at/i18n';
@@ -36,7 +37,7 @@ export default () => {
           ? reports.map((report) => (
               <div
                 key={report.datas[0].index}
-                className="flex border-t py-2 mt-2"
+                className={clsx('flex border-t py-2 mt-2', tw.borderColor)}
               >
                 <div className="flex-1">
                   <div className="text-neutral-500 mb-1 text-sm">
@@ -48,9 +49,12 @@ export default () => {
                       <span
                         key={idx}
                         className={clsx({
-                          'bg-green-200': op.kind === 'retain',
-                          'bg-yellow-200': op.kind === 'insert',
-                          'bg-red-200 line-through': op.kind === 'delete',
+                          'bg-green-200 dark:bg-green-900/50':
+                            op.kind === 'retain',
+                          'bg-yellow-200 dark:bg-yellow-900/50':
+                            op.kind === 'insert',
+                          'bg-red-200 dark:bg-red-900/50 line-through':
+                            op.kind === 'delete',
                         })}
                       >
                         {op.content}
@@ -72,15 +76,12 @@ export default () => {
       }
       answer={
         <>
-          {hasAnswer ? (
-            <AnkiField name="answer" className="prose dark:prose-invert" />
+          {hasAnswer ? <AnkiField name="answer" className={tw.prose} /> : null}
+          {hasAnswer && hasNote ? (
+            <hr className={clsx('my-4', tw.borderColor)} />
           ) : null}
-          {hasAnswer && hasNote ? <hr className="my-4" /> : null}
           {hasNote ? (
-            <AnkiField
-              name="note"
-              className={clsx('prose prose-sm', 'dark:prose-invert')}
-            />
+            <AnkiField name="note" className={clsx('prose-sm', tw.prose)} />
           ) : null}
         </>
       }
