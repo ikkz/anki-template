@@ -13,6 +13,8 @@ const HIGHLIGHT_CLS = 'at-cloze-highlight';
 
 export default () => {
   const hasNote = !isFieldEmpty(FIELD_ID('note'));
+  const hasAnswer = !isFieldEmpty(FIELD_ID('answer'));
+
   const [reports, setReports] = useState<Report[]>([]);
   const highlightCloze = (report: Report) => {
     report.nodes.forEach((el) => {
@@ -29,54 +31,58 @@ export default () => {
     <CardShell
       title={t.question}
       question={<ClozeInputField name="question" setReports={setReports} />}
-      answer={
-        reports.length || hasNote ? (
-          <>
-            {reports.length
-              ? reports.map((report) => (
-                  <div
-                    key={report.datas[0].index}
-                    className="flex border-b last:border-none py-2 mb-2"
-                  >
-                    <div className="flex-1">
-                      <div className="text-neutral-500 mb-1 text-sm">
-                        #{report.datas[0].index}{' '}
-                        {report.hasWholeType
-                          ? `(${t.unsupportedClozeType})`
-                          : ''}
-                      </div>
-                      <div className="">
-                        {report.ops?.map((op, idx) => (
-                          <span
-                            key={idx}
-                            className={clsx({
-                              'bg-green-200': op.kind === 'retain',
-                              'bg-yellow-200': op.kind === 'insert',
-                              'bg-red-200 line-through': op.kind === 'delete',
-                            })}
-                          >
-                            {op.content}
-                          </span>
-                        )) ?? report.value}
-                      </div>
-                    </div>
-                    <div
-                      className="p-2 cursor-pointer"
-                      onClick={() => highlightCloze(report)}
-                    >
-                      <LocateFixed strokeWidth="1.5px" />
-                    </div>
+      questionExtra={
+        reports.length
+          ? reports.map((report) => (
+              <div
+                key={report.datas[0].index}
+                className="flex border-t py-2 mt-2"
+              >
+                <div className="flex-1">
+                  <div className="text-neutral-500 mb-1 text-sm">
+                    #{report.datas[0].index}{' '}
+                    {report.hasWholeType ? `(${t.unsupportedClozeType})` : ''}
                   </div>
-                ))
-              : null}
-            {hasNote ? (
-              <AnkiField
-                name="note"
-                className={clsx('prose prose-sm', 'dark:prose-invert')}
-              />
-            ) : null}
-          </>
-        ) : null
+                  <div>
+                    {report.ops?.map((op, idx) => (
+                      <span
+                        key={idx}
+                        className={clsx({
+                          'bg-green-200': op.kind === 'retain',
+                          'bg-yellow-200': op.kind === 'insert',
+                          'bg-red-200 line-through': op.kind === 'delete',
+                        })}
+                      >
+                        {op.content}
+                      </span>
+                    )) ||
+                      report.value ||
+                      '-'}
+                  </div>
+                </div>
+                <div
+                  className="p-2 cursor-pointer"
+                  onClick={() => highlightCloze(report)}
+                >
+                  <LocateFixed strokeWidth="1.5px" />
+                </div>
+              </div>
+            ))
+          : null
+      }
+      answer={
+        <>
+          {hasAnswer ? (
+            <AnkiField name="answer" className="prose dark:prose-invert" />
+          ) : null}
+          {hasAnswer && hasNote ? <hr className="my-4" /> : null}
+          {hasNote ? (
+            <AnkiField
+              name="note"
+              className={clsx('prose prose-sm', 'dark:prose-invert')}
+            />
+          ) : null}
+        </>
       }
     />
   );
