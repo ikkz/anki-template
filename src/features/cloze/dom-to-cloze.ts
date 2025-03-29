@@ -88,7 +88,7 @@ export function getClozeNodes(container: Element, node: Element | number) {
     return [];
   }
   return Array.from(
-    container.querySelectorAll(`[${CLOZE_INDEX_ATTR}='${index}'`),
+    container.querySelectorAll(`[${CLOZE_INDEX_ATTR}='${index}']`),
   );
 }
 
