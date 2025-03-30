@@ -1,5 +1,15 @@
 # anki-templates
 
+## 2.4.0
+
+### Minor Changes
+
+- e1ddc1b: feat(input): new input template
+
+### Patch Changes
+
+- b000436: style: improve style
+
 ## 2.3.2
 
 ### Patch Changes
