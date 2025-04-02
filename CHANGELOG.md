@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.4.2
+
+### Patch Changes
+
+- 9767024: fix: eliminate first card delay of AnkiDroid
+
 ## 2.4.1
 
 ### Patch Changes
