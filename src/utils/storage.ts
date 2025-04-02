@@ -31,7 +31,7 @@ function createAnkiDroidStorage() {
   const as: ReturnType<typeof getAnkiStorage> = new Promise((resolve) => {
     setTimeout(() => {
       resolve(getAnkiStorage('https://anki-storage.pages.dev/ikkz-template'));
-    }, 0);
+    }, 1);
   });
   const updaters = new Map<string, Array<(value: string | null) => void>>();
 
