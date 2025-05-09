@@ -27,6 +27,7 @@ export const items: ConfigItem[] = [
       'match',
       'cloze',
       'input',
+      'vocab',
     ] as const satisfies (keyof typeof entries)[],
   },
   {
