@@ -7,7 +7,8 @@ export const EnAbout = () => (
   <div className={clsx('prose prose-sm', 'dark:prose-invert')}>
     <p>
       Docs of this template:{' '}
-      <a href={`https://template.ikkz.fun/docs/${entry}`}>click here</a>
+      <a href={`https://template.ikkz.fun/docs/${entry}`}>click here</a>. You
+      can hide this About block in the card settings
     </p>
     <p>
       Thank you for using my carefully crafted Anki template! The best way to
@@ -46,6 +47,7 @@ export const ZhAbout = () => (
     <p>
       本模板使用文档:{' '}
       <a href={`https://template.ikkz.fun/docs/${entry}`}>点击此处</a>
+      。你可以在卡片设置中隐藏此关于区域。
     </p>
     <p>
       感谢您使用我精心制作的 Anki 模板！ 支持我的最好方式是在{' '}

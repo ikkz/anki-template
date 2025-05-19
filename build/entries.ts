@@ -255,6 +255,30 @@ const entries = {
       },
     ],
   }),
+  vocab: defineEntry({
+    desc: 'Vocabulary template (requires network during review)',
+    fields: ['word', 'note', 'override', 'Tags'],
+    notes: [
+      {
+        config: {
+          field: 'native',
+        },
+        fields: {
+          word: 'fetch',
+          note: 'note',
+        },
+      },
+      {
+        config: {
+          field: 'markdown',
+        },
+        fields: {
+          word: 'fetch',
+          note: 'note',
+        },
+      },
+    ],
+  }),
 };
 
 export { entries };
