@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.4.4
+
+### Patch Changes
+
+- 19bebfe: feat: disable countdown by default
+
 ## 2.4.3
 
 ### Patch Changes
