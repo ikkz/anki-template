@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.4.3
+
+### Patch Changes
+
+- 37a9040: feat(mcq_26): add mcq template with 26 options
+
 ## 2.4.2
 
 ### Patch Changes
