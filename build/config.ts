@@ -33,7 +33,7 @@ export const items: ConfigItem[] = [
   {
     key: 'locale',
     len: 4,
-    variants: ['zh', 'en', 'ja'],
+    variants: ['zh', 'en', 'ja', 'pt-br'],
   },
   {
     key: 'field',
