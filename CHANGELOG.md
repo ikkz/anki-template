@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.4.5
+
+### Patch Changes
+
+- 921698c: feat: add Portuguese (pt-br) translations
+
 ## 2.4.4
 
 ### Patch Changes
