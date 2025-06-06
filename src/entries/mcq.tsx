@@ -152,7 +152,7 @@ export default () => {
                         selectResult !== 'none',
                       'after:origin-top-right after:scale-75':
                         selectResult !== 'none' &&
-                        ['en', 'ja'].includes(locale),
+                        ['en', 'ja', 'pt_br'].includes(locale),
                       'before:text-red-500 after:bg-red-500':
                         selectResult === 'wrong',
                       'before:text-green-500 after:bg-green-500':

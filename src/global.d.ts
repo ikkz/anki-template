@@ -10,7 +10,7 @@ declare module 'at/i18n' {
   const i18nMap: typeof import('../translations/en.json') &
     typeof import('../translations/zh.json') &
     typeof import('../translations/ja.json') &
-    typeof import('../translations/pt-br.json');
+    typeof import('../translations/pt_br.json');
   export = i18nMap;
 }
 
