@@ -10,6 +10,12 @@ export const EnAbout = () => (
       <a href={`https://template.ikkz.fun/docs/${entry}`}>click here</a>
     </p>
     <p>
+      <em>
+        Tip: You can hide this About section by setting the{' '}
+        <code>window.atHideAboutByDefault = true</code> in the template.
+      </em>
+    </p>
+    <p>
       Thank you for using my carefully crafted Anki template! The best way to
       support me is giving me a star at{' '}
       <a href="https://github.com/ikkz/anki-template">github</a>, or consider
@@ -46,6 +52,12 @@ export const ZhAbout = () => (
     <p>
       本模板使用文档:{' '}
       <a href={`https://template.ikkz.fun/docs/${entry}`}>点击此处</a>
+    </p>
+    <p>
+      <em>
+        提示: 您可以通过在模板中设置{' '}
+        <code>window.atHideAboutByDefault = true</code> 来隐藏这个 About 区域。
+      </em>
     </p>
     <p>
       感谢您使用我精心制作的 Anki 模板！ 支持我的最好方式是在{' '}
