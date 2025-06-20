@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.5.0
+
+### Minor Changes
+
+- 9b532c0: feat: Provide a more convenient way to hide "About" section
+
 ## 2.4.5
 
 ### Patch Changes
