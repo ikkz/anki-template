@@ -145,6 +145,10 @@ export async function rollupOptions(
             const { files = {} } = options || {};
             let frontHtml = '';
             frontHtml += `<script>
+
+/* if you want to hide the "About" section, change the "false" below to "true" */
+window.atHideAboutByDefault = false;
+
 window.atDefaultOptions =
 
 /* options begin */

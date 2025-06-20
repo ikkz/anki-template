@@ -8,7 +8,17 @@ export const selectionMenuAtom = atomWithScopedStorage<boolean>(
   'selectionMenu',
   true,
 );
-export const hideAboutAtom = atomWithScopedStorage<boolean>('hideAbout', false);
+
+declare global {
+  interface Window {
+    atHideAboutByDefault?: boolean;
+  }
+}
+
+export const hideAboutAtom = atomWithScopedStorage<boolean>(
+  'hideAbout',
+  !!window.atHideAboutByDefault,
+);
 export const biggerTextAtom = atomWithScopedStorage<boolean>(
   'biggerText',
   false,
