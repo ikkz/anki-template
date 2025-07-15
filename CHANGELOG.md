@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.5.1
+
+### Patch Changes
+
+- d1b984a: fix(match): support formula
+
 ## 2.5.0
 
 ### Minor Changes
