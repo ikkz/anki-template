@@ -1,3 +1,4 @@
+import { noop } from 'lodash-es';
 import { FC, useLayoutEffect, useRef } from 'react';
 
 declare global {
@@ -15,7 +16,7 @@ export const NativeText: FC<{ text: string }> = ({ text }) => {
     const span = document.createElement('span');
     span.innerText = text;
     ref.current?.appendChild(span);
-    window.MathJax?.typesetPromise?.([span]);
+    window.MathJax?.typesetPromise?.([span]).catch(noop);
     return () => span.remove();
   }, [text]);
 
