@@ -1,4 +1,5 @@
 import { CardShell } from '@/components/card-shell';
+import { NativeText } from '@/components/native-text';
 import { Tag } from '@/components/tag';
 import { useBack } from '@/hooks/use-back';
 import { useCrossState } from '@/hooks/use-cross-state';
@@ -46,10 +47,11 @@ const ItemComponent: FC<{
   status?: 'correct' | 'missed' | 'wrong' | 'default';
 }> = ({ item, status = 'default' }) => {
   const [back] = useBack();
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: item.id,
-    disabled: back,
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: item.id,
+      disabled: back,
+    });
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
@@ -57,9 +59,18 @@ const ItemComponent: FC<{
     : undefined;
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div
+      ref={setNodeRef}
+      style={{
+        zIndex: isDragging ? 99999 : undefined,
+        ...style,
+      }}
+      {...listeners}
+      {...attributes}
+    >
       <Tag
         size="md"
+        className={isDragging ? 'shadow' : undefined}
         color={
           (
             {
@@ -71,8 +82,7 @@ const ItemComponent: FC<{
           )[status]
         }
       >
-        {' '}
-        {item.name}
+        <NativeText text={item.name} />
       </Tag>
     </div>
   );

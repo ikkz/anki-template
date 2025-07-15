@@ -41,7 +41,6 @@ export async function rollupOptions(
       .then(JSON.parse);
     return {
       input: 'entry',
-      jsx: 'react-jsx',
       transform: {
         jsx: {
           runtime: 'automatic',
