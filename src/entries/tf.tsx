@@ -9,16 +9,16 @@ import * as t from 'at/i18n';
 import { extractItems } from 'at/virtual/extract-tf-items';
 import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
-import { CheckCircle, XCircle, Triangle } from 'lucide-react';
+import { CheckCircle, XCircle, Triangle, Check, X } from 'lucide-react';
 import { type ReactElement } from 'react';
 
 const WrongAnwserIndicator = () => (
   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1">
     <Triangle
-      size={14}
+      size={16}
       fill="#ef4444"
       color="#ef4444"
-      className="animate-bounce"
+      className="animate-pulse"
     />
   </div>
 );
@@ -51,35 +51,51 @@ const Item = ({ node, answer, index }: ItemProp) => {
   return (
     <div
       className={clsx(
-        'rounded-xl pl-4 pr-2 py-2 mt-4 flex items-center justify-between',
+        'rounded-xl pl-4 pr-2 py-2 mt-4 flex items-center justify-between border-2',
         back
           ? displayStatus === answer
-            ? 'bg-indigo-50'
-            : 'bg-red-100'
-          : 'bg-indigo-50',
-        'dark:bg-opacity-10',
+            ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-700'
+            : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-700'
+          : 'bg-indigo-50 border-indigo-200 dark:bg-neutral-800 dark:border-neutral-600',
       )}
     >
       <div
         className={clsx(
           'prose prose-neutral dark:prose-invert rm-prose-y',
-          'flex-grow mr-2',
+          'flex-grow mr-2 flex items-center',
         )}
       >
-        {node}
+        {back && (
+          <div className="mr-3 flex-shrink-0">
+            {displayStatus === answer ? (
+              <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                <Check size={16} color="white" strokeWidth={3} />
+              </div>
+            ) : (
+              <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                <X size={16} color="white" strokeWidth={3} />
+              </div>
+            )}
+          </div>
+        )}
+        <div className="flex-grow">{node}</div>
       </div>
       <div className="relative">
         <div className="flex space-x-2">
           <div
             className={clsx(
-              'p-2 rounded-full relative',
+              'p-2 rounded-full relative border-2',
               {
                 'cursor-pointer transition-transform hover:scale-105 active:scale-95':
                   !back,
               },
-              displayStatus === true
-                ? 'bg-green-500 text-white'
-                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
+              back
+                ? answer === true
+                  ? 'bg-green-500 text-white border-green-600'
+                  : 'bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-neutral-400 border-gray-300 dark:border-neutral-600'
+                : displayStatus === true
+                  ? 'bg-blue-500 text-white border-blue-600'
+                  : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 border-indigo-200 dark:border-neutral-600',
             )}
             onClick={() => onStatusChange(true)}
           >
@@ -88,14 +104,18 @@ const Item = ({ node, answer, index }: ItemProp) => {
           </div>
           <div
             className={clsx(
-              'p-2 rounded-full relative',
+              'p-2 rounded-full relative border-2',
               {
                 'cursor-pointer transition-transform hover:scale-105 active:scale-95':
                   !back,
               },
-              displayStatus === false
-                ? 'bg-orange-500 text-white'
-                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
+              back
+                ? answer === false
+                  ? 'bg-orange-500 text-white border-orange-600'
+                  : 'bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-neutral-400 border-gray-300 dark:border-neutral-600'
+                : displayStatus === false
+                  ? 'bg-blue-500 text-white border-blue-600'
+                  : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 border-indigo-200 dark:border-neutral-600',
             )}
             onClick={() => onStatusChange(false)}
           >
@@ -110,18 +130,34 @@ const Item = ({ node, answer, index }: ItemProp) => {
 };
 
 export default () => {
-  const items = useCreation(() => {
+  const [back] = useBack();
+  const rawItems = useCreation(() => {
     const field = document.getElementById(FIELD_ID('items'));
     if (!field) {
       return [];
     }
-    return extractItems(field).map(({ node, answer }, idx) => (
-      <Item index={idx} key={idx} node={node} answer={answer} />
-    ));
+    return extractItems(field);
   }, []);
 
+  const items = useCreation(() => {
+    return rawItems.map(({ node, answer }, idx) => (
+      <Item index={idx} key={idx} node={node} answer={answer} />
+    ));
+  }, [rawItems]);
+
   const hasNote = !isFieldEmpty(FIELD_ID('note'));
-  const [back] = useBack();
+
+  // Check if any answers are wrong when on the back
+  const hasWrongAnswers = useCreation(() => {
+    if (!back) return false;
+    return rawItems.some((item, idx) => {
+      const statusKey = `status-${idx}`;
+      const storedStatus = localStorage.getItem(statusKey);
+      if (storedStatus === null) return true; // No answer given
+      const userAnswer = JSON.parse(storedStatus);
+      return userAnswer !== item.answer;
+    });
+  }, [back, rawItems]);
 
   return (
     <CardShell
@@ -129,14 +165,19 @@ export default () => {
       questionExtra={
         <>
           {items}
-          {back ? (
-            <div className="flex items-center justify-end space-x-1 mt-2 text-xs text-gray-500">
-              {t.yourWrongAnswer}
+          {back && hasWrongAnswers ? (
+            <div className="flex items-center justify-center space-x-2 mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm">
+              <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <X size={12} color="white" strokeWidth={3} />
+              </div>
+              <span className="text-red-700 dark:text-red-300 font-medium">
+                {t.yourWrongAnswer}
+              </span>
               <Triangle
-                size={12}
-                fill="#f87171"
-                color="#f87171"
-                className="ml-1"
+                size={14}
+                fill="#ef4444"
+                color="#ef4444"
+                className="animate-pulse"
               />
             </div>
           ) : null}
