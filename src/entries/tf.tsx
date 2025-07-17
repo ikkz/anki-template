@@ -2,6 +2,7 @@ import { CardShell } from '@/components/card-shell';
 import { useBack } from '@/hooks/use-back';
 import { useCrossState } from '@/hooks/use-cross-state';
 import { FIELD_ID } from '@/utils/const';
+import { crossStorage } from '@/utils/cross-storage';
 import { isFieldEmpty } from '@/utils/field';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
@@ -152,10 +153,9 @@ export default () => {
     if (!back) return false;
     return rawItems.some((item, idx) => {
       const statusKey = `status-${idx}`;
-      const storedStatus = localStorage.getItem(statusKey);
-      if (storedStatus === null) return true; // No answer given
-      const userAnswer = JSON.parse(storedStatus);
-      return userAnswer !== item.answer;
+      const storedStatus = crossStorage.getItem(statusKey, undefined);
+      if (storedStatus === undefined) return true; // No answer given
+      return storedStatus !== item.answer;
     });
   }, [back, rawItems]);
 
