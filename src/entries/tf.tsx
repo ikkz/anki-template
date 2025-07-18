@@ -80,11 +80,12 @@ const Item = ({ node, answer, index }: ItemProp) => {
               },
               back
                 ? displayStatus === true
-                  ? 'bg-blue-500 text-white border-blue-600'
+                  ? 'bg-indigo-500 text-white border-indigo-600'
                   : 'bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-neutral-400 border-gray-300 dark:border-neutral-600'
                 : displayStatus === true
-                  ? 'bg-blue-500 text-white border-blue-600'
+                  ? 'bg-indigo-500 text-white border-indigo-600'
                   : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 border-indigo-200 dark:border-neutral-600',
+              back && answer === true && 'border-green-500 border-4',
             )}
             onClick={() => onStatusChange(true)}
           >
@@ -99,11 +100,12 @@ const Item = ({ node, answer, index }: ItemProp) => {
               },
               back
                 ? displayStatus === false
-                  ? 'bg-blue-500 text-white border-blue-600'
+                  ? 'bg-indigo-500 text-white border-indigo-600'
                   : 'bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-neutral-400 border-gray-300 dark:border-neutral-600'
                 : displayStatus === false
-                  ? 'bg-blue-500 text-white border-blue-600'
+                  ? 'bg-indigo-500 text-white border-indigo-600'
                   : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400 border-indigo-200 dark:border-neutral-600',
+              back && answer === false && 'border-green-500 border-4',
             )}
             onClick={() => onStatusChange(false)}
           >
