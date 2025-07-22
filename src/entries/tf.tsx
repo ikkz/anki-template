@@ -123,6 +123,7 @@ export default () => {
     <CardShell
       title={t.question}
       questionExtra={<>{items}</>}
+      answerTitle={t.note}
       answer={
         hasNote ? (
           <AnkiField

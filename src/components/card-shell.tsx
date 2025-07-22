@@ -21,6 +21,7 @@ interface Props {
   title: ReactNode;
   question?: ReactNode;
   questionExtra?: ReactNode;
+  answerTitle?: string;
   answer?: ReactNode;
 }
 
@@ -29,6 +30,7 @@ export const CardShell: FC<Props> = ({
   title,
   question,
   questionExtra,
+  answerTitle = t.answer,
   answer,
 }) => {
   const prefHideAbout = useAtomValue(hideAboutAtom);
@@ -89,7 +91,7 @@ export const CardShell: FC<Props> = ({
           </Block>
           {back && answer ? (
             <Block
-              name={t.answer}
+              name={answerTitle}
               id={prefNoScroll ? undefined : 'answer'}
               enableTools
             >
