@@ -3,25 +3,15 @@ import { useBack } from '@/hooks/use-back';
 import { useCrossState } from '@/hooks/use-cross-state';
 import { FIELD_ID } from '@/utils/const';
 import { isFieldEmpty } from '@/utils/field';
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import * as t from 'at/i18n';
 import { extractItems } from 'at/virtual/extract-tf-items';
 import { AnkiField } from 'at/virtual/field';
 import clsx from 'clsx';
-import { CheckCircle, XCircle, Triangle } from 'lucide-react';
-import { type ReactElement } from 'react';
-
-const WrongAnwserIndicator = () => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1">
-    <Triangle
-      size={14}
-      fill="#ef4444"
-      color="#ef4444"
-      className="animate-bounce"
-    />
-  </div>
-);
+import { CheckCircle, XCircle } from 'lucide-react';
+import { useEffect, useState, type ReactElement } from 'react';
 
 interface ItemProp {
   index: number;
@@ -44,18 +34,36 @@ const Item = ({ node, answer, index }: ItemProp) => {
     setStatus(status);
   });
 
-  const displayStatus = back ? answer : status;
+  const [laterBack, setLaterBack] = useState(false);
 
-  const showWrong = back && answer !== status;
+  useEffect(() => {
+    if (!back) {
+      return;
+    }
+    const id = setTimeout(() => {
+      setLaterBack(true);
+    }, 50);
+    return () => clearTimeout(id);
+  }, [back, status]);
+
+  const displayButtons = laterBack
+    ? typeof status === 'boolean'
+      ? [status]
+      : []
+    : [true, false];
+
+  const [animationRef] = useAutoAnimate({
+    duration: 200,
+  });
 
   return (
     <div
       className={clsx(
-        'rounded-xl pl-4 pr-2 py-2 mt-4 flex items-center justify-between',
-        back
-          ? displayStatus === answer
-            ? 'bg-indigo-50'
-            : 'bg-red-100'
+        'rounded-xl pl-4 pr-2 py-2 mt-4 flex items-center justify-between transition-colors duration-200 border-transparent border-2',
+        laterBack
+          ? answer === status
+            ? 'bg-green-50 !border-green-500'
+            : 'bg-red-50 !border-red-500'
           : 'bg-indigo-50',
         'dark:bg-opacity-10',
       )}
@@ -69,41 +77,30 @@ const Item = ({ node, answer, index }: ItemProp) => {
         {node}
       </div>
       <div className="relative">
-        <div className="flex space-x-2">
-          <div
-            className={clsx(
-              'p-2 rounded-full relative',
-              {
-                'cursor-pointer transition-transform hover:scale-105 active:scale-95':
-                  !back,
-              },
-              displayStatus === true
-                ? 'bg-green-500 text-white'
-                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
-            )}
-            onClick={() => onStatusChange(true)}
-          >
-            <CheckCircle size={24} />
-            {showWrong && status === true ? <WrongAnwserIndicator /> : null}
-          </div>
-          <div
-            className={clsx(
-              'p-2 rounded-full relative',
-              {
-                'cursor-pointer transition-transform hover:scale-105 active:scale-95':
-                  !back,
-              },
-              displayStatus === false
-                ? 'bg-orange-500 text-white'
-                : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
-            )}
-            onClick={() => onStatusChange(false)}
-          >
-            <XCircle size={24} />
-            {showWrong && status === false ? <WrongAnwserIndicator /> : null}
-          </div>
+        <div
+          className="flex space-x-2 justify-end transition-[width] duration-500"
+          ref={animationRef}
+          style={{ width: laterBack ? 40 : 88, height: 40 }}
+        >
+          {displayButtons.map((bool) => (
+            <div
+              className={clsx(
+                'p-2 rounded-full relative',
+                {
+                  'cursor-pointer transition-transform hover:scale-105 active:scale-95':
+                    !back,
+                },
+                status === bool
+                  ? 'bg-indigo-500 text-white'
+                  : 'bg-indigo-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400',
+              )}
+              onClick={() => onStatusChange(bool)}
+              key={String(bool)}
+            >
+              {bool ? <CheckCircle size={24} /> : <XCircle size={24} />}
+            </div>
+          ))}
         </div>
-        {showWrong && status === undefined ? <WrongAnwserIndicator /> : null}
       </div>
     </div>
   );
@@ -121,27 +118,11 @@ export default () => {
   }, []);
 
   const hasNote = !isFieldEmpty(FIELD_ID('note'));
-  const [back] = useBack();
 
   return (
     <CardShell
       title={t.question}
-      questionExtra={
-        <>
-          {items}
-          {back ? (
-            <div className="flex items-center justify-end space-x-1 mt-2 text-xs text-gray-500">
-              {t.yourWrongAnswer}
-              <Triangle
-                size={12}
-                fill="#f87171"
-                color="#f87171"
-                className="ml-1"
-              />
-            </div>
-          ) : null}
-        </>
-      }
+      questionExtra={<>{items}</>}
       answer={
         hasNote ? (
           <AnkiField
