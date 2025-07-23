@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.5.2
+
+### Patch Changes
+
+- a78ce80: style(tf): better style for tf
+
 ## 2.5.1
 
 ### Patch Changes
