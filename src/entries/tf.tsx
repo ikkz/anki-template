@@ -49,7 +49,7 @@ const Item = ({ node, answer, index }: ItemProp) => {
   const displayButtons = laterBack
     ? typeof status === 'boolean'
       ? [status]
-      : []
+      : [answer]
     : [true, false];
 
   const [animationRef] = useAutoAnimate({
@@ -61,9 +61,11 @@ const Item = ({ node, answer, index }: ItemProp) => {
       className={clsx(
         'rounded-xl pl-4 pr-2 py-2 mt-4 flex items-center justify-between transition-colors duration-200 border-transparent border-2',
         laterBack
-          ? answer === status
-            ? 'bg-green-50 !border-green-500'
-            : 'bg-red-50 !border-red-500'
+          ? {
+              'bg-green-50 !border-green-500': status === true,
+              'bg-red-50 !border-red-500': status === false,
+              'bg-indigo-50': typeof status === 'undefined',
+            }
           : 'bg-indigo-50',
         'dark:bg-opacity-10',
       )}
