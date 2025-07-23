@@ -42,7 +42,7 @@ const Item = ({ node, answer, index }: ItemProp) => {
     }
     const id = setTimeout(() => {
       setLaterBack(true);
-    }, 200);
+    }, 500);
     return () => clearTimeout(id);
   }, [back, status]);
 
