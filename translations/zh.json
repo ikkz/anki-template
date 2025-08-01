@@ -12,6 +12,8 @@
   "hideTimer": "隐藏倒计时",
   "randomOption": "随机选项",
   "randomOptionDetail": "开启后展示随机打乱的选项，显示答案后恢复至原顺序",
+  "keepRandomOrderOnBack": "显示答案时保持随机顺序",
+  "keepRandomOrderOnBackDetail": "开启后，翻转到答案面时将保持随机打乱的选项顺序",
   "selMenu": "选中菜单",
   "selMenuDetail": "选中题目文字后弹出菜单，点击可快速跳转至百度翻译、百度搜索等工具查看选中文字相关的信息",
   "hideAbout": "隐藏首页“关于”",

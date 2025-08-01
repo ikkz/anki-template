@@ -12,6 +12,8 @@
   "hideTimer": "Ocultar contagem regressiva",
   "randomOption": "Opções aleatórias",
   "randomOptionDetail": "As opções serão exibidas em ordem aleatória, e a ordem original será restaurada após mostrar a resposta",
+  "keepRandomOrderOnBack": "Manter ordem aleatória ao mostrar resposta",
+  "keepRandomOrderOnBackDetail": "Quando ativado, a ordem aleatória das opções será mantida após virar para o lado da resposta",
   "selMenu": "Menu de seleção de texto",
   "selMenuDetail": "Após selecionar o texto, um menu aparecerá, e você pode clicar para ir rapidamente a ferramentas como Google Search ou Google Translate para ver informações relacionadas ao texto selecionado",
   "hideAbout": "Ocultar \"Sobre\"",

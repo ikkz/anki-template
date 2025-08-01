@@ -13,6 +13,7 @@ import {
   hideQuestionTypeAtom,
   hideTimerAtom,
   instantFeedbackAtom,
+  keepRandomOrderOnBackAtom,
   noScrollAtom,
   randomOptionsAtom,
   selectionMenuAtom,
@@ -93,6 +94,7 @@ let OptionList: FC;
 if (entry === 'mcq' || entry === 'mcq_10' || entry === 'mcq_26') {
   OptionList = () => {
     const [randomOptions, setRandomOptions] = useAtom(randomOptionsAtom);
+    const [keepRandomOrderOnBack, setKeepRandomOrderOnBack] = useAtom(keepRandomOrderOnBackAtom);
     const [hideQuestionType, setHideQuestionType] =
       useAtom(hideQuestionTypeAtom);
     const [blurOptions, setBlurOptions] = useAtom(blurOptionsAtom);
@@ -114,6 +116,15 @@ if (entry === 'mcq' || entry === 'mcq_10' || entry === 'mcq_26') {
           onChange={setRandomOptions}
           data-testid="setting:randomOptions"
         />
+        {randomOptions && (
+          <Checkbox
+            title={t.keepRandomOrderOnBack}
+            subtitle={t.keepRandomOrderOnBackDetail}
+            checked={keepRandomOrderOnBack}
+            onChange={setKeepRandomOrderOnBack}
+            data-testid="setting:keepRandomOrderOnBack"
+          />
+        )}
         <Checkbox
           title={t.blurOptions}
           subtitle={t.blurOptionsDetail}

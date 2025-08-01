@@ -7,6 +7,7 @@ import {
   blurOptionsAtom,
   hideMcqAnswerAtom,
   hideQuestionTypeAtom,
+  keepRandomOrderOnBackAtom,
   randomOptionsAtom,
 } from '@/store/settings';
 import '@/styles/mcq.css';
@@ -36,6 +37,7 @@ const fieldToAlpha = (field: string) => field.slice(field.length - 1);
 
 export default () => {
   const prefRandomOptions = useAtomValue(randomOptionsAtom);
+  const prefKeepRandomOrderOnBack = useAtomValue(keepRandomOrderOnBackAtom);
   const prefBiggerText = useAtomValue(biggerTextAtom);
   const prefHideQuestionType = useAtomValue(hideQuestionTypeAtom);
 
@@ -100,14 +102,14 @@ export default () => {
 
   const [parent] = useAutoAnimate();
   useEffect(() => {
-    if (back) {
+    if (back && !prefKeepRandomOrderOnBack) {
       const timeout = setTimeout(() => {
         setOptions(originOptions);
       }, 600);
       return () => clearTimeout(timeout);
     }
     return doNothing;
-  }, [back]);
+  }, [back, prefKeepRandomOrderOnBack]);
 
   const note = useField('note');
   const isMultipleChoice = answers.length > 1;

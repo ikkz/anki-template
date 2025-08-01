@@ -4,6 +4,10 @@ export const randomOptionsAtom = atomWithScopedStorage<boolean>(
   'randomOptions',
   true,
 );
+export const keepRandomOrderOnBackAtom = atomWithScopedStorage<boolean>(
+  'keepRandomOrderOnBack', 
+  false,
+);
 export const selectionMenuAtom = atomWithScopedStorage<boolean>(
   'selectionMenu',
   true,
