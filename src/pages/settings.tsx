@@ -94,7 +94,9 @@ let OptionList: FC;
 if (entry === 'mcq' || entry === 'mcq_10' || entry === 'mcq_26') {
   OptionList = () => {
     const [randomOptions, setRandomOptions] = useAtom(randomOptionsAtom);
-    const [keepRandomOrderOnBack, setKeepRandomOrderOnBack] = useAtom(keepRandomOrderOnBackAtom);
+    const [keepRandomOrderOnBack, setKeepRandomOrderOnBack] = useAtom(
+      keepRandomOrderOnBackAtom,
+    );
     const [hideQuestionType, setHideQuestionType] =
       useAtom(hideQuestionTypeAtom);
     const [blurOptions, setBlurOptions] = useAtom(blurOptionsAtom);

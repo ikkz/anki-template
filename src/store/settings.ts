@@ -5,7 +5,7 @@ export const randomOptionsAtom = atomWithScopedStorage<boolean>(
   true,
 );
 export const keepRandomOrderOnBackAtom = atomWithScopedStorage<boolean>(
-  'keepRandomOrderOnBack', 
+  'keepRandomOrderOnBack',
   false,
 );
 export const selectionMenuAtom = atomWithScopedStorage<boolean>(
