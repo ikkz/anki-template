@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.6.0
+
+### Minor Changes
+
+- 7c5ca87: feat: Add option to maintain randomized order when showing MCQ answers
+
 ## 2.5.2
 
 ### Patch Changes
