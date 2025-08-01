@@ -16,6 +16,7 @@ import { FIELD_ID } from '@/utils/const';
 import { getFieldText, isFieldEmpty } from '@/utils/field';
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import useCreation from 'ahooks/es/useCreation';
+import useLatest from 'ahooks/es/useLatest';
 import useMemoizedFn from 'ahooks/es/useMemoizedFn';
 import useSelections from 'ahooks/es/useSelections';
 import * as t from 'at/i18n';
@@ -38,6 +39,7 @@ const fieldToAlpha = (field: string) => field.slice(field.length - 1);
 export default () => {
   const prefRandomOptions = useAtomValue(randomOptionsAtom);
   const prefKeepRandomOrderOnBack = useAtomValue(keepRandomOrderOnBackAtom);
+  const prefKeepRandomOrderOnBackLatest = useLatest(prefKeepRandomOrderOnBack);
   const prefBiggerText = useAtomValue(biggerTextAtom);
   const prefHideQuestionType = useAtomValue(hideQuestionTypeAtom);
 
@@ -102,14 +104,14 @@ export default () => {
 
   const [parent] = useAutoAnimate();
   useEffect(() => {
-    if (back && !prefKeepRandomOrderOnBack) {
+    if (back && !prefKeepRandomOrderOnBackLatest.current) {
       const timeout = setTimeout(() => {
         setOptions(originOptions);
       }, 600);
       return () => clearTimeout(timeout);
     }
     return doNothing;
-  }, [back, prefKeepRandomOrderOnBack]);
+  }, [back]);
 
   const note = useField('note');
   const isMultipleChoice = answers.length > 1;
