@@ -1,7 +1,6 @@
 import { CardShell } from '@/components/card-shell';
 import { useBack } from '@/hooks/use-back';
 import { useCrossState } from '@/hooks/use-cross-state';
-import { useField } from '@/hooks/use-field';
 import {
   biggerTextAtom,
   blurOptionsAtom,
@@ -113,7 +112,7 @@ export default () => {
     return doNothing;
   }, [back]);
 
-  const note = useField('note');
+  const hasNote = !isFieldEmpty(FIELD_ID('note'));
   const isMultipleChoice = answers.length > 1;
 
   const [blurred, setBlurred] = useCrossState(
@@ -249,7 +248,7 @@ export default () => {
               <hr className="my-3" />
             </>
           )}
-          {note ? (
+          {hasNote ? (
             <AnkiField
               name="note"
               className={clsx('prose prose-sm mt-3', 'dark:prose-invert')}
