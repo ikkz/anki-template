@@ -33,6 +33,8 @@ This project welcomes any form of open-source contribution. Here is some informa
 
 This project uses node's [type stripping](https://nodejs.org/en/learn/typescript/run-natively) feature, so you need to install node version 23.6.0 or above.
 
+**Note:** If you are using Node.js version 20.x or below, the project will automatically use [tsx](https://tsx.is/) as a fallback TypeScript runner. This ensures compatibility across different Node.js versions.
+
 After installation, run the following commands to install project dependencies.
 
 ```
