@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.6.1
+
+### Patch Changes
+
+- bb5dddc: fix image-only notes not showing in mcq
+
 ## 2.6.0
 
 ### Minor Changes
