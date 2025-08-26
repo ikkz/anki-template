@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.6.2
+
+### Patch Changes
+
+- dcc3127: fix: set default font for card field
+
 ## 2.6.1
 
 ### Patch Changes
