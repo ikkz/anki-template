@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsc --build tsconfig.lib.json",
+          "uvx pyfuze@2.7.1 src/python --entry package.py --pyproject src/python/pyproject.toml --uv-lock src/python/uv.lock --mode online --output-name anki-eco-packager",
+          "cp schema.json dist/schema.json"
+        ],
+        "cwd": "{projectRoot}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/bin.js -i test_data -o test_output"],
+        "cwd": "{projectRoot}"
+      },
+      "dependsOn": ["build"]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+  - templates/*
+
+autoInstallPeers: true
+
+strictPeerDependencies: false
+
+onlyBuiltDependencies:
+  - '@swc/core'
+  - nx

@@ -1,33 +1,44 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-node_modules
+# compiled output
 dist
-release
-dist-ssr
-*.local
+tmp
+out-tsc
 
-# Editor directories and files
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 !.vscode/extensions.json
-.idea
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
 
-stats.html
-
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md

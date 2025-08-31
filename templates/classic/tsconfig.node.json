@@ -1,0 +1,17 @@
+{
+  "extends": ["@tsconfig/node23"],
+  "include": [
+    "build",
+    "eslint.config.js",
+    "tailwind.config.js",
+    "vitest.config.ts"
+  ],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true
+  }
+}
