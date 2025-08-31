@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Anki Deck Build Configuration",
+  "description": "Schema for build.json files used in Anki deck packaging",
+  "type": "object",
+  "required": ["config", "fields", "notes"],
+  "properties": {
+    "config": {
+      "type": "object",
+      "description": "Configuration for the Anki deck and note type",
+      "required": ["note_type_name", "deck_name", "type_id", "deck_id"],
+      "properties": {
+        "note_type_name": {
+          "type": "string",
+          "description": "Name of the Anki note type"
+        },
+        "deck_name": {
+          "type": "string",
+          "description": "Name of the Anki deck"
+        },
+        "type_id": {
+          "type": "integer",
+          "description": "Unique identifier for the note type"
+        },
+        "deck_id": {
+          "type": "integer",
+          "description": "Unique identifier for the deck"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fields": {
+      "type": "array",
+      "description": "List of field names for the note type",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "array",
+      "description": "List of notes to be added to the deck",
+      "items": {
+        "type": "object",
+        "required": ["fields"],
+        "properties": {
+          "fields": {
+            "type": "object",
+            "description": "Field values for this note",
+            "patternProperties": {
+              "^.*$": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

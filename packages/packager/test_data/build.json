@@ -1,0 +1,23 @@
+{
+  "config": {
+    "note_type_name": "Test Note Type",
+    "deck_name": "Test Deck",
+    "type_id": 1234567890,
+    "deck_id": 9876543210
+  },
+  "fields": ["question", "answer"],
+  "notes": [
+    {
+      "fields": {
+        "question": "What is 2 + 2?",
+        "answer": "4"
+      }
+    },
+    {
+      "fields": {
+        "question": "What is the capital of France?",
+        "answer": "Paris"
+      }
+    }
+  ]
+}
