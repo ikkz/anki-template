@@ -1,5 +1,11 @@
 # anki-templates
 
+## 2.6.3
+
+### Patch Changes
+
+- 25a1510: fix(input): show answer unexpectedly
+
 ## 2.6.2
 
 ### Patch Changes
