@@ -7,7 +7,7 @@
         "commands": [
           "tsc --build tsconfig.lib.json",
           "uvx pyfuze@2.7.1 src/python --entry package.py --pyproject src/python/pyproject.toml --uv-lock src/python/uv.lock --mode online --output-name anki-eco-packager",
-          "cp schema.json dist/schema.json"
+          "mkdir -p dist && cp schema.json dist/schema.json"
         ],
         "cwd": "{projectRoot}"
       }
