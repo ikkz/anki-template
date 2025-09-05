@@ -9,6 +9,7 @@ import {
 import type { FieldProps } from '@/components/native-field';
 import { useBack } from '@/hooks/use-back';
 import { caseSensitiveAtom, instantFeedbackAtom } from '@/store/settings';
+import { flipToBack } from '@/utils/bridge';
 import { IS_DEV } from '@/utils/const';
 import { crossStorage } from '@/utils/cross-storage';
 import { getEditOps, Op } from '@/utils/edit-ops';
@@ -110,7 +111,7 @@ export const ClozeInputField: FC<
         }
       }
 
-      const onInput = (event: Event) => {
+      const getClozeInfoFromEvent = (event: Event) => {
         const { target } = event;
         if (
           !(target instanceof HTMLInputElement) ||
@@ -127,6 +128,16 @@ export const ClozeInputField: FC<
         if (!info) {
           return;
         }
+
+        return info;
+      };
+
+      const onInput = (event: Event) => {
+        const info = getClozeInfoFromEvent(event);
+        if (!info) {
+          return;
+        }
+        const target = event.target as HTMLInputElement;
         const value = target.value || '';
         if (instantFeedback.current) {
           if (compare(value, info.answer)) {
@@ -135,9 +146,27 @@ export const ClozeInputField: FC<
             target.classList.remove(CORRECT_CLS);
           }
         }
-        crossStorage.setItem(inputKey(data.index), value);
+        crossStorage.setItem(inputKey(info.datas[0].index), value);
       };
+
+      const onKeyDown = (event: KeyboardEvent) => {
+        const info = getClozeInfoFromEvent(event);
+        if (!info) {
+          return;
+        }
+        if (event.key !== 'Enter' || event.isComposing) {
+          return;
+        }
+        if (info.datas[0].index !== clozeCount - 1) {
+          return;
+        }
+
+        flipToBack();
+      };
+
       el.addEventListener('input', onInput, true);
+      el.addEventListener('keydown', onKeyDown, true);
+
       return () => {
         for (let clozeIndex = 0; clozeIndex < clozeCount; clozeIndex++) {
           const nodes = getClozeNodes(el, clozeIndex);
@@ -158,6 +187,7 @@ export const ClozeInputField: FC<
           }
         }
         el.removeEventListener('input', onInput, true);
+        el.removeEventListener('keydown', onKeyDown, true);
       };
     } else {
       const reports: Report[] = clozeInfos.map((info, idx) => {
